@@ -12,10 +12,10 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 @Configuration
 public class RedisCachingConfig {
 
-    @Value("${spring.redis.cache.host}")
+    @Value("${spring.second-redis.cache.host}")
     private String hostName;
 
-    @Value("${spring.redis.cache.port}")
+    @Value("${spring.second-redis.cache.port}")
     private int port;
 
     @Bean
