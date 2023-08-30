@@ -27,7 +27,7 @@ public class MemberApi {
     }
 
     @DeleteMapping
-    public Response delete(@AuthenticationPrincipal OAuth2User oAuth2User) {
+    public Response deleteMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
         String id = (String) oAuth2User.getAttributes().get("id");
         MemberResponse memberResponse = new MemberResponse(memberDeleteService.deleteMember(id));
         return Response.of(CommonCode.GOOD_REQUEST, memberResponse);
