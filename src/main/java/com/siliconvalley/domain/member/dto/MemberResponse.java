@@ -1,6 +1,6 @@
 package com.siliconvalley.domain.member.dto;
 
-import com.siliconvalley.domain.member.Member;
+import com.siliconvalley.domain.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,7 @@
-package com.siliconvalley.global.config.jwt;
+package com.siliconvalley.global.config.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.siliconvalley.global.config.security.response.JsonResponser;
 import com.siliconvalley.global.error.ErrorResponse;
 import com.siliconvalley.global.error.exception.ErrorCode;
 import org.springframework.security.access.AccessDeniedException;
@@ -17,13 +18,6 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         System.out.println("권한없음");
-        sendJsonResponse(response, ErrorCode.HANDLE_ACCESS_DENIED);
-    }
-
-    private void sendJsonResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
-        response.setContentType("application/json"); // JSON 형식의 데이터라고 설정
-        response.setCharacterEncoding("UTF-8"); // 인코딩 설정
-        response.setStatus(ErrorCode.HANDLE_ACCESS_DENIED.getStatus());
-        response.getWriter().write(new ObjectMapper().writeValueAsString(errorCode));
+        JsonResponser.sendJsonResponse(response, ErrorCode.HANDLE_ACCESS_DENIED);
     }
 }

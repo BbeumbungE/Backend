@@ -1,10 +1,11 @@
-package com.siliconvalley.global.config.jwt;
+package com.siliconvalley.global.config.security.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.siliconvalley.domain.member.Member;
-import com.siliconvalley.domain.member.MemberRepository;
+import com.siliconvalley.domain.member.dao.MemberFindDao;
+import com.siliconvalley.domain.member.domain.Member;
+import com.siliconvalley.domain.member.dao.MemberRepository;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class JwtTokenProvider {
 
     private final RedisTemplate<String, String> redisTokenTemplate;
 
-    private final MemberRepository memberRepository;
+    private final MemberFindDao memberFindDao;
 
     @Value("${spring.jwt.secret}")
     private String secretKey;
@@ -36,7 +37,6 @@ public class JwtTokenProvider {
     private long refreshTokenExpirationTime;
 
     public String createAccessToken(OAuth2User oAuth2User){
-        System.out.println("accessToken 발급");
         return JWT.create()
                 .withSubject("Access")
                 .withExpiresAt(new Date(System.currentTimeMillis() + accessTokenExpirationTime))
@@ -44,9 +44,16 @@ public class JwtTokenProvider {
                 .withClaim("role", (String) oAuth2User.getAttributes().get("role"))
                 .sign(Algorithm.HMAC512(secretKey));
     }
+    public String createAccessToken(Member member){
+        return JWT.create()
+                .withSubject("Access")
+                .withExpiresAt(new Date(System.currentTimeMillis() + accessTokenExpirationTime))
+                .withClaim("userId", member.getUserId())
+                .withClaim("role", member.getRole())
+                .sign(Algorithm.HMAC512(secretKey));
+    }
 
     public void createRefreshToken(OAuth2User oAuth2User, String accessToken, HttpServletRequest request){
-        System.out.println("refreshToken 발급");
         String refreshToken = JWT.create()
                 .withSubject("Access")
                 .withExpiresAt(new Date(System.currentTimeMillis() + refreshTokenExpirationTime))
@@ -70,18 +77,10 @@ public class JwtTokenProvider {
     public String createNewAccessToken(String accessToken, HttpServletRequest request) {
         String refreshToken = redisTokenTemplate.opsForValue().get(accessToken);
         if (refreshToken != null) {
-            String userId = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(refreshToken).getClaim("userId").asString();
-            Optional<Member> memberOptional = memberRepository.findByUserId(userId);
 
-            if (memberOptional.isEmpty()) return null;
+            Member member = getMemberOfToken(accessToken);
+            String newAccessToken = createAccessToken(member);
 
-            System.out.println("accessToken 재발급");
-            String newAccessToken = JWT.create()
-                    .withSubject("Access")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + accessTokenExpirationTime))
-                    .withClaim("userId", memberOptional.get().getUserId())
-                    .withClaim("role", memberOptional.get().getRole())
-                    .sign(Algorithm.HMAC512(secretKey));
             try {
                 // redis 저장
                 redisTokenTemplate.opsForValue().set(
@@ -100,36 +99,43 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
+
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
         return null;
+
     }
 
     public String validateToken(String accessToken, HttpServletRequest request, HttpServletResponse response){
         try{
+
             JWT.require(Algorithm.HMAC512(secretKey)).build().verify(accessToken);
             return accessToken;
+
         } catch(TokenExpiredException e) {
+
             String newAccessToken = createNewAccessToken(accessToken, request);
             if (newAccessToken != null) {
                 response.setHeader("newAccessToken", newAccessToken); // 클라이언트에 새로운 accessToken 발급
                 return newAccessToken;
             }
-            System.out.println("accessToken 만료");
             request.setAttribute("exception", e);
+
         } catch(JWTDecodeException e) {
-            System.out.println("디코딩 오류");
+
             request.setAttribute("exception", e);
+
         }
         return null;
     }
 
     public Member getMemberOfToken(String accessToken) {
         String userId = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(accessToken).getClaim("userId").asString();
-        Optional<Member> memberOptional = memberRepository.findByUserId(userId);
-        return memberOptional.get();
+        Member member = memberFindDao.findByUserId(userId);
+        if (member == null) System.out.println("member 없음");
+        return member;
     }
 
 }

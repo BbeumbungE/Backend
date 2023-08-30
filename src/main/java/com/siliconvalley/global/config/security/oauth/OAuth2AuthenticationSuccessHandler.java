@@ -1,14 +1,13 @@
-package com.siliconvalley.global.config.oauth;
+package com.siliconvalley.global.config.security.oauth;
 
-import com.siliconvalley.global.config.jwt.JwtTokenProvider;
+import com.siliconvalley.global.config.security.jwt.JwtTokenProvider;
+import com.siliconvalley.global.config.security.response.RedirectUrlCreator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,28 +37,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         jwtTokenProvider.createRefreshToken(oAuth2User, accessToken, request);
 
         // token 발급 or 예외 리다이렉트
+        String redirectUrl;
         if (request.getAttribute("exception") != null) {
-            sendRedirectUrl(request, response);
+            redirectUrl = RedirectUrlCreator.createTargetUrl(request);
         } else {
-            sendRedirectUrl(request, response, accessToken);
+            redirectUrl = RedirectUrlCreator.createTargetUrl(accessToken, (String) oAuth2User.getAttributes().get("userId"));
         }
-    }
-
-    private void sendRedirectUrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String redirectUrl = "http://localhost:3000/oauth/redirect";
-        String exception = (String) request.getAttribute("exception");
-        redirectUrl = UriComponentsBuilder.fromUriString(redirectUrl)
-                .queryParam("exception", exception)
-                .build().toUriString();
-
-        getRedirectStrategy().sendRedirect(request, response, redirectUrl);
-    }
-
-    private void sendRedirectUrl(HttpServletRequest request, HttpServletResponse response, String accessToken) throws IOException {
-        String redirectUrl = "http://localhost:3000/oauth/redirect";
-        redirectUrl = UriComponentsBuilder.fromUriString(redirectUrl)
-                .queryParam("accessToken", accessToken)
-                .build().toUriString();
 
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
