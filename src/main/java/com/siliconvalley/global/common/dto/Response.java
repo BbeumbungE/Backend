@@ -41,7 +41,6 @@ public class Response<T> {
         response.setContent(content);
 
         return response;
-
     }
 }
 

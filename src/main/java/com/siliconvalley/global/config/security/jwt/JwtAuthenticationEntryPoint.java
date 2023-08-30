@@ -1,7 +1,8 @@
-package com.siliconvalley.global.config.jwt;
+package com.siliconvalley.global.config.security.jwt;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.siliconvalley.global.config.security.response.JsonResponser;
 import com.siliconvalley.global.error.ErrorResponse;
 import com.siliconvalley.global.error.exception.ErrorCode;
 import org.springframework.data.redis.RedisConnectionFailureException;
@@ -24,20 +25,13 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         Exception e = (Exception) request.getAttribute("exception");
         if (e instanceof JWTDecodeException) {
-            sendJsonResponse(response, ErrorCode.INVALID_TOKEN);
+            JsonResponser.sendJsonResponse(response, ErrorCode.INVALID_TOKEN);
         } else if (e instanceof RedisConnectionFailureException) {
-            sendJsonResponse(response, ErrorCode.UNCONNECTED_REDIS);
+            JsonResponser.sendJsonResponse(response, ErrorCode.UNCONNECTED_REDIS);
         } else if (e instanceof TokenExpiredException) {
-            sendJsonResponse(response, ErrorCode.EXPIRED_TOKEN);
+            JsonResponser.sendJsonResponse(response, ErrorCode.EXPIRED_TOKEN);
         } else {
-            sendJsonResponse(response, ErrorCode.UNAUTHORIZATION);
+            JsonResponser.sendJsonResponse(response, ErrorCode.UNAUTHORIZATION);
         }
-    }
-
-    private void sendJsonResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
-        response.setContentType("application/json"); // JSON 형식의 데이터라고 설정
-        response.setCharacterEncoding("UTF-8"); // 인코딩 설정
-        response.setStatus(errorCode.getStatus());
-        response.getWriter().write(new ObjectMapper().writeValueAsString(errorCode));
     }
 }

@@ -1,5 +1,6 @@
-package com.siliconvalley.domain.member;
+package com.siliconvalley.domain.member.dao;
 
+import com.siliconvalley.domain.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

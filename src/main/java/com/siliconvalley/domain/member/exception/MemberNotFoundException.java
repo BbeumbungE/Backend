@@ -4,7 +4,7 @@ import com.siliconvalley.global.error.exception.EntityNotFoundException;
 
 public class MemberNotFoundException extends EntityNotFoundException {
 
-    public MemberNotFoundException(Long target){
+    public MemberNotFoundException(String target){
         super(target + "is not found");
     }
 }

@@ -1,11 +1,11 @@
-package com.siliconvalley.global.config.security;
+package com.siliconvalley.global.config.security.config;
 
-import com.siliconvalley.global.config.jwt.JwtAccessDeniedHandler;
-import com.siliconvalley.global.config.jwt.JwtAuthenticationEntryPoint;
-import com.siliconvalley.global.config.jwt.JwtAuthorizationFilter;
-import com.siliconvalley.global.config.jwt.JwtTokenProvider;
-import com.siliconvalley.global.config.oauth.OAuth2AuthenticationSuccessHandler;
-import com.siliconvalley.global.config.oauth.OAuth2UserService;
+import com.siliconvalley.global.config.security.jwt.JwtAccessDeniedHandler;
+import com.siliconvalley.global.config.security.jwt.JwtAuthenticationEntryPoint;
+import com.siliconvalley.global.config.security.jwt.JwtAuthorizationFilter;
+import com.siliconvalley.global.config.security.jwt.JwtTokenProvider;
+import com.siliconvalley.global.config.security.oauth.OAuth2AuthenticationSuccessHandler;
+import com.siliconvalley.global.config.security.oauth.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

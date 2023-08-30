@@ -1,8 +1,7 @@
-package com.siliconvalley.global.config.jwt;
+package com.siliconvalley.global.config.security.jwt;
 
-import com.siliconvalley.domain.member.Member;
-import org.springframework.core.annotation.Order;
-import org.springframework.data.redis.RedisConnectionFailureException;
+import com.siliconvalley.domain.member.domain.Member;
+import com.siliconvalley.global.config.security.oauth.OAuth2UserAttributeCreator;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,8 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
@@ -51,7 +47,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private void saveMemberInSecurityContextHolder(Member member) {
-        Map<String, Object> attributes = createAttribute(member);
+        Map<String, Object> attributes = OAuth2UserAttributeCreator.createAttribute(member);
 
         DefaultOAuth2User oAuth2User = new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(member.getRole())),
@@ -64,14 +60,4 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-
-    private Map<String, Object> createAttribute (Member member) {
-        Map<String, Object> attributes = new HashMap<>();
-        attributes.put("id", member.getId());
-        attributes.put("userId", member.getUserId());
-        attributes.put("email", member.getEmail());
-        attributes.put("role", member.getRole());
-        return attributes;
-    }
-
 }

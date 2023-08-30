@@ -1,4 +1,4 @@
-package com.siliconvalley.global.config.security;
+package com.siliconvalley.global.config.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
