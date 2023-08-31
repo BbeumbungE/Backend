@@ -27,22 +27,18 @@ public class MemberApi {
     @GetMapping
     public Response getMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
         String id = (String) oAuth2User.getAttributes().get("id");
-        MemberResponse memberResponse = new MemberResponse(memberFindDao.findById(id));
-        return Response.of(CommonCode.GOOD_REQUEST, memberResponse);
+        return Response.of(CommonCode.GOOD_REQUEST, memberFindDao.getById(id));
     }
 
     @DeleteMapping
     public Response deleteMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
         String id = (String) oAuth2User.getAttributes().get("id");
-        Member member = memberFindDao.findById(id);
-        MemberResponse memberResponse = new MemberResponse(memberDeleteService.deleteMember(member));
-        return Response.of(CommonCode.GOOD_REQUEST, memberResponse);
+        return Response.of(CommonCode.GOOD_REQUEST, memberDeleteService.deleteMember(id));
     }
 
     @GetMapping("/profiles")
     public Response getProfilesOfMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
         String id = (String) oAuth2User.getAttributes().get("id");
-        ProfileResponseList profileList = new ProfileResponseList(profileFindDao.getProfilesByMemberId(id));
-        return Response.of(CommonCode.GOOD_REQUEST, profileList);
+        return Response.of(CommonCode.GOOD_REQUEST, profileFindDao.getProfilesByMemberId(id));
     }
 }

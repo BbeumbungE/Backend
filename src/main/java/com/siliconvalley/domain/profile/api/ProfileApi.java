@@ -30,17 +30,15 @@ public class ProfileApi {
             @RequestBody @Valid final ProfileCreateOrUpdate dto,
             @AuthenticationPrincipal OAuth2User oAuth2User
     ) {
-        String id = (String) oAuth2User.getAttributes().get("id");
-        Member member = memberFindDao.findById(id);
-        return Response.of(CommonCode.GOOD_REQUEST, new ProfileResponse(profileManagementService.createProfile(member, dto)));
+        String memberId = (String) oAuth2User.getAttributes().get("id");
+        return Response.of(CommonCode.GOOD_REQUEST, new ProfileResponse(profileManagementService.createProfile(memberId, dto)));
     }
 
     @GetMapping("/{profileId}")
     public Response getProfile(
             @PathVariable("profileId") Long profileId
     ) {
-        Profile profile = profileFindDao.findById(profileId);
-        return Response.of(CommonCode.GOOD_REQUEST, new ProfileResponse(profile));
+        return Response.of(CommonCode.GOOD_REQUEST, profileFindDao.getProfileById(profileId));
     }
 
     @PatchMapping("/{profileId}")
@@ -48,15 +46,13 @@ public class ProfileApi {
             @PathVariable("profileId") Long profileId,
         @RequestBody @Valid final ProfileCreateOrUpdate dto
     ) {
-        Profile profile = profileFindDao.findById(profileId);
-        return Response.of(CommonCode.GOOD_REQUEST, new ProfileResponse(profileManagementService.updateProfile(profile, dto)));
+        return Response.of(CommonCode.GOOD_REQUEST, profileManagementService.updateProfile(profileId, dto));
     }
 
     @DeleteMapping("/{profileId}")
     public Response deleteProfile(
         @PathVariable("profileId") Long profileId
     ) {
-        Profile profile = profileFindDao.findById(profileId);
-        return Response.of(CommonCode.GOOD_REQUEST, new ProfileResponse(profileManagementService.deleteProfile(profile)));
+        return Response.of(CommonCode.GOOD_REQUEST, profileManagementService.deleteProfile(profileId));
     }
 }

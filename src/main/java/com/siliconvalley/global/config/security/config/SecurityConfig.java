@@ -58,6 +58,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.OPTIONS).permitAll() // OPTIONS 메서드는 모두 허용
                         .antMatchers("/api/members/**").authenticated()
+                        .antMatchers("/api/profiles/**").authenticated()
                         .anyRequest().permitAll()
                 );
 

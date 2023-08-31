@@ -1,9 +1,12 @@
 package com.siliconvalley.domain.profile.application;
 
+import com.siliconvalley.domain.member.dao.MemberFindDao;
 import com.siliconvalley.domain.member.domain.Member;
+import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.dao.ProfileRepository;
 import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.profile.dto.ProfileCreateOrUpdate;
+import com.siliconvalley.domain.profile.dto.ProfileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,20 +17,24 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProfileManagementService {
 
+    private final MemberFindDao memberFindDao;
     private final ProfileRepository profileRepository;
+    private final ProfileFindDao profileFindDao;
 
-    public Profile createProfile(final Member member, final ProfileCreateOrUpdate dto) {
-        return profileRepository.save(dto.toEntity(member));
+    public Profile createProfile(final String memberId, final ProfileCreateOrUpdate dto) {
+        return profileRepository.save(dto.toEntity(memberFindDao.findById(memberId)));
     }
 
-    public Profile updateProfile(final Profile profile, final ProfileCreateOrUpdate dto) {
+    public ProfileResponse updateProfile(final Long profileId, final ProfileCreateOrUpdate dto) {
+        Profile profile = profileFindDao.findById(profileId);
         profile.updateProfile(dto.getProfileName(), dto.getProfileImage());
-        return profile;
+        return new ProfileResponse(profile);
     }
 
-    public Profile deleteProfile(Profile profile) {
+    public ProfileResponse deleteProfile(Long profileId) {
+        Profile profile = profileFindDao.findById(profileId);
         profileRepository.delete(profile);
         SecurityContextHolder.clearContext();
-        return profile;
+        return new ProfileResponse(profile);
     }
 }
