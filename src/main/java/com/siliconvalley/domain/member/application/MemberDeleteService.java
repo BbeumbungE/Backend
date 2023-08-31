@@ -3,6 +3,7 @@ package com.siliconvalley.domain.member.application;
 import com.siliconvalley.domain.member.dao.MemberFindDao;
 import com.siliconvalley.domain.member.dao.MemberRepository;
 import com.siliconvalley.domain.member.domain.Member;
+import com.siliconvalley.domain.member.dto.MemberResponse;
 import com.siliconvalley.global.error.exception.EntityNotFoundException;
 import com.siliconvalley.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,10 @@ public class MemberDeleteService {
     private final MemberFindDao memberFindDao;
 
     @Transactional
-    public Member deleteMember(String id) {
-        Member member = memberFindDao.findById(id);
+    public MemberResponse deleteMember(String memberId) {
+        Member member = memberFindDao.findById(memberId);
         memberRepository.delete(member);
         SecurityContextHolder.clearContext();
-        return member;
+        return new MemberResponse(member);
     }
 }
