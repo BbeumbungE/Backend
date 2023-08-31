@@ -6,6 +6,7 @@ import com.siliconvalley.global.error.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -70,6 +71,16 @@ public class GlobalExceptionHandler {
         log.error("handleAccessDeniedException", e);
         final ErrorResponse response = ErrorResponse.of(ErrorCode.HANDLE_ACCESS_DENIED);
         return new ResponseEntity<>(response, HttpStatus.valueOf(ErrorCode.HANDLE_ACCESS_DENIED.getStatus()));
+    }
+
+    /**
+     * HTTP 요청의 본문(Request Body)이 필요하지만 비어있거나 전송되지 않은 경우 발생
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ResponseEntity<ErrorResponse> handleEmptyRequestBodyException(HttpMessageNotReadableException e) {
+        log.error("handleEmptyRequestBodyException", e);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.EMPTY_REQUEST_BODY);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(ErrorCode.EMPTY_REQUEST_BODY.getStatus()));
     }
 
     @ExceptionHandler(BusinessException.class)

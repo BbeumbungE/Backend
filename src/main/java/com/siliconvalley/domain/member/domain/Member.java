@@ -1,15 +1,15 @@
 package com.siliconvalley.domain.member.domain;
 
+import com.siliconvalley.domain.profile.domain.Profile;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "member")
@@ -33,6 +33,9 @@ public class Member {
     @CreationTimestamp
     @Column(name = "create_at", nullable = false, updatable = false)
     private LocalDateTime createAt;
+
+    @OneToMany(mappedBy = "member")
+    private List<Profile> profileList = new ArrayList<>();
 
     @Builder
     public Member(String id, String userId,String email, String role) {

@@ -18,6 +18,7 @@ public enum ErrorCode {
     INVALID_TOKEN(401, "C008", "Invalid Token Error"),
     EXPIRED_TOKEN(401, "C009", "Expired Token Error"),
     UNCONNECTED_REDIS(500, "C010", "Unconnected Redis Error"),
+    EMPTY_REQUEST_BODY(400, "C011", "Empty Request Body"),
 
 
     // 도메인별 에러코드 추가

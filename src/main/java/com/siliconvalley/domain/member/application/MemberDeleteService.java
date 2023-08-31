@@ -15,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberDeleteService {
 
     private final MemberRepository memberRepository;
-    private final MemberFindDao memberFindDao;
 
     @Transactional
-    public Member deleteMember(String id) {
-        Member member = memberFindDao.findById(id);
+    public Member deleteMember(Member member) {
         memberRepository.delete(member);
         SecurityContextHolder.clearContext();
         return member;
