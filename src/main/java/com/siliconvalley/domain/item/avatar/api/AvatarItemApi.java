@@ -36,12 +36,4 @@ public class AvatarItemApi {
     public Response getAvatarItem(@PathVariable("itemId") Long itemId) {
         return Response.of(CommonCode.GOOD_REQUEST, avatarItemFindDao.getAvatarItemById(itemId));
     }
-
-    @PostMapping("/{itemId}/{profileId}")
-    public Response purchaseAvatarItem(
-            @PathVariable Long itemId,
-            @PathVariable Long profileId
-    ) {
-        return Response.of(CommonCode.SUCCESS_CREATE, myItemCreateService.createMyItem(profileId, itemId, "avatar"));
-    }
 }

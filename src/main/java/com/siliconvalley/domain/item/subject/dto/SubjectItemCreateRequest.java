@@ -39,11 +39,10 @@ public class SubjectItemCreateRequest {
                 .build();
     }
 
-    public Subject toSubjectEntity(Item item) {
+    public Subject toSubjectEntity() {
         return Subject.builder()
                 .subjectName(subjectName)
                 .subjectImage(subjectImage)
-                .item(item)
                 .build();
     }
 }

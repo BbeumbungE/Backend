@@ -22,14 +22,24 @@ public class Item {
     @Column(name = "item_price")
     private Long itemPrice;
 
-    @OneToOne(mappedBy = "item")
+    @OneToOne(mappedBy = "item", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Avatar avatar;
 
-    @OneToOne(mappedBy = "item")
+    @OneToOne(mappedBy = "item", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Subject subject;
 
     @Builder
     public Item(Long itemPrice) {
         this.itemPrice = itemPrice;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+        avatar.setItem(this); // 양방향 관계 설정
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+        subject.setItem(this); // 양방향 관계 설정
     }
 }

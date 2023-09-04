@@ -3,8 +3,8 @@ package com.siliconvalley.domain.item.subject.application;
 import com.siliconvalley.domain.item.item.dao.ItemRepository;
 import com.siliconvalley.domain.item.item.domain.Item;
 import com.siliconvalley.domain.item.item.dto.ItemPostSuccessResponse;
+import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.item.subject.dto.SubjectItemCreateRequest;
-import com.siliconvalley.domain.item.subject.dao.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class SubjectCreateService {
 
     private final ItemRepository itemRepository;
-    private final SubjectRepository subjectRepository;
 
     public ItemPostSuccessResponse createSubjectItem(SubjectItemCreateRequest dto) {
-        Item item = itemRepository.save(dto.toItemEntity());
-        subjectRepository.save(dto.toSubjectEntity(item));
+        Item item = dto.toItemEntity();
+        Subject subject = dto.toSubjectEntity();
+
+        // Item과 Subject 객체를 연결
+        item.setSubject(subject);
+
+        // Item이 저장될 때 Subject 자동 저장
+        itemRepository.save(item);
+
         return new ItemPostSuccessResponse(item);
     }
 }

@@ -37,11 +37,10 @@ public class AvatarItemCreateRequest {
                 .build();
     }
 
-    public Avatar toAvatarEntity(Item item) {
+    public Avatar toAvatarEntity() {
         return Avatar.builder()
                 .avatarName(avatarName)
                 .avatarImage(avatarImage)
-                .item(item)
                 .build();
     }
 }

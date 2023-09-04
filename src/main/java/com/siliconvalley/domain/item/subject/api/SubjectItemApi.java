@@ -42,14 +42,6 @@ public class SubjectItemApi {
         return Response.of(CommonCode.GOOD_REQUEST, subjectItemFindDao.getSubjectItemById(itemId));
     }
 
-    @PostMapping("/{itemId}/{profileId}")
-    public Response purchaseSubjectItem(
-            @PathVariable Long itemId,
-            @PathVariable Long profileId
-    ) {
-        return Response.of(CommonCode.SUCCESS_CREATE, myItemCreateService.createMyItem(profileId, itemId, "subject"));
-    }
-
     @PostMapping("/{subjectId}/sketches")
     public Response addSketch(
             @PathVariable(name = "subjectId") Long subjectId,

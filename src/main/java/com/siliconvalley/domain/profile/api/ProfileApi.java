@@ -1,5 +1,6 @@
 package com.siliconvalley.domain.profile.api;
 
+import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
 import com.siliconvalley.domain.profile.application.ProfileManagementService;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
@@ -23,6 +24,7 @@ public class ProfileApi {
     private final ProfileFindDao profileFindDao;
     private final ProfileManagementService profileManagementService;
     private final MyItemFindDao myItemFindDao;
+    private final MyItemCreateService myItemCreateService;
 
     @PostMapping
     public Response createProfile(
@@ -62,5 +64,14 @@ public class ProfileApi {
             Pageable pageable
     ) {
         return Response.of(CommonCode.GOOD_REQUEST, myItemFindDao.getMyItemListByPage(profileId, pageable, category));
+    }
+
+    @PostMapping("/{profileId}/items/{itemId}")
+    public Response purchaseSubjectItem(
+            @PathVariable(name = "profileId") Long profileId,
+            @PathVariable(name = "itemId") Long itemId,
+            @RequestParam(value = "category") String category // subject or avatar
+    ) {
+        return Response.of(CommonCode.SUCCESS_CREATE, myItemCreateService.createMyItem(profileId, itemId, category));
     }
 }

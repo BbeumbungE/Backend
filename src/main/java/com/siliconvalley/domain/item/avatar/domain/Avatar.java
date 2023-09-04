@@ -24,7 +24,7 @@ public class Avatar {
     @Column(name = "avt_image")
     private String avatarImage;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
@@ -32,6 +32,10 @@ public class Avatar {
     public Avatar(String avatarName, String avatarImage, Item item) {
         this.avatarName = avatarName;
         this.avatarImage = avatarImage;
+        this.item = item;
+    }
+
+    public void setItem(Item item) {
         this.item = item;
     }
 }

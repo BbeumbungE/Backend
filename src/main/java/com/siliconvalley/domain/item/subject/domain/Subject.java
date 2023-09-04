@@ -29,7 +29,7 @@ public class Subject {
     @OneToMany(mappedBy = "subject")
     private List<Sketch> sketchList = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
@@ -37,6 +37,10 @@ public class Subject {
     public Subject(String subjectName, String subjectImage, Item item) {
         this.subjectName = subjectName;
         this.subjectImage = subjectImage;
+        this.item = item;
+    }
+
+    public void setItem(Item item) {
         this.item = item;
     }
 }
