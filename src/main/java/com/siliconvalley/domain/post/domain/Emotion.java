@@ -16,8 +16,9 @@ import javax.persistence.*;
 @Slf4j
 public class Emotion {
     @Id
-    @GeneratedValue
-    private Long emotionId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private Long Id;
 
     @JoinColumn(name = "profile_id", nullable = false)
     @ManyToOne

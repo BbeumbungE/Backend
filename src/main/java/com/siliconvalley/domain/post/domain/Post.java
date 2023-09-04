@@ -22,8 +22,9 @@ import java.util.List;
 public class Post {
 
     @Id
-    @GeneratedValue
-    private Long postId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private Long Id;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

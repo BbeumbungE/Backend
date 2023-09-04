@@ -19,8 +19,9 @@ import javax.persistence.*;
 public class Canvas {
 
     @Id
-    @GeneratedValue
-    private Long canvasId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private Long Id;
 
     @Column(name = "sketch", nullable = false)
     private String sketch;

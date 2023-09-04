@@ -15,8 +15,9 @@ import javax.persistence.*;
 public class Subject {
 
     @Id
-    @GeneratedValue
-    private Long subjectId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private Long Id;
 
     @Column(name = "subject_name", nullable = false)
     private String subjectName;

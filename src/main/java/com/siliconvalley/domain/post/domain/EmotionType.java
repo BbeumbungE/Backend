@@ -14,8 +14,9 @@ import javax.persistence.*;
 @Slf4j
 public class EmotionType {
     @Id
-    @GeneratedValue
-    private Long emotionTypeId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private Long Id;
 
     @Column(name = "emotion_name")
     private String emotion_name;
