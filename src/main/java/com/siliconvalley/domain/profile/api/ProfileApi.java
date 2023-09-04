@@ -1,10 +1,8 @@
 package com.siliconvalley.domain.profile.api;
 
-import com.siliconvalley.domain.member.dao.MemberFindDao;
-import com.siliconvalley.domain.member.domain.Member;
+import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
 import com.siliconvalley.domain.profile.application.ProfileManagementService;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
-import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.profile.dto.ProfileCreateOrUpdate;
 import com.siliconvalley.domain.profile.dto.ProfileResponse;
 import com.siliconvalley.global.common.code.CommonCode;
@@ -12,6 +10,7 @@ import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +20,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ProfileApi {
 
-    private final MemberFindDao memberFindDao;
     private final ProfileFindDao profileFindDao;
     private final ProfileManagementService profileManagementService;
+    private final MyItemFindDao myItemFindDao;
 
     @PostMapping
     public Response createProfile(
@@ -54,5 +53,14 @@ public class ProfileApi {
         @PathVariable("profileId") Long profileId
     ) {
         return Response.of(CommonCode.GOOD_REQUEST, profileManagementService.deleteProfile(profileId));
+    }
+
+    @GetMapping("/{profileId}/items")
+    public Response getItemsOfProfile(
+            @PathVariable("profileId") Long profileId,
+            @RequestParam(value = "category", required = false) String category,
+            Pageable pageable
+    ) {
+        return Response.of(CommonCode.GOOD_REQUEST, myItemFindDao.getMyItemListByPage(profileId, pageable, category));
     }
 }
