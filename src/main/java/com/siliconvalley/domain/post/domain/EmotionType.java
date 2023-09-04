@@ -16,7 +16,7 @@ public class EmotionType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long Id;
+    private Long id;
 
     @Column(name = "emotion_name")
     private String emotion_name;

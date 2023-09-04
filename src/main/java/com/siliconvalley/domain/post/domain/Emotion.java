@@ -18,7 +18,7 @@ public class Emotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long Id;
+    private Long id;
 
     @JoinColumn(name = "profile_id", nullable = false)
     @ManyToOne
