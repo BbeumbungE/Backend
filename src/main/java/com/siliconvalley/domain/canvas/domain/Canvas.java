@@ -20,8 +20,8 @@ public class Canvas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
-    private Long Id;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "sketch", nullable = false)
     private String sketch;

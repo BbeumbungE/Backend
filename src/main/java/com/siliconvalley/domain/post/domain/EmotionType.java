@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class EmotionType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long Id;
 
     @Column(name = "emotion_name")
