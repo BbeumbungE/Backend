@@ -30,7 +30,7 @@ public class Canvas {
     private String canvas;
 
     @ManyToOne
-    @JoinColumn(name = "profild_id", nullable = false)
+    @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;
 
     @ManyToOne
