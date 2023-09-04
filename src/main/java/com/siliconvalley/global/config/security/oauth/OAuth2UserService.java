@@ -24,7 +24,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         String userEmail = getEmail(userRequest);
-        Optional<Member> memberOptional = memberFindDao.findByEmail(userEmail);
+        Optional<Member> memberOptional = memberFindDao.getMemberOptionalByEmail(userEmail);
         Member member;
 
         // 회원가입 여부 확인

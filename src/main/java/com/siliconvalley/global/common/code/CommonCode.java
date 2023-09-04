@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public enum CommonCode implements ResponseCode{
     GOOD_REQUEST(200, "올바른 요청입니다.", HttpStatus.OK),
+    SUCCESS_CREATE(201, "생성 성공했습니다.", HttpStatus.CREATED),
     VALIDATION_FAIL(400, "입력값 검증이 실패하였습니다.", HttpStatus.BAD_REQUEST),
     BAD_REQUEST(400, "잘못된 요청입니다.", HttpStatus.BAD_REQUEST),
     ILLEGAL_REQUEST(422, "잘못된 데이터가 포함된 요청입니다.", HttpStatus.UNPROCESSABLE_ENTITY);
