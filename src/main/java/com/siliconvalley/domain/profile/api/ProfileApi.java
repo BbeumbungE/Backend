@@ -4,6 +4,7 @@ import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
 import com.siliconvalley.domain.point.application.PointManagementService;
 import com.siliconvalley.domain.profile.application.ProfileManagementService;
+import com.siliconvalley.domain.profile.application.ProfilePostingService;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.dto.ProfileCreateOrUpdate;
 import com.siliconvalley.domain.profile.dto.ProfileResponse;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,7 @@ public class ProfileApi {
     private final MyItemFindDao myItemFindDao;
     private final MyItemCreateService myItemCreateService;
     private final PointManagementService pointManagementService;
+    private final ProfilePostingService profilePostingService;
 
     @PostMapping
     public Response createProfile(
@@ -92,4 +95,22 @@ public class ProfileApi {
         pointManagementService.updatePoint(profileId, newPointValue);
         return Response.of(CommonCode.SUCCESS_UPDATE);
     }
+    @PostMapping("/{profileId}/canvases/{canvasId}/posts")
+    public ResponseEntity<Response> postCanvas(
+            @PathVariable Long profileId,
+            @PathVariable Long canvasId
+    ){
+        Response response = profilePostingService.createPostForProfile(profileId, canvasId);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{profileId}/canvases/{canvasId}/posts")
+    public ResponseEntity<Response> deletePost(
+            @PathVariable Long profileId,
+            @PathVariable Long canvasId
+    ){
+        Response response = profilePostingService.deletePostForProfile(profileId, canvasId);
+        return ResponseEntity.ok(response);
+    }
+
 }
