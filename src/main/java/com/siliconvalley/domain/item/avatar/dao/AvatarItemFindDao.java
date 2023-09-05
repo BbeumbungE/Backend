@@ -4,7 +4,7 @@ import com.siliconvalley.domain.item.item.dao.ItemRepository;
 import com.siliconvalley.domain.item.item.domain.Item;
 import com.siliconvalley.domain.item.avatar.dto.AvatarItemResponse;
 import com.siliconvalley.domain.item.item.exception.ItemNotFoundException;
-import com.siliconvalley.global.common.dto.Page.PageResponse;
+import com.siliconvalley.global.common.dto.page.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

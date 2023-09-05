@@ -42,5 +42,19 @@ public class Response<T> {
 
         return response;
     }
+
+    public static <T> Response<T> of(ResponseCode responseCode) {
+        Response<T> response = new Response<>();
+
+        Status status = new Status();
+        status.setCode(responseCode.getCode());
+        status.setMessage(responseCode.getMessage());
+        status.setHttpStatus(responseCode.getHttpStatus());
+
+        response.setStatus(status);
+        response.setContent(null);
+
+        return response;
+    }
 }
 

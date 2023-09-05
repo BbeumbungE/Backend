@@ -3,7 +3,7 @@ package com.siliconvalley.domain.item.myitem.dao;
 import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.item.myitem.dto.MyAvatarItemResponse;
 import com.siliconvalley.domain.item.myitem.dto.MySubjectItemResponse;
-import com.siliconvalley.global.common.dto.Page.PageResponse;
+import com.siliconvalley.global.common.dto.page.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
