@@ -7,6 +7,7 @@ import com.siliconvalley.domain.point.application.PointManagementService;
 import com.siliconvalley.domain.point.code.PointCode;
 import com.siliconvalley.domain.profile.application.ProfileManagementService;
 import com.siliconvalley.domain.profile.code.ProfileCode;
+import com.siliconvalley.domain.profile.application.ProfilePostingService;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.dto.ProfileCreateOrUpdate;
 import com.siliconvalley.domain.profile.dto.ProfileResponse;
@@ -32,6 +33,7 @@ public class ProfileApi {
     private final MyItemFindDao myItemFindDao;
     private final MyItemCreateService myItemCreateService;
     private final PointManagementService pointManagementService;
+    private final ProfilePostingService profilePostingService;
 
     @PostMapping
     public ResponseEntity createProfile(
@@ -107,4 +109,22 @@ public class ProfileApi {
         Response response = Response.of(PointCode.UPDATE_SUCCESS);
         return new ResponseEntity(response, HttpStatus.NO_CONTENT);
     }
+    @PostMapping("/{profileId}/canvases/{canvasId}/posts")
+    public ResponseEntity<Response> postCanvas(
+            @PathVariable Long profileId,
+            @PathVariable Long canvasId
+    ){
+        Response response = profilePostingService.createPostForProfile(profileId, canvasId);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{profileId}/canvases/{canvasId}/posts")
+    public ResponseEntity<Response> deletePost(
+            @PathVariable Long profileId,
+            @PathVariable Long canvasId
+    ){
+        Response response = profilePostingService.deletePostForProfile(profileId, canvasId);
+        return ResponseEntity.ok(response);
+    }
+
 }
