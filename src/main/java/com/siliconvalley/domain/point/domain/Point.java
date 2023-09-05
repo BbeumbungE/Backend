@@ -1,4 +1,4 @@
-package com.siliconvalley.domain.point;
+package com.siliconvalley.domain.point.domain;
 
 import com.siliconvalley.domain.profile.domain.Profile;
 import lombok.AccessLevel;

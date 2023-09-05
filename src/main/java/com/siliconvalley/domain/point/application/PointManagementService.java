@@ -1,7 +1,7 @@
 package com.siliconvalley.domain.point.application;
 
-import com.siliconvalley.domain.point.Point;
-import com.siliconvalley.domain.point.PointResponse;
+import com.siliconvalley.domain.point.domain.Point;
+import com.siliconvalley.domain.point.dto.PointResponse;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.domain.Profile;
 import lombok.RequiredArgsConstructor;

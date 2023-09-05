@@ -1,5 +1,6 @@
-package com.siliconvalley.domain.point;
+package com.siliconvalley.domain.point.dto;
 
+import com.siliconvalley.domain.point.domain.Point;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

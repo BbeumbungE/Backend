@@ -2,7 +2,7 @@ package com.siliconvalley.domain.profile.domain;
 
 import com.siliconvalley.domain.canvas.domain.Canvas;
 import com.siliconvalley.domain.member.domain.Member;
-import com.siliconvalley.domain.point.Point;
+import com.siliconvalley.domain.point.domain.Point;
 import com.siliconvalley.domain.post.domain.Post;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -58,7 +58,11 @@ public class Profile {
         this.postList.add(post);
     }
 
-    public void setPoint(Point point) {
+    public void setPoint() {
+        Point point = Point.builder()
+                .point(0L)
+                .build();
+
         this.point = point;
         point.setProfile(this);
     }
