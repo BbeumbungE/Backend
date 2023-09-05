@@ -58,13 +58,15 @@ public class Profile {
         this.postList.add(post);
     }
 
-    public void setPoint() {
-        Point point = Point.builder()
-                .point(0L)
-                .build();
-
+    public void setPoint(Point point) {
         this.point = point;
         point.setProfile(this);
+    }
+
+    public Point buildPoint() {
+        return Point.builder()
+                .point(0L)
+                .build();
     }
 
     public void updateProfile(

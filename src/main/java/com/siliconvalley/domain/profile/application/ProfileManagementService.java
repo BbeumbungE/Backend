@@ -22,7 +22,7 @@ public class ProfileManagementService {
 
     public Profile createProfile(final String memberId, final ProfileCreateOrUpdate dto) {
         Profile profile = dto.toEntity(memberFindDao.findById(memberId));
-        profile.setPoint();
+        profile.setPoint(profile.buildPoint());
         return profileRepository.save(profile);
     }
 
