@@ -1,9 +1,12 @@
 package com.siliconvalley.domain.profile.api;
 
 import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
+import com.siliconvalley.domain.item.myitem.code.MyItemCode;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
 import com.siliconvalley.domain.point.application.PointManagementService;
+import com.siliconvalley.domain.point.code.PointCode;
 import com.siliconvalley.domain.profile.application.ProfileManagementService;
+import com.siliconvalley.domain.profile.code.ProfileCode;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.dto.ProfileCreateOrUpdate;
 import com.siliconvalley.domain.profile.dto.ProfileResponse;
@@ -13,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -29,67 +33,77 @@ public class ProfileApi {
     private final PointManagementService pointManagementService;
 
     @PostMapping
-    public Response createProfile(
+    public ResponseEntity createProfile(
             @RequestBody @Valid final ProfileCreateOrUpdate dto,
             @AuthenticationPrincipal OAuth2User oAuth2User
     ) {
         String memberId = (String) oAuth2User.getAttributes().get("id");
-        return Response.of(CommonCode.GOOD_REQUEST, new ProfileResponse(profileManagementService.createProfile(memberId, dto)));
+        Response responser = Response.of(ProfileCode.CREATE_SUCCESS, profileManagementService.createProfile(memberId, dto));
+        return ResponseEntity.ok(responser);
     }
 
     @GetMapping("/{profileId}")
-    public Response getProfile(
+    public ResponseEntity getProfile(
             @PathVariable("profileId") Long profileId
     ) {
-        return Response.of(CommonCode.GOOD_REQUEST, profileFindDao.getProfileById(profileId));
+        Response response = Response.of(CommonCode.GOOD_REQUEST, profileFindDao.getProfileById(profileId));
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{profileId}")
-    public Response updateProfile(
+    public ResponseEntity updateProfile(
             @PathVariable("profileId") Long profileId,
         @RequestBody @Valid final ProfileCreateOrUpdate dto
     ) {
-        return Response.of(CommonCode.GOOD_REQUEST, profileManagementService.updateProfile(profileId, dto));
+        profileManagementService.updateProfile(profileId, dto);
+        Response response = Response.of(ProfileCode.PATCH_SUCCESS, null);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{profileId}")
-    public Response deleteProfile(
+    public ResponseEntity deleteProfile(
         @PathVariable("profileId") Long profileId
     ) {
-        return Response.of(CommonCode.GOOD_REQUEST, profileManagementService.deleteProfile(profileId));
+        profileManagementService.deleteProfile(profileId);
+        Response response = Response.of(ProfileCode.DELETE_SUCCESS, null);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{profileId}/items")
-    public Response getItemsOfProfile(
+    public ResponseEntity getItemsOfProfile(
             @PathVariable("profileId") Long profileId,
             @RequestParam(value = "category", required = false) String category,
             Pageable pageable
     ) {
-        return Response.of(CommonCode.GOOD_REQUEST, myItemFindDao.getMyItemListByPage(profileId, pageable, category));
+        Response response = Response.of(CommonCode.GOOD_REQUEST, myItemFindDao.getMyItemListByPage(profileId, pageable, category));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{profileId}/items/{itemId}")
-    public Response purchaseSubjectItem(
+    public ResponseEntity purchaseSubjectItem(
             @PathVariable(name = "profileId") Long profileId,
             @PathVariable(name = "itemId") Long itemId,
             @RequestParam(value = "category") String category // subject or avatar
     ) {
-        return Response.of(CommonCode.SUCCESS_CREATE, myItemCreateService.createMyItem(profileId, itemId, category));
+        Response response = Response.of(MyItemCode.CREATE_SUCCESS, myItemCreateService.createMyItem(profileId, itemId, category));
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{profileId}/points")
-    public Response getPoint(
+    public ResponseEntity getPoint(
             @PathVariable(name = "profileId") Long profileId
     ) {
-        return Response.of(CommonCode.GOOD_REQUEST, pointManagementService.getPoint(profileId));
+        Response response = Response.of(CommonCode.GOOD_REQUEST, pointManagementService.getPoint(profileId));
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{profileId}/points/{newPointValue}")
-    public Response updatePoint(
+    public ResponseEntity updatePoint(
             @PathVariable(name = "profileId") Long profileId,
             @PathVariable(name = "newPointValue") Long newPointValue
     ) {
         pointManagementService.updatePoint(profileId, newPointValue);
-        return Response.of(CommonCode.SUCCESS_UPDATE);
+        Response response = Response.of(PointCode.UPDATE_SUCCESS);
+        return ResponseEntity.ok(response);
     }
 }

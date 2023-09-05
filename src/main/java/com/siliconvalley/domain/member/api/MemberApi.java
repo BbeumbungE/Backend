@@ -6,6 +6,7 @@ import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -20,20 +21,23 @@ public class MemberApi {
     private final ProfileFindDao profileFindDao;
 
     @GetMapping
-    public Response getMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
+    public ResponseEntity getMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
         String id = (String) oAuth2User.getAttributes().get("id");
-        return Response.of(CommonCode.GOOD_REQUEST, memberFindDao.getMemberById(id));
+        Response response = Response.of(CommonCode.GOOD_REQUEST, memberFindDao.getMemberById(id));
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping
-    public Response deleteMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
+    public ResponseEntity deleteMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
         String id = (String) oAuth2User.getAttributes().get("id");
-        return Response.of(CommonCode.GOOD_REQUEST, memberDeleteService.deleteMember(id));
+        Response response = Response.of(CommonCode.GOOD_REQUEST, memberDeleteService.deleteMember(id));
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/profiles")
-    public Response getProfilesOfMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
+    public ResponseEntity getProfilesOfMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
         String id = (String) oAuth2User.getAttributes().get("id");
-        return Response.of(CommonCode.GOOD_REQUEST, profileFindDao.getProfilesByMemberId(id));
+        Response response = Response.of(CommonCode.GOOD_REQUEST, profileFindDao.getProfilesByMemberId(id));
+        return ResponseEntity.ok(response);
     }
 }
