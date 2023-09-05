@@ -2,6 +2,7 @@ package com.siliconvalley.domain.profile.api;
 
 import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
+import com.siliconvalley.domain.point.application.PointManagementService;
 import com.siliconvalley.domain.profile.application.ProfileManagementService;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.dto.ProfileCreateOrUpdate;
@@ -25,6 +26,7 @@ public class ProfileApi {
     private final ProfileManagementService profileManagementService;
     private final MyItemFindDao myItemFindDao;
     private final MyItemCreateService myItemCreateService;
+    private final PointManagementService pointManagementService;
 
     @PostMapping
     public Response createProfile(
@@ -73,5 +75,21 @@ public class ProfileApi {
             @RequestParam(value = "category") String category // subject or avatar
     ) {
         return Response.of(CommonCode.SUCCESS_CREATE, myItemCreateService.createMyItem(profileId, itemId, category));
+    }
+
+    @GetMapping("/{profileId}/points")
+    public Response getPoint(
+            @PathVariable(name = "profileId") Long profileId
+    ) {
+        return Response.of(CommonCode.GOOD_REQUEST, pointManagementService.getPoint(profileId));
+    }
+
+    @PatchMapping("/{profileId}/points/{newPointValue}")
+    public Response updatePoint(
+            @PathVariable(name = "profileId") Long profileId,
+            @PathVariable(name = "newPointValue") Long newPointValue
+    ) {
+        pointManagementService.updatePoint(profileId, newPointValue);
+        return Response.of(CommonCode.SUCCESS_UPDATE);
     }
 }

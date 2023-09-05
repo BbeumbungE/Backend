@@ -1,4 +1,4 @@
-package com.siliconvalley.global.common.dto.Page;
+package com.siliconvalley.global.common.dto.page;
 
 import lombok.Getter;
 import org.springframework.data.domain.Page;

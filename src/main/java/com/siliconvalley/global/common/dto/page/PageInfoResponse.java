@@ -1,10 +1,9 @@
-package com.siliconvalley.global.common.dto.Page;
+package com.siliconvalley.global.common.dto.page;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

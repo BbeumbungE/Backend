@@ -2,6 +2,7 @@ package com.siliconvalley.domain.profile.domain;
 
 import com.siliconvalley.domain.canvas.domain.Canvas;
 import com.siliconvalley.domain.member.domain.Member;
+import com.siliconvalley.domain.point.Point;
 import com.siliconvalley.domain.post.domain.Post;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,6 +40,9 @@ public class Profile {
     @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Post> postList = new ArrayList<>();
 
+    @OneToOne(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Point point;
+
     @Builder
     public Profile(String profileName, String profileImage,Member member) {
         this.profileName = profileName;
@@ -52,6 +56,11 @@ public class Profile {
 
     public void addPost(Post post){
         this.postList.add(post);
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+        point.setProfile(this);
     }
 
     public void updateProfile(
