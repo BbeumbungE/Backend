@@ -29,7 +29,7 @@ public class ProfilePostingService {
         Canvas canvas = canvasFindDao.findById(canvasId);
         Post post = postingService.createPost(profile, canvas);
         profileRepository.save(profile);
-        return Response.of(PostCode.POSTING_SUCCESS, new PostCreatedResponse(post);
+        return Response.of(PostCode.POSTING_SUCCESS, new PostCreatedResponse(post));
     }
 
     public Response deletePostForProfile(Long profileId, Long postId){
