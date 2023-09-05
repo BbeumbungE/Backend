@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -38,8 +39,8 @@ public class ProfileApi {
             @AuthenticationPrincipal OAuth2User oAuth2User
     ) {
         String memberId = (String) oAuth2User.getAttributes().get("id");
-        Response responser = Response.of(ProfileCode.CREATE_SUCCESS, profileManagementService.createProfile(memberId, dto));
-        return ResponseEntity.ok(responser);
+        Response response = Response.of(ProfileCode.CREATE_SUCCESS, profileManagementService.createProfile(memberId, dto));
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/{profileId}")
@@ -47,7 +48,7 @@ public class ProfileApi {
             @PathVariable("profileId") Long profileId
     ) {
         Response response = Response.of(CommonCode.GOOD_REQUEST, profileFindDao.getProfileById(profileId));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @PatchMapping("/{profileId}")
@@ -57,7 +58,7 @@ public class ProfileApi {
     ) {
         profileManagementService.updateProfile(profileId, dto);
         Response response = Response.of(ProfileCode.PATCH_SUCCESS, null);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{profileId}")
@@ -66,7 +67,7 @@ public class ProfileApi {
     ) {
         profileManagementService.deleteProfile(profileId);
         Response response = Response.of(ProfileCode.DELETE_SUCCESS, null);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{profileId}/items")
@@ -76,7 +77,7 @@ public class ProfileApi {
             Pageable pageable
     ) {
         Response response = Response.of(CommonCode.GOOD_REQUEST, myItemFindDao.getMyItemListByPage(profileId, pageable, category));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @PostMapping("/{profileId}/items/{itemId}")
@@ -86,7 +87,7 @@ public class ProfileApi {
             @RequestParam(value = "category") String category // subject or avatar
     ) {
         Response response = Response.of(MyItemCode.CREATE_SUCCESS, myItemCreateService.createMyItem(profileId, itemId, category));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/{profileId}/points")
@@ -94,7 +95,7 @@ public class ProfileApi {
             @PathVariable(name = "profileId") Long profileId
     ) {
         Response response = Response.of(CommonCode.GOOD_REQUEST, pointManagementService.getPoint(profileId));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @PatchMapping("/{profileId}/points/{newPointValue}")
@@ -104,6 +105,6 @@ public class ProfileApi {
     ) {
         pointManagementService.updatePoint(profileId, newPointValue);
         Response response = Response.of(PointCode.UPDATE_SUCCESS);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.NO_CONTENT);
     }
 }

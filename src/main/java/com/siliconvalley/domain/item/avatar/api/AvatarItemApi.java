@@ -9,6 +9,7 @@ import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,18 +28,18 @@ public class AvatarItemApi {
     @PostMapping
     public ResponseEntity createAvatarItem(@RequestBody @Valid AvatarItemCreateRequest dto) {
         Response response = Response.of(ItemCode.CREATE_SUCCESS, avatarCreateService.createAvatarItem(dto));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity getAllAvatarItems(Pageable pageable) {
         Response response = Response.of(CommonCode.GOOD_REQUEST, avatarItemFindDao.getAvatarItemListByPage(pageable));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @GetMapping("/{itemId}")
     public ResponseEntity getAvatarItem(@PathVariable("itemId") Long itemId) {
         Response response = Response.of(CommonCode.GOOD_REQUEST, avatarItemFindDao.getAvatarItemById(itemId));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 }

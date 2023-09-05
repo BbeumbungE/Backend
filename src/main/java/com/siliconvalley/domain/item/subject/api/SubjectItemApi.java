@@ -13,6 +13,7 @@ import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,19 +34,19 @@ public class SubjectItemApi {
     @PostMapping
     public ResponseEntity createSubjectItem(@RequestBody @Valid SubjectItemCreateRequest dto) {
         Response response = Response.of(ItemCode.CREATE_SUCCESS, subjectCreateService.createSubjectItem(dto));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity getAllSubjectItems(Pageable pageable) {
         Response response = Response.of(CommonCode.GOOD_REQUEST, subjectItemFindDao.getSubjectItemListByPage(pageable));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @GetMapping("/{itemId}")
     public ResponseEntity getSubjectItem(@PathVariable("itemId") Long itemId) {
         Response response = Response.of(CommonCode.GOOD_REQUEST, subjectItemFindDao.getSubjectItemById(itemId));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @PostMapping("/{subjectId}/sketches")
@@ -53,12 +54,12 @@ public class SubjectItemApi {
             @PathVariable(name = "subjectId") Long subjectId,
             @RequestBody @Valid SketchCreateRequest dto) {
         Response response = Response.of(SketchCode.CREATE_SUCCESS, sketchCreateService.createSketch(subjectId, dto));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/{subjectId}/sketches")
     public ResponseEntity getAllSketches(@PathVariable(name = "subjectId") Long subjectId) {
         Response response = Response.of(CommonCode.GOOD_REQUEST, sketchFindDao.getAllsketches(subjectId));
-        return ResponseEntity.ok(response);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 }
