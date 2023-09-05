@@ -54,10 +54,18 @@ public class Profile {
         this.canvasList.add(canvas);
     }
 
-    public void addPost(Post post){
+    public Post addPost(Canvas canvas){
+        Post post = buildPost(canvas);
         this.postList.add(post);
+        return post;
     }
 
+    public Post buildPost(Canvas canvas){
+        return Post.builder()
+                .profile(this)
+                .canvas(canvas)
+                .build();
+    }
     public void setPoint(Point point) {
         this.point = point;
         point.setProfile(this);
