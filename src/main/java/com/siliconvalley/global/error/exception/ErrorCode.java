@@ -22,7 +22,10 @@ public enum ErrorCode {
 
 
     // 도메인별 에러코드 추가
-    MEMBER_NOT_FOUND(400, "M001", "Member Not Found");
+    MEMBER_NOT_FOUND(400, "M001", "Member Not Found"),
+
+    // Profile
+    PROFILE_NAME_DUPLICATE(400, "P001", "Profile Name Duplicate");
 
 
     private final String code;
