@@ -1,7 +1,6 @@
 package com.siliconvalley.domain.profile.application;
 
 import com.siliconvalley.domain.member.dao.MemberFindDao;
-import com.siliconvalley.domain.member.domain.Member;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.dao.ProfileRepository;
 import com.siliconvalley.domain.profile.domain.Profile;
@@ -22,7 +21,9 @@ public class ProfileManagementService {
     private final ProfileFindDao profileFindDao;
 
     public Profile createProfile(final String memberId, final ProfileCreateOrUpdate dto) {
-        return profileRepository.save(dto.toEntity(memberFindDao.findById(memberId)));
+        Profile profile = dto.toEntity(memberFindDao.findById(memberId));
+        profile.setPoint(profile.buildPoint());
+        return profileRepository.save(profile);
     }
 
     public ProfileResponse updateProfile(final Long profileId, final ProfileCreateOrUpdate dto) {

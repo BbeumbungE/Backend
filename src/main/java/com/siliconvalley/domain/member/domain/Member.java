@@ -34,7 +34,7 @@ public class Member {
     @Column(name = "create_at", nullable = false, updatable = false)
     private LocalDateTime createAt;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", orphanRemoval = true)
     private List<Profile> profileList = new ArrayList<>();
 
     @Builder

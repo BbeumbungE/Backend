@@ -1,8 +1,8 @@
 package com.siliconvalley.domain.canvas.domain;
 
+import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.post.domain.Post;
 import com.siliconvalley.domain.profile.domain.Profile;
-import com.siliconvalley.domain.subject.domain.Subject;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
