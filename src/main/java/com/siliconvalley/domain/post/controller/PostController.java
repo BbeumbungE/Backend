@@ -1,14 +1,11 @@
 package com.siliconvalley.domain.post.controller;
 
-
 import com.siliconvalley.domain.post.code.PostCode;
 import com.siliconvalley.domain.post.dao.PostFindDao;
-import com.siliconvalley.domain.post.domain.Post;
 import com.siliconvalley.domain.post.dto.PostResponse;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,5 +39,4 @@ public class PostController {
         Response response = Response.of(PostCode.POST_RETRIEVE_SUCCESS, new PostResponse(postFindDao.findById(postId)));
         return ResponseEntity.ok(response);
     }
-
 }
