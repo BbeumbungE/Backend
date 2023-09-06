@@ -55,8 +55,10 @@ public class Post {
                 .build();
     }
 
-    public void addEmotion(EmotionType emotionType, Profile profile){
-        this.emotions.add(buildEmotion(emotionType, profile));
+    public Emotion addEmotion(EmotionType emotionType, Profile profile){
+        Emotion emotion = buildEmotion(emotionType, profile);
+        this.emotions.add(emotion);
+        return emotion;
     }
 
 }

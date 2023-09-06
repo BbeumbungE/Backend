@@ -19,6 +19,6 @@ public class EmotionType {
     private Long id;
 
     @Column(name = "emotion_name")
-    private String emotion_name;
+    private String emotionName;
 
 }
