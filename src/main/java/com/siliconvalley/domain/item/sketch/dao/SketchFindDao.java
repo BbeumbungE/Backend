@@ -1,7 +1,7 @@
-package com.siliconvalley.domain.item.subject.dao;
+package com.siliconvalley.domain.item.sketch.dao;
 
-import com.siliconvalley.domain.item.subject.domain.Sketch;
-import com.siliconvalley.domain.item.subject.dto.SketchResponseList;
+import com.siliconvalley.domain.item.sketch.dto.SketchResponseList;
+import com.siliconvalley.domain.item.sketch.domain.Sketch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

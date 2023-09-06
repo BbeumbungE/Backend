@@ -1,4 +1,4 @@
-package com.siliconvalley.domain.item.subject.exception;
+package com.siliconvalley.domain.item.sketch.exception;
 
 import com.siliconvalley.global.error.exception.EntityNotFoundException;
 

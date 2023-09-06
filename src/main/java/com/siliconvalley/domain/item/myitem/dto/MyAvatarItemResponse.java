@@ -1,6 +1,6 @@
 package com.siliconvalley.domain.item.myitem.dto;
 
-import com.siliconvalley.domain.item.avatar.dto.AvatarItemResponse;
+import com.siliconvalley.domain.item.item.dto.AvatarItemResponse;
 import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import lombok.AccessLevel;
 import lombok.Getter;

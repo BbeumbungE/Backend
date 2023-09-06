@@ -1,6 +1,7 @@
-package com.siliconvalley.domain.item.subject.dto;
+package com.siliconvalley.domain.item.stage.dto;
 
 import com.siliconvalley.domain.item.item.domain.Item;
+import com.siliconvalley.domain.item.stage.domain.Stage;
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,11 +11,13 @@ import javax.validation.Valid;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-public class SubjectItemCreateRequest {
-
+public class StageSubjectCreateRequest {
 
     @Valid
-    private Long itemPrice;
+    private int stage;
+
+    @Valid
+    private int point;
 
     @Valid
     private String subjectName;
@@ -22,20 +25,22 @@ public class SubjectItemCreateRequest {
     @Valid
     private String subjectImage;
 
-    SubjectItemCreateRequest(
-            @Valid String itemName,
-            @Valid Long itemPrice,
+    StageSubjectCreateRequest(
+            @Valid int stage,
+            @Valid int point,
             @Valid String subjectName,
             @Valid String subjectImage
     ) {
-        this.itemPrice = itemPrice;
+        this.stage = stage;
+        this.point = point;
         this.subjectName = subjectName;
         this.subjectImage = subjectImage;
     }
 
-    public Item toItemEntity() {
-        return Item.builder()
-                .itemPrice(itemPrice)
+    public Stage toStageEntity() {
+        return Stage.builder()
+                .stage(stage)
+                .point(point)
                 .build();
     }
 

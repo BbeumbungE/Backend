@@ -20,5 +20,4 @@ public class SubjectFindDao {
         subjectOptional.orElseThrow(() -> new SubjectNotFoundException(subjectId));
         return subjectOptional.get();
     }
-
 }
