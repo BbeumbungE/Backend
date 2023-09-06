@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.Valid;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StageSubjectCreateRequest {
 
     @Valid
