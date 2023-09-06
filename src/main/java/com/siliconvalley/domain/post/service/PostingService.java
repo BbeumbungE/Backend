@@ -20,9 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostingService {
 
     private final PostFindDao postFindDao;
-    private final ProfileFindDao profileFindDao;
     private final PostRepository postRepository;
-    private final CanvasFindDao canvasFindDao;
+
 
     public Post createPost(Profile profile, Canvas canvas){
         Post post = profile.addPost(canvas);

@@ -9,6 +9,7 @@ import com.siliconvalley.domain.post.domain.Emotion;
 import com.siliconvalley.domain.post.domain.Post;
 import com.siliconvalley.domain.post.dto.EmotionCreatedResponse;
 import com.siliconvalley.domain.post.exception.IllegalDeleteException;
+import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -18,21 +19,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class PostEmotionService {
+public class PostEmoteService {
 
     private final EmotionFindDao emotionFindDao;
     private final PostFindDao postFindDao;
     private final EmotionRepository emotionRepository;
     private final EmotionTypeFindDao emotionTypeFindDao;
+    private final ProfileFindDao profileFindDao;
 
-    public Response emoteToPost(Long postId, Long emotionTypeId, Profile profile){
+    public Response emoteToPost(Long postId, Long emotionTypeId, Long profileId){
         Post post = postFindDao.findById(postId);
+        Profile profile = profileFindDao.findById(profileId);
         Emotion emotion = post.addEmotion(emotionTypeFindDao.findById(emotionTypeId), profile);
         return Response.of(EmotionCode.CANCEL_EMOTION_SUCCESS, new EmotionCreatedResponse(emotion));
     }
 
-    public Response cancelEmote(Long emotionId, Long requestProfileId){
-        Emotion emotion = emotionFindDao.findById(emotionId);
+    public Response cancelEmote(Long postId, Long requestProfileId){
+        Emotion emotion = emotionFindDao.findByPostIdAndProfileId(postId, requestProfileId);
         if (emotion.getProfile().getId() != requestProfileId){
             throw new IllegalDeleteException("요청 ID와 감정표현 프로필 ID가 맞지않음");
         }
