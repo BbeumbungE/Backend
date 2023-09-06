@@ -2,6 +2,7 @@ package com.siliconvalley.domain.post.controller;
 
 import com.siliconvalley.domain.post.dao.PostFindDao;
 import com.siliconvalley.domain.post.dto.EmotionCreateRequest;
+import com.siliconvalley.domain.post.service.PostDetailService;
 import com.siliconvalley.domain.post.service.PostEmoteService;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class PostController {
 
     private final PostFindDao postFindDao;
     private final PostEmoteService postEmoteService;
+    private final PostDetailService postDetailService;
 
     @GetMapping("/posts")
     public ResponseEntity<Response> getAllPosts(
@@ -37,8 +39,10 @@ public class PostController {
     }
 
     @GetMapping("/posts/{postId}")
-    public ResponseEntity<Response> getPostDetail(@PathVariable Long postId){
-        Response response = postFindDao.getPostDetail(postId);
+    public ResponseEntity<Response> getPostDetail(
+            @PathVariable Long postId,
+            @RequestParam Long profileId){
+        Response response = postDetailService.getPostDetail(postId, profileId);
         return ResponseEntity.ok(response);
     }
 

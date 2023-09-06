@@ -15,12 +15,9 @@ public class PostDetailResponse {
     private ProfileResponse authorProfile;
     private List<PostEmotionTypeInfo> postEmotionTypeInfos;
 
-    public PostDetailResponse(Post post){
+    public PostDetailResponse(Post post, List<PostEmotionTypeInfo> postEmotionTypeInfos){
         this.canvasUrl = post.getCanvas().getCanvas();
         this.authorProfile = new ProfileResponse(post.getProfile());
-    }
-
-    public void addPostEmotionInfo(PostEmotionTypeInfo postEmotionTypeInfo){
-        this.postEmotionTypeInfos.add(postEmotionTypeInfo);
+        this.postEmotionTypeInfos = postEmotionTypeInfos;
     }
 }

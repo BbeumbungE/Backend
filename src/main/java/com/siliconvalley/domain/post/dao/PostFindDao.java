@@ -35,11 +35,6 @@ public class PostFindDao {
         return Response.of(PostCode.POST_RETRIEVE_SUCCESS, posts.map(PostListResponse::new));
     }
 
-    public Response getPostDetail(Long postId){
-        final Post post = findById(postId);
-        return Response.of(PostCode.POST_RETRIEVE_SUCCESS, new PostDetailResponse(post));
-    }
-
     public Response getPostsBySubjectName(Long subjectId, Pageable pageable) {
         Subject subject = subjectFindDao.findById(subjectId);
         Page<Post> posts = postRepository.findByCanvas_Subject_SubjectName(subject.getSubjectName(), pageable);
