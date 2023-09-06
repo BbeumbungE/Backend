@@ -1,4 +1,4 @@
-package com.siliconvalley.domain.item.avatar.dto;
+package com.siliconvalley.domain.item.item.dto;
 
 import com.siliconvalley.domain.item.avatar.domain.Avatar;
 import com.siliconvalley.domain.item.item.domain.Item;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.Valid;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AvatarItemCreateRequest {
 
     @Valid

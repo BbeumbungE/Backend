@@ -1,5 +1,6 @@
-package com.siliconvalley.domain.item.subject.domain;
+package com.siliconvalley.domain.item.sketch.domain;
 
+import com.siliconvalley.domain.item.subject.domain.Subject;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

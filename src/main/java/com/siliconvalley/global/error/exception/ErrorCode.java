@@ -25,8 +25,10 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(400, "M001", "Member Not Found"),
 
     // Profile
-    PROFILE_NAME_DUPLICATE(400, "P001", "Profile Name Duplicate");
+    PROFILE_NAME_DUPLICATE(400, "P001", "Profile Name Duplicate"),
 
+    // Item
+    INVALID_CATEROTY(400,"I001", "Invalid category");
 
     private final String code;
     private final String message;

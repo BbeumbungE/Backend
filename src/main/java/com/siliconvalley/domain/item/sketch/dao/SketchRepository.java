@@ -1,6 +1,6 @@
-package com.siliconvalley.domain.item.subject.dao;
+package com.siliconvalley.domain.item.sketch.dao;
 
-import com.siliconvalley.domain.item.subject.domain.Sketch;
+import com.siliconvalley.domain.item.sketch.domain.Sketch;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

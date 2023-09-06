@@ -1,6 +1,8 @@
 package com.siliconvalley.domain.item.subject.domain;
 
 import com.siliconvalley.domain.item.item.domain.Item;
+import com.siliconvalley.domain.item.sketch.domain.Sketch;
+import com.siliconvalley.domain.item.stage.domain.Stage;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +32,10 @@ public class Subject {
     private List<Sketch> sketchList = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stage_id")
+    private Stage stage;
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
@@ -42,5 +48,9 @@ public class Subject {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

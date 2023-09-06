@@ -1,6 +1,6 @@
-package com.siliconvalley.domain.item.subject.dto;
+package com.siliconvalley.domain.item.sketch.dto;
 
-import com.siliconvalley.domain.item.subject.domain.Sketch;
+import com.siliconvalley.domain.item.sketch.domain.Sketch;
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.Valid;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SketchCreateRequest {
 
     @Valid

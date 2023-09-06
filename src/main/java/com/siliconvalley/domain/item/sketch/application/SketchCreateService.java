@@ -1,10 +1,10 @@
-package com.siliconvalley.domain.item.subject.application;
+package com.siliconvalley.domain.item.sketch.application;
 
-import com.siliconvalley.domain.item.subject.dao.SketchRepository;
+import com.siliconvalley.domain.item.sketch.dto.SketchPostSuccessResponse;
+import com.siliconvalley.domain.item.sketch.dao.SketchRepository;
+import com.siliconvalley.domain.item.sketch.dto.SketchCreateRequest;
 import com.siliconvalley.domain.item.subject.dao.SubjectFindDao;
 import com.siliconvalley.domain.item.subject.domain.Subject;
-import com.siliconvalley.domain.item.subject.dto.SketchCreateRequest;
-import com.siliconvalley.domain.item.subject.dto.SketchPostSuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

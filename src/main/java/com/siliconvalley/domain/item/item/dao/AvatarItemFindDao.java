@@ -1,8 +1,8 @@
-package com.siliconvalley.domain.item.avatar.dao;
+package com.siliconvalley.domain.item.item.dao;
 
 import com.siliconvalley.domain.item.item.dao.ItemRepository;
 import com.siliconvalley.domain.item.item.domain.Item;
-import com.siliconvalley.domain.item.avatar.dto.AvatarItemResponse;
+import com.siliconvalley.domain.item.item.dto.AvatarItemResponse;
 import com.siliconvalley.domain.item.item.exception.ItemNotFoundException;
 import com.siliconvalley.global.common.dto.page.PageResponse;
 import lombok.RequiredArgsConstructor;

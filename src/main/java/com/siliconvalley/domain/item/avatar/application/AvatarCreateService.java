@@ -3,7 +3,7 @@ package com.siliconvalley.domain.item.avatar.application;
 import com.siliconvalley.domain.item.avatar.domain.Avatar;
 import com.siliconvalley.domain.item.item.dao.ItemRepository;
 import com.siliconvalley.domain.item.item.domain.Item;
-import com.siliconvalley.domain.item.avatar.dto.AvatarItemCreateRequest;
+import com.siliconvalley.domain.item.item.dto.AvatarItemCreateRequest;
 import com.siliconvalley.domain.item.item.dto.ItemPostSuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
