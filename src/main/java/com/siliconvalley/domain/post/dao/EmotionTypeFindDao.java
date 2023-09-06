@@ -26,9 +26,9 @@ public class EmotionTypeFindDao {
         return emotionType.get();
     }
 
-    public Response getAllEmotionType(){
+    public List<EmotionType> getAllEmotionType(){
         List<EmotionType> emotionTypes = emotionTypeRepository.findAll();
-        return Response.of(EmotionCode.GET_EMOTION_TYPE, emotionTypes.stream().map(EmotionTypeResponse::new));
+        return emotionTypes;
     }
 
 }

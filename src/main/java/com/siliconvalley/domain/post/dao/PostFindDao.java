@@ -5,7 +5,7 @@ import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.post.code.PostCode;
 import com.siliconvalley.domain.post.domain.Post;
 import com.siliconvalley.domain.post.dto.PostListResponse;
-import com.siliconvalley.domain.post.dto.PostResponse;
+import com.siliconvalley.domain.post.dto.PostDetailResponse;
 import com.siliconvalley.domain.post.exception.PostNotFoundException;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class PostFindDao {
 
     public Response getPostDetail(Long postId){
         final Post post = findById(postId);
-        return Response.of(PostCode.POST_RETRIEVE_SUCCESS, new PostResponse(post));
+        return Response.of(PostCode.POST_RETRIEVE_SUCCESS, new PostDetailResponse(post));
     }
 
     public Response getPostsBySubjectName(Long subjectId, Pageable pageable) {
