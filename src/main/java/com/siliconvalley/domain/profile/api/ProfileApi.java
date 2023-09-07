@@ -1,5 +1,7 @@
 package com.siliconvalley.domain.profile.api;
 
+import com.siliconvalley.domain.canvas.dao.CanvasFindDao;
+import com.siliconvalley.domain.canvas.service.CanvasDeleteService;
 import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
 import com.siliconvalley.domain.item.myitem.code.MyItemCode;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
@@ -16,10 +18,12 @@ import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +38,8 @@ public class ProfileApi {
     private final MyItemCreateService myItemCreateService;
     private final PointManagementService pointManagementService;
     private final ProfilePostingService profilePostingService;
+    private final CanvasFindDao canvasFindDao;
+    private final CanvasDeleteService canvasDeleteService;
 
     @PostMapping
     public ResponseEntity createProfile(
@@ -115,7 +121,7 @@ public class ProfileApi {
             @PathVariable Long canvasId
     ){
         Response response = profilePostingService.createPostForProfile(profileId, canvasId);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/{profileId}/canvases/{canvasId}/posts")
@@ -124,7 +130,35 @@ public class ProfileApi {
             @PathVariable Long canvasId
     ){
         Response response = profilePostingService.deletePostForProfile(profileId, canvasId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+    }
+
+    @GetMapping("/{profileId}/canvases")
+    public ResponseEntity<Response> getCanvasList(
+            @PathVariable Long profileId,
+            @RequestParam int page,
+            @RequestParam int size
+    ){
+        Response response = canvasFindDao.findByProfileId(profileId, PageRequest.of(page, size));
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{profileId}/canvases/{canvasId}")
+    public ResponseEntity<Response> getCanvasDetail(
+            @PathVariable Long profileId,
+            @PathVariable Long canvasId
+    ){
+        Response response = canvasFindDao.findCanvasDetail(profileId, canvasId);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{profileId}/canvases/{canvasId}")
+    public ResponseEntity<Response> deleteCanvas(
+            @PathVariable Long profileId,
+            @PathVariable Long canvasId
+    ){
+        Response response = canvasDeleteService.deleteCanvas(profileId, canvasId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
 }
