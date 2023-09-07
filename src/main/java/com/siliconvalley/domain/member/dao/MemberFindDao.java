@@ -3,6 +3,8 @@ package com.siliconvalley.domain.member.dao;
 import com.siliconvalley.domain.member.domain.Member;
 import com.siliconvalley.domain.member.dto.MemberResponse;
 import com.siliconvalley.domain.member.exception.MemberNotFoundException;
+import com.siliconvalley.global.common.code.CommonCode;
+import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +35,9 @@ public class MemberFindDao {
         return memberOptional;
     }
 
-    public MemberResponse getMemberById(final String id) {
+    public Response getMemberById(final String id) {
         final Optional<Member> memberOptional = memberRepository.findById(id);
         memberOptional.orElseThrow(() -> new MemberNotFoundException(id));
-        return new MemberResponse(memberOptional.get());
+        return Response.of(CommonCode.GOOD_REQUEST, new MemberResponse(memberOptional.get()));
     }
 }

@@ -1,11 +1,15 @@
 package com.siliconvalley.domain.profile.dao;
 
 import com.siliconvalley.domain.member.dao.MemberRepository;
+import com.siliconvalley.domain.profile.code.ProfileCode;
 import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.profile.dto.ProfileResponse;
 import com.siliconvalley.domain.profile.dto.ProfileResponseList;
 import com.siliconvalley.domain.profile.exception.ProfileNotFoundException;
+import com.siliconvalley.global.common.code.CommonCode;
+import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,14 +29,14 @@ public class ProfileFindDao {
         return profileOptional.get();
     }
 
-    public ProfileResponse getProfileById(final Long id) {
+    public Response getProfileById(final Long id) {
         final Optional<Profile> profileOptional = profileRepository.findById(id);
         profileOptional.orElseThrow(()-> new ProfileNotFoundException(id));
-        return new ProfileResponse(profileOptional.get());
+        return Response.of(CommonCode.GOOD_REQUEST, new ProfileResponse(profileOptional.get()));
     }
 
-    public ProfileResponseList getProfilesByMemberId(String userId) {
+    public Response getProfilesByMemberId(String userId) {
         List<Profile> profileList = profileRepository.findByMemberId(userId);
-        return new ProfileResponseList(profileList);
+        return Response.of(CommonCode.GOOD_REQUEST, new ProfileResponseList(profileList));
     }
 }

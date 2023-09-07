@@ -1,12 +1,10 @@
 package com.siliconvalley.domain.item.stage.api;
 
-import com.siliconvalley.domain.item.item.code.ItemCode;
 import com.siliconvalley.domain.item.subject.application.SubjectCreateService;
 import com.siliconvalley.domain.item.stage.dao.StageSubjectFindDao;
 import com.siliconvalley.domain.item.stage.dto.StageSubjectCreateRequest;
-import com.siliconvalley.global.common.code.CommonCode;
-import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +21,11 @@ public class StageSubjectApi {
 
     @PostMapping
     public ResponseEntity createStageSubject(@RequestBody @Valid StageSubjectCreateRequest dto) {
-        Response response = Response.of(ItemCode.CREATE_SUCCESS, subjectCreateService.createStageSubject(dto));
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(subjectCreateService.createStageSubject(dto));
     }
 
     @GetMapping()
-    public ResponseEntity getAllStageItem() {
-        Response response = Response.of(CommonCode.GOOD_REQUEST, stageSubjectFindDao.getStageItemList());
-        return new ResponseEntity(response, HttpStatus.OK);
+    public ResponseEntity getAllStageItem(Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(stageSubjectFindDao.getStageItemList(pageable));
     }
 }

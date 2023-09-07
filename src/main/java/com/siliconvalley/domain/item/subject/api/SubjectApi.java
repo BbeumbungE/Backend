@@ -30,13 +30,11 @@ public class SubjectApi {
     public ResponseEntity addSketch(
             @PathVariable(name = "subjectId") Long subjectId,
             @RequestBody @Valid SketchCreateRequest dto) {
-        Response response = Response.of(SketchCode.CREATE_SUCCESS, sketchCreateService.createSketch(subjectId, dto));
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(sketchCreateService.createSketch(subjectId, dto));
     }
 
     @GetMapping("/{subjectId}/sketches")
     public ResponseEntity getAllSketches(@PathVariable(name = "subjectId") Long subjectId) {
-        Response response = Response.of(CommonCode.GOOD_REQUEST, sketchFindDao.getAllsketches(subjectId));
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(sketchFindDao.getAllsketches(subjectId));
     }
 }

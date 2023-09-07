@@ -5,19 +5,20 @@ import com.siliconvalley.domain.item.subject.dto.SubjectResponse;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StageSubjectResponseList {
+public class StageSubjectResponse {
 
-    private List<SubjectResponse> stageItemList;
+    private StageResponse stage;
+    private SubjectResponse subject;
 
-    public StageSubjectResponseList(List<Stage> stageList) {
-        this.stageItemList = stageList.stream()
-                .map(stage -> new SubjectResponse(stage.getSubject()))
-                .collect(Collectors.toList());
+    public StageSubjectResponse(Stage stage) {
+        this.stage = new StageResponse(stage);
+        this.subject = new SubjectResponse(stage.getSubject());
     }
 }

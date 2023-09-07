@@ -4,6 +4,8 @@ import com.siliconvalley.domain.item.item.dao.ItemRepository;
 import com.siliconvalley.domain.item.item.domain.Item;
 import com.siliconvalley.domain.item.item.dto.AvatarItemResponse;
 import com.siliconvalley.domain.item.item.exception.ItemNotFoundException;
+import com.siliconvalley.global.common.code.CommonCode;
+import com.siliconvalley.global.common.dto.Response;
 import com.siliconvalley.global.common.dto.page.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,15 +23,9 @@ public class AvatarItemFindDao {
 
     private final ItemRepository itemRepository;
 
-    public PageResponse getAvatarItemListByPage(Pageable pageable) {
+    public Response getAvatarItemListByPage(Pageable pageable) {
         Page<Item> itemPage = itemRepository.findAllByAvatarIsNotNull(pageable);
         List<AvatarItemResponse> itemResponseList = itemPage.map(item -> new AvatarItemResponse(item)).getContent();
-        return new PageResponse(itemResponseList,itemPage);
-    }
-
-    public AvatarItemResponse getAvatarItemById(Long id) {
-        Optional<Item> itemOptional = itemRepository.findById(id);
-        itemOptional.orElseThrow(() -> new ItemNotFoundException(id));
-        return new AvatarItemResponse(itemOptional.get());
+        return Response.of(CommonCode.GOOD_REQUEST,new PageResponse(itemResponseList,itemPage));
     }
 }

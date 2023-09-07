@@ -24,13 +24,11 @@ public class AvatarItemApi {
 
     @PostMapping
     public ResponseEntity createAvatarItem(@RequestBody @Valid AvatarItemCreateRequest dto) {
-        Response response = Response.of(ItemCode.CREATE_SUCCESS, avatarCreateService.createAvatarItem(dto));
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(avatarCreateService.createAvatarItem(dto));
     }
 
     @GetMapping
     public ResponseEntity getAllAvatarItems(Pageable pageable) {
-        Response response = Response.of(CommonCode.GOOD_REQUEST, avatarItemFindDao.getAvatarItemListByPage(pageable));
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(avatarItemFindDao.getAvatarItemListByPage(pageable));
     }
 }

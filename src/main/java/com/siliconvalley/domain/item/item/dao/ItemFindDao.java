@@ -5,6 +5,8 @@ import com.siliconvalley.domain.item.item.domain.Item;
 import com.siliconvalley.domain.item.item.exception.InvalidCategoryException;
 import com.siliconvalley.domain.item.item.exception.ItemNotFoundException;
 import com.siliconvalley.domain.item.item.dto.RankSubjectItemResponse;
+import com.siliconvalley.global.common.code.CommonCode;
+import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,15 +26,17 @@ public class ItemFindDao {
         return itemOptional.get();
     } 
 
-    public Object getItemById(Long itemId, String category) {
+    public Response getItemById(Long itemId, String category) {
         Item item = findById(itemId);
-
+        Object response;
         if (category.equals("avatar")) {
-            return new AvatarItemResponse(item);
+            response = new AvatarItemResponse(item);
         } else if (category.equals("subject")) {
-            return new RankSubjectItemResponse(item);
+            response = new RankSubjectItemResponse(item);
         } else {
             throw new InvalidCategoryException(category);
         }
+
+        return Response.of(CommonCode.GOOD_REQUEST, response);
     }
 }
