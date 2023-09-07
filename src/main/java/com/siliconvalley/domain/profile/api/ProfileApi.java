@@ -41,22 +41,26 @@ public class ProfileApi {
     private final CanvasFindDao canvasFindDao;
     private final CanvasDeleteService canvasDeleteService;
 
+    /**
+     *
+     * Profile Management
+     *
+     * **/
+
     @PostMapping
     public ResponseEntity createProfile(
             @RequestBody @Valid final ProfileCreateOrUpdate dto,
             @AuthenticationPrincipal OAuth2User oAuth2User
     ) {
         String memberId = (String) oAuth2User.getAttributes().get("id");
-        Response response = Response.of(ProfileCode.CREATE_SUCCESS, profileManagementService.createProfile(memberId, dto));
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(profileManagementService.createProfile(memberId, dto));
     }
 
     @GetMapping("/{profileId}")
     public ResponseEntity getProfile(
             @PathVariable("profileId") Long profileId
     ) {
-        Response response = Response.of(CommonCode.GOOD_REQUEST, profileFindDao.getProfileById(profileId));
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(profileFindDao.getProfileById(profileId));
     }
 
     @PatchMapping("/{profileId}")
@@ -64,19 +68,21 @@ public class ProfileApi {
             @PathVariable("profileId") Long profileId,
         @RequestBody @Valid final ProfileCreateOrUpdate dto
     ) {
-        profileManagementService.updateProfile(profileId, dto);
-        Response response = Response.of(ProfileCode.PATCH_SUCCESS, null);
-        return new ResponseEntity(response, HttpStatus.NO_CONTENT);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(profileManagementService.updateProfile(profileId, dto));
     }
 
     @DeleteMapping("/{profileId}")
     public ResponseEntity deleteProfile(
         @PathVariable("profileId") Long profileId
     ) {
-        profileManagementService.deleteProfile(profileId);
-        Response response = Response.of(ProfileCode.DELETE_SUCCESS, null);
-        return new ResponseEntity(response, HttpStatus.NO_CONTENT);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(profileManagementService.deleteProfile(profileId));
     }
+
+    /**
+     *
+     *  MyItem Management
+     *
+     * **/
 
     @GetMapping("/{profileId}/items")
     public ResponseEntity getItemsOfProfile(
@@ -98,6 +104,13 @@ public class ProfileApi {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
+
+    /**
+     *
+     * Point Management
+     *
+     * **/
+
     @GetMapping("/{profileId}/points")
     public ResponseEntity getPoint(
             @PathVariable(name = "profileId") Long profileId
@@ -115,6 +128,14 @@ public class ProfileApi {
         Response response = Response.of(PointCode.UPDATE_SUCCESS);
         return new ResponseEntity(response, HttpStatus.NO_CONTENT);
     }
+
+
+    /**
+     *
+     * Post Management
+     *
+     * **/
+
     @PostMapping("/{profileId}/canvases/{canvasId}/posts")
     public ResponseEntity<Response> postCanvas(
             @PathVariable Long profileId,

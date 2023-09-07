@@ -1,11 +1,11 @@
 package com.siliconvalley.domain.item.subject.api;
 
 import com.siliconvalley.domain.item.sketch.application.SketchCreateService;
-import com.siliconvalley.domain.item.sketch.code.SketchCode;
 import com.siliconvalley.domain.item.sketch.dao.SketchFindDao;
 import com.siliconvalley.domain.item.sketch.dto.SketchCreateRequest;
-import com.siliconvalley.global.common.code.CommonCode;
-import com.siliconvalley.global.common.dto.Response;
+import com.siliconvalley.domain.item.stage.application.StageCreateService;
+import com.siliconvalley.domain.item.stage.application.StageUpdateService;
+import com.siliconvalley.domain.item.stage.dto.StageCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +20,8 @@ public class SubjectApi {
 
     private final SketchCreateService sketchCreateService;
     private final SketchFindDao sketchFindDao;
+    private final StageCreateService stageCreateService;
+    private final StageUpdateService stageUpdateService;
 
 
     /**
@@ -30,13 +32,19 @@ public class SubjectApi {
     public ResponseEntity addSketch(
             @PathVariable(name = "subjectId") Long subjectId,
             @RequestBody @Valid SketchCreateRequest dto) {
-        Response response = Response.of(SketchCode.CREATE_SUCCESS, sketchCreateService.createSketch(subjectId, dto));
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(sketchCreateService.createSketch(subjectId, dto));
     }
 
     @GetMapping("/{subjectId}/sketches")
     public ResponseEntity getAllSketches(@PathVariable(name = "subjectId") Long subjectId) {
-        Response response = Response.of(CommonCode.GOOD_REQUEST, sketchFindDao.getAllsketches(subjectId));
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(sketchFindDao.getAllsketches(subjectId));
+    }
+
+    @PatchMapping("/{subjectId}/stages/{stageId}")
+    public ResponseEntity setSubjectToStage(
+            @PathVariable(name = "subjectId") Long subjectId,
+            @PathVariable(name = "stageId") Long stageId
+    ) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(stageUpdateService.updateStage(subjectId, stageId));
     }
 }

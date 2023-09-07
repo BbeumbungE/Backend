@@ -1,6 +1,8 @@
 package com.siliconvalley.domain.item.item.domain;
 
 import com.siliconvalley.domain.item.avatar.domain.Avatar;
+import com.siliconvalley.domain.item.item.dto.AvatarItemCreateRequest;
+import com.siliconvalley.domain.item.item.dto.SubjectItemCreateRequest;
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,10 +24,10 @@ public class Item {
     @Column(name = "item_price")
     private Long itemPrice;
 
-    @OneToOne(mappedBy = "item", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "item", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Avatar avatar;
 
-    @OneToOne(mappedBy = "item", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "item", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Subject subject;
 
     @Builder
@@ -33,12 +35,12 @@ public class Item {
         this.itemPrice = itemPrice;
     }
 
-    public void setAvatar(Avatar avatar) {
+    public void addAvatar(Avatar avatar) {
         this.avatar = avatar;
         avatar.setItem(this); // 양방향 관계 설정
     }
 
-    public void setSubject(Subject subject) {
+    public void addSubject(Subject subject) {
         this.subject = subject;
         subject.setItem(this); // 양방향 관계 설정
     }

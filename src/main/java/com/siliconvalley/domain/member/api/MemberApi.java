@@ -24,21 +24,18 @@ public class MemberApi {
     @GetMapping
     public ResponseEntity getMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
         String id = (String) oAuth2User.getAttributes().get("id");
-        Response response = Response.of(CommonCode.GOOD_REQUEST, memberFindDao.getMemberById(id));
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(memberFindDao.getMemberById(id));
     }
 
     @DeleteMapping
     public ResponseEntity deleteMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
         String id = (String) oAuth2User.getAttributes().get("id");
-        Response response = Response.of(CommonCode.GOOD_REQUEST, memberDeleteService.deleteMember(id));
-        return new ResponseEntity(response, HttpStatus.NO_CONTENT);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(memberDeleteService.deleteMember(id));
     }
 
     @GetMapping("/profiles")
     public ResponseEntity getProfilesOfMember(@AuthenticationPrincipal OAuth2User oAuth2User) {
         String id = (String) oAuth2User.getAttributes().get("id");
-        Response response = Response.of(CommonCode.GOOD_REQUEST, profileFindDao.getProfilesByMemberId(id));
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(profileFindDao.getProfilesByMemberId(id));
     }
 }

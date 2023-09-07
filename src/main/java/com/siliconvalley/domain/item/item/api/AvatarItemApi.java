@@ -1,11 +1,8 @@
 package com.siliconvalley.domain.item.item.api;
 
-import com.siliconvalley.domain.item.avatar.application.AvatarCreateService;
+import com.siliconvalley.domain.item.item.application.AvatarItemCreateService;
 import com.siliconvalley.domain.item.item.dao.AvatarItemFindDao;
 import com.siliconvalley.domain.item.item.dto.AvatarItemCreateRequest;
-import com.siliconvalley.domain.item.item.code.ItemCode;
-import com.siliconvalley.global.common.code.CommonCode;
-import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,18 +16,23 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AvatarItemApi {
 
-    private final AvatarCreateService avatarCreateService;
+    private final AvatarItemCreateService avatarItemCreateService;
     private final AvatarItemFindDao avatarItemFindDao;
 
     @PostMapping
     public ResponseEntity createAvatarItem(@RequestBody @Valid AvatarItemCreateRequest dto) {
-        Response response = Response.of(ItemCode.CREATE_SUCCESS, avatarCreateService.createAvatarItem(dto));
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(avatarItemCreateService.createAvatarItem(dto));
     }
 
     @GetMapping
     public ResponseEntity getAllAvatarItems(Pageable pageable) {
-        Response response = Response.of(CommonCode.GOOD_REQUEST, avatarItemFindDao.getAvatarItemListByPage(pageable));
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(avatarItemFindDao.getAvatarItemListByPage(pageable));
+    }
+
+    @GetMapping("/{itemId}")
+    public ResponseEntity getAvatarItem(
+            @PathVariable("itemId") Long itemId
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(avatarItemFindDao.getAvatarItemById(itemId));
     }
 }

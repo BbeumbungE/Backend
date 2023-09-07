@@ -1,7 +1,7 @@
 package com.siliconvalley.domain.item.item.dao;
 
 import com.siliconvalley.domain.item.item.domain.Item;
-import com.siliconvalley.domain.item.item.dto.AvatarItemResponse;
+import com.siliconvalley.domain.item.item.dto.SubjectItemResponse;
 import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import com.siliconvalley.global.common.dto.page.PageResponse;
@@ -16,19 +16,19 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class AvatarItemFindDao {
+public class SubjectItemFindDao {
 
     private final ItemRepository itemRepository;
     private final ItemFindDao itemFindDao;
 
-    public Response getAvatarItemListByPage(Pageable pageable) {
-        Page<Item> itemPage = itemRepository.findAllByAvatarIsNotNull(pageable);
-        List<AvatarItemResponse> itemResponseList = itemPage.map(item -> new AvatarItemResponse(item)).getContent();
-        return Response.of(CommonCode.GOOD_REQUEST,new PageResponse(itemResponseList,itemPage));
+    public Response getSubjectItemListByPage(Pageable pageable) {
+        Page<Item> itemPage = itemRepository.findAllBySubjectIsNotNull(pageable);
+        List<SubjectItemResponse> itemResponseList = itemPage.map(item -> new SubjectItemResponse(item)).getContent();
+        return Response.of(CommonCode.GOOD_REQUEST, new PageResponse(itemResponseList, itemPage));
     }
 
-    public Response getAvatarItemById(Long itemId) {
+    public Response getSubjectItemById(Long itemId) {
         Item item = itemFindDao.findById(itemId);
-        return Response.of(CommonCode.GOOD_REQUEST, new AvatarItemResponse(item));
+        return Response.of(CommonCode.GOOD_REQUEST, new SubjectItemResponse(item));
     }
 }
