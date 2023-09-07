@@ -25,7 +25,7 @@ public class SubjectItemApi {
 
     // 새 subject 아이템 생성 // admin 가능하게 권한 설정 필요
     @PostMapping
-    public ResponseEntity createRankSubject(@RequestBody @Valid SubjectItemCreateRequest dto) {
+    public ResponseEntity createSubjectItem(@RequestBody @Valid SubjectItemCreateRequest dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(subjectItemCreateService.createSubjectItem(dto));
     }
 
