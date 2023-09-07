@@ -1,7 +1,6 @@
 package com.siliconvalley.domain.post.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.siliconvalley.domain.canvas.domain.Canvas;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +10,14 @@ import lombok.NoArgsConstructor;
 public class PostRankingDto {
 
     private Long canvasId;
+    private Long postId;
     private String canvasUrl;
 
     @QueryProjection
-    public PostRankingDto(Long canvasId, String canvasUrl){
+    public PostRankingDto(Long canvasId, String canvasUrl, Long postId){
         this.canvasId = canvasId;
         this.canvasUrl = canvasUrl;
+        this.postId = postId;
     }
 
 }

@@ -4,6 +4,8 @@ import com.siliconvalley.domain.post.dao.PostFindDao;
 import com.siliconvalley.domain.post.dto.EmotionCreateRequest;
 import com.siliconvalley.domain.post.service.PostDetailService;
 import com.siliconvalley.domain.post.service.PostEmoteService;
+import com.siliconvalley.domain.post.service.PostRankingService;
+import com.siliconvalley.domain.post.service.RankCachingService;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,7 @@ public class PostController {
     private final PostFindDao postFindDao;
     private final PostEmoteService postEmoteService;
     private final PostDetailService postDetailService;
+    private final RankCachingService rankCachingService;
 
     @GetMapping("/posts")
     public ResponseEntity<Response> getAllPosts(
@@ -26,6 +29,12 @@ public class PostController {
             @RequestParam int size
     ){
         Response response = postFindDao.findAll(PageRequest.of(page, size));
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/posts/ranking")
+    public ResponseEntity<Response> getRankingThisWeek(){
+        Response response = rankCachingService.getRankingThisWeek();
         return ResponseEntity.ok(response);
     }
 
