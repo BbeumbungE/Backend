@@ -23,7 +23,7 @@ public class SubjectItemCreateService {
         Item item = dto.getItem();
 
         // Item과 Subject빌드 및 연관관계 매핑
-        item.setSubject(dto.getSubject());
+        item.addSubject(dto.getSubject());
 
         // Item이 저장될 때 Subject 자동 저장
         itemRepository.save(item);

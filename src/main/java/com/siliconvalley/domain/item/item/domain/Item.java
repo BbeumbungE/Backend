@@ -35,27 +35,13 @@ public class Item {
         this.itemPrice = itemPrice;
     }
 
-    public void setAvatar(Avatar avatar) {
+    public void addAvatar(Avatar avatar) {
         this.avatar = avatar;
         avatar.setItem(this); // 양방향 관계 설정
     }
 
-    public void setSubject(Subject subject) {
+    public void addSubject(Subject subject) {
         this.subject = subject;
         subject.setItem(this); // 양방향 관계 설정
-    }
-
-    public static Avatar buildAvatar(String avatarName, String avatarImage) {
-        return Avatar.builder()
-                .avatarName(avatarName)
-                .avatarImage(avatarImage)
-                .build();
-    }
-
-    public static Subject buildSubject(String subjectName, String subjectImage) {
-        return Subject.builder()
-                .subjectName(subjectName)
-                .subjectImage(subjectImage)
-                .build();
     }
 }
