@@ -19,11 +19,10 @@ public class AvatarItemCreateService {
     private final ItemRepository itemRepository;
 
     public Response createAvatarItem(AvatarItemCreateRequest dto) {
-        Item item = dto.toItemEntity();
-        Avatar avatar = dto.toAvatarEntity();
+        Item item = dto.getItem();
 
         // Item과 Avatar 빌드 및 연관관계 매핑
-        item.setAvatar(dto);
+        item.setAvatar(dto.getAvatar());
 
         // Item이 저장될 때 Avatar 자동 저장
         itemRepository.save(item);

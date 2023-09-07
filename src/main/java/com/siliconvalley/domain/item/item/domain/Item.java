@@ -35,14 +35,12 @@ public class Item {
         this.itemPrice = itemPrice;
     }
 
-    public void setAvatar(AvatarItemCreateRequest dto) {
-        Avatar avatar = buildAvatar(dto.getAvatarName(), dto.getAvatarImage());
+    public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
         avatar.setItem(this); // 양방향 관계 설정
     }
 
-    public void setSubject(SubjectItemCreateRequest dto) {
-        Subject subject = buildSubject(dto.getSubjectName(), dto.getSubjectImage());
+    public void setSubject(Subject subject) {
         this.subject = subject;
         subject.setItem(this); // 양방향 관계 설정
     }

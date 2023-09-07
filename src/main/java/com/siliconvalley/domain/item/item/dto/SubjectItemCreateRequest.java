@@ -31,13 +31,13 @@ public class SubjectItemCreateRequest {
         this.subjectImage = subjectImage;
     }
 
-    public Item toItemEntity() {
+    public Item getItem() {
         return Item.builder()
                 .itemPrice(itemPrice)
                 .build();
     }
 
-    public Subject toSubjectEntity() {
+    public Subject getSubject() {
         return Subject.builder()
                 .subjectName(subjectName)
                 .subjectImage(subjectImage)

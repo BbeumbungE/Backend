@@ -20,11 +20,10 @@ public class SubjectItemCreateService {
     private final ItemRepository itemRepository;
 
     public Response createSubjectItem(SubjectItemCreateRequest dto) {
-        Item item = dto.toItemEntity();
-        Subject subject = dto.toSubjectEntity();
+        Item item = dto.getItem();
 
         // Item과 Subject빌드 및 연관관계 매핑
-        item.setSubject(dto);
+        item.setSubject(dto.getSubject());
 
         // Item이 저장될 때 Subject 자동 저장
         itemRepository.save(item);

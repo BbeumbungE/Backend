@@ -31,13 +31,13 @@ public class AvatarItemCreateRequest {
         this.avatarImage = avatarImage;
     }
 
-    public Item toItemEntity() {
+    public Item getItem() {
         return Item.builder()
                 .itemPrice(itemPrice)
                 .build();
     }
 
-    public Avatar toAvatarEntity() {
+    public Avatar getAvatar() {
         return Avatar.builder()
                 .avatarName(avatarName)
                 .avatarImage(avatarImage)
