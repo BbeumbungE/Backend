@@ -24,7 +24,8 @@ public class Stage {
     @Column(name = "point")
     private int point;
 
-    @OneToOne(mappedBy = "stage",cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
     @Builder
@@ -36,6 +37,5 @@ public class Stage {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
-        subject.setStage(this);
     }
 }

@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 
 public enum StageCode implements ResponseCode {
 
-    CREATE_SUCCESS(201, "스테이지 모드 주제로 변경했습니다.", HttpStatus.CREATED);
+    CREATE_SUCCESS(201, "스테이지 생성에 성공했습니다.", HttpStatus.CREATED),
+    UPDATE_SUCCESS(204, "스테이지의 그림주제 변경에 성공했습니다.", HttpStatus.NO_CONTENT);
 
     private final int code;
     private final String message;

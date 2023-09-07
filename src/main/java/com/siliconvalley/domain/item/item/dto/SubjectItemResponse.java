@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RankSubjectItemResponse {
+public class SubjectItemResponse {
 
     private Long id;
     private Long itemPrice;
     private SubjectResponse subject;
 
-    public RankSubjectItemResponse(final Item item) {
+    public SubjectItemResponse(final Item item) {
         this.id = item.getId();
         this.itemPrice = item.getItemPrice();
         this.subject = new SubjectResponse(item.getSubject());

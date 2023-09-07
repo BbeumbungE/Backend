@@ -1,4 +1,4 @@
-package com.siliconvalley.domain.item.avatar.application;
+package com.siliconvalley.domain.item.item.application;
 
 import com.siliconvalley.domain.item.avatar.domain.Avatar;
 import com.siliconvalley.domain.item.item.code.ItemCode;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class AvatarCreateService {
+public class AvatarItemCreateService {
 
     private final ItemRepository itemRepository;
 
@@ -22,8 +22,8 @@ public class AvatarCreateService {
         Item item = dto.toItemEntity();
         Avatar avatar = dto.toAvatarEntity();
 
-        // Item과 Avatar 객체를 연결
-        item.setAvatar(avatar);
+        // Item과 Avatar 빌드 및 연관관계 매핑
+        item.setAvatar(dto);
 
         // Item이 저장될 때 Avatar 자동 저장
         itemRepository.save(item);
