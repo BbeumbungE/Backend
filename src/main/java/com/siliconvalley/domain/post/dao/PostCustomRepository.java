@@ -39,7 +39,7 @@ public class PostCustomRepository {
                 .join(post.canvas, canvas)
                 .where(emotion.createdAt.between(startOfWeek, endOfWeek)) // 감정 표현의 생성 시간을 기준으로 필터링
                 .groupBy(post.id, canvas.id, canvas.canvas)
-                .orderBy(emotion.count().desc())
+                .orderBy(emotion.count().desc(), post.createdAt.asc()) // 추가된 정렬 기준
                 .limit(8)
                 .fetch();
     }
