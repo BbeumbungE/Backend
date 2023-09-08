@@ -6,8 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "emotion")
@@ -27,6 +29,10 @@ public class Emotion {
     @ManyToOne
     @JoinColumn(name = "emotion_type_id", nullable = false)
     private EmotionType emotionType;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
