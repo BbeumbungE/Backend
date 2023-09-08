@@ -28,11 +28,4 @@ public class AvatarItemApi {
     public ResponseEntity getAllAvatarItems(Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(avatarItemFindDao.getAvatarItemListByPage(pageable));
     }
-
-    @GetMapping("/{itemId}")
-    public ResponseEntity getAvatarItem(
-            @PathVariable("itemId") Long itemId
-    ) {
-        return ResponseEntity.status(HttpStatus.OK).body(avatarItemFindDao.getAvatarItemById(itemId));
-    }
 }

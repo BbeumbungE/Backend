@@ -14,7 +14,6 @@ public class SubjectResponse {
     private String subjectName;
     private String subjectImage;
 
-    @QueryProjection
     public SubjectResponse(Subject subject) {
         this.id = subject.getId();
         this.subjectName = subject.getSubjectName();

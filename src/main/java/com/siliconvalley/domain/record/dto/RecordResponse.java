@@ -14,7 +14,6 @@ public class RecordResponse {
     private Long id;
     private int score;
 
-    @QueryProjection
     public RecordResponse(final Record record) {
         this.id = record.getId();
         this.score = record.getScore();
