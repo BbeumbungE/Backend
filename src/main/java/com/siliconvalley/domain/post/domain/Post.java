@@ -30,10 +30,6 @@ public class Post {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "profile_id")
-    private Profile profile;
-
     @OneToOne
     @JoinColumn(name = "canvas_id")
     private Canvas canvas;
@@ -42,8 +38,7 @@ public class Post {
     private List<Emotion> emotions = new ArrayList<>();
 
     @Builder
-    public Post(Profile profile, Canvas canvas) {
-        this.profile = profile;
+    public Post(Canvas canvas) {
         this.canvas = canvas;
     }
 

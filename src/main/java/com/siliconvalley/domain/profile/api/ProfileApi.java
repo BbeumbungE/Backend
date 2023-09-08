@@ -136,15 +136,6 @@ public class ProfileApi {
      *
      * **/
 
-    @PostMapping("/{profileId}/canvases/{canvasId}/posts")
-    public ResponseEntity<Response> postCanvas(
-            @PathVariable Long profileId,
-            @PathVariable Long canvasId
-    ){
-        Response response = profilePostingService.createPostForProfile(profileId, canvasId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
     @DeleteMapping("/{profileId}/canvases/{canvasId}/posts")
     public ResponseEntity<Response> deletePost(
             @PathVariable Long profileId,

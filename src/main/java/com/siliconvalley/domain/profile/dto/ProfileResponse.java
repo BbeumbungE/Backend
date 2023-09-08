@@ -1,12 +1,10 @@
 package com.siliconvalley.domain.profile.dto;
 
-import com.siliconvalley.domain.member.domain.Member;
 import com.siliconvalley.domain.member.dto.MemberResponse;
 import com.siliconvalley.domain.profile.domain.Profile;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Primary;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

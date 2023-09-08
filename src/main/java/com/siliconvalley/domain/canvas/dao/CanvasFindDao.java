@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CanvasFindDao {
 
-    private CanvasRepository canvasRepository;
+    private final CanvasRepository canvasRepository;
 
     public Canvas findById(Long canvasId){
         Optional<Canvas> canvas = canvasRepository.findById(canvasId);
@@ -34,9 +34,9 @@ public class CanvasFindDao {
     }
 
     public Response findCanvasDetail(Long profileId, Long canvasId){
-        Optional<CanvasResponse> canvasResponse = canvasRepository.findCanvasByIdAndProfileId(canvasId, profileId);
-        canvasResponse.orElseThrow(() -> new CanvasNotFoundException(canvasId + "번 캔버스"));
-        return Response.of(CanvasCode.GET_CANVAS_SUCCESS, canvasResponse.get());
+        Optional<Canvas> canvas = canvasRepository.findCanvasByIdAndProfileId(canvasId, profileId);
+        canvas.orElseThrow(() -> new CanvasNotFoundException(canvasId + "번 캔버스"));
+        return Response.of(CanvasCode.GET_CANVAS_SUCCESS, new CanvasResponse(canvas.get()));
     }
 
 }

@@ -1,7 +1,6 @@
 package com.siliconvalley.domain.post.dto;
 
 import com.siliconvalley.domain.post.domain.Post;
-import com.siliconvalley.domain.profile.dto.ProfileResponse;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +11,14 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostDetailResponse {
     private String canvasUrl;
-    private ProfileResponse authorProfile;
+    private Long authorProfileId;
+    private String authorProfileImage;
     private List<PostEmotionTypeInfo> postEmotionTypeInfos;
 
     public PostDetailResponse(Post post, List<PostEmotionTypeInfo> postEmotionTypeInfos){
         this.canvasUrl = post.getCanvas().getCanvas();
-        this.authorProfile = new ProfileResponse(post.getProfile());
+        this.authorProfileId = post.getCanvas().getProfile().getId();
+        this.authorProfileImage = post.getCanvas().getProfile().getProfileImage();
         this.postEmotionTypeInfos = postEmotionTypeInfos;
     }
 }

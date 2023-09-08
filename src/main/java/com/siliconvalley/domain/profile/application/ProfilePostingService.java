@@ -20,17 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProfilePostingService {
 
     private final ProfileFindDao profileFindDao;
-    private final CanvasFindDao canvasFindDao;
-    private final ProfileRepository profileRepository;
     private final PostingService postingService;
-
-    public Response createPostForProfile(Long profileId, Long canvasId){
-        Profile profile = profileFindDao.findById(profileId);
-        Canvas canvas = canvasFindDao.findById(canvasId);
-        Post post = postingService.createPost(profile, canvas);
-        profileRepository.save(profile);
-        return Response.of(PostCode.POSTING_SUCCESS, new PostCreatedResponse(post));
-    }
 
     public Response deletePostForProfile(Long profileId, Long postId){
         Profile profile = profileFindDao.findById(profileId);

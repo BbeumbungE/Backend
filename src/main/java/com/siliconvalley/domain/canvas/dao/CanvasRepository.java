@@ -11,5 +11,5 @@ import java.util.Optional;
 
 public interface CanvasRepository extends JpaRepository<Canvas, Long> {
     Page<CanvasListResponse> findCanvasByProfileId(Long profileId, Pageable pageable);
-    Optional<CanvasResponse> findCanvasByIdAndProfileId(Long canvasId, Long profileId);
+    Optional<Canvas> findCanvasByIdAndProfileId(Long canvasId, Long profileId);
 }
