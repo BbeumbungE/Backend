@@ -31,7 +31,8 @@ public class PostEmoteService {
         Post post = postFindDao.findById(postId);
         Profile profile = profileFindDao.findById(profileId);
         Emotion emotion = post.addEmotion(emotionTypeFindDao.findById(emotionTypeId), profile);
-        return Response.of(EmotionCode.CANCEL_EMOTION_SUCCESS, new EmotionCreatedResponse(emotion));
+        emotionRepository.save(emotion);
+        return Response.of(EmotionCode.EMOTE_SUCCESS, new EmotionCreatedResponse(emotion));
     }
 
     public Response cancelEmote(Long postId, Long requestProfileId){

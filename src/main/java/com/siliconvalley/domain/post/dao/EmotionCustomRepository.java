@@ -1,7 +1,5 @@
 package com.siliconvalley.domain.post.dao;
 
-import com.querydsl.core.types.ConstantImpl;
-import com.querydsl.core.types.dsl.BooleanTemplate;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.siliconvalley.domain.post.domain.QEmotion;

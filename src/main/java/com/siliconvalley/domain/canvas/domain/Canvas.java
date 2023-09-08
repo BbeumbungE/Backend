@@ -40,6 +40,12 @@ public class Canvas {
     @OneToOne(mappedBy = "canvas", orphanRemoval = true, cascade = CascadeType.PERSIST)
     private Post post;
 
+    public Post buildPost(){
+        Post post = Post.builder().canvas(this).build();
+        this.post = post;
+        return post;
+    }
+
     @Builder
     public Canvas(String sketch, String canvas, Profile profile, Subject subject){
         this.sketch = sketch;
