@@ -1,4 +1,4 @@
-package com.siliconvalley.domain.item.stage.exception;
+package com.siliconvalley.domain.stage.exception;
 
 import com.siliconvalley.global.error.exception.EntityNotFoundException;
 

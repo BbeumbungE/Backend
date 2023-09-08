@@ -37,10 +37,11 @@ public class AvatarItemCreateRequest {
                 .build();
     }
 
-    public Avatar getAvatar() {
+    public Avatar getAvatar(Item item) {
         return Avatar.builder()
                 .avatarName(avatarName)
                 .avatarImage(avatarImage)
+                .item(item)
                 .build();
     }
 }

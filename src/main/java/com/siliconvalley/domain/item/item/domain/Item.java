@@ -37,11 +37,9 @@ public class Item {
 
     public void addAvatar(Avatar avatar) {
         this.avatar = avatar;
-        avatar.setItem(this); // 양방향 관계 설정
     }
 
     public void addSubject(Subject subject) {
         this.subject = subject;
-        subject.setItem(this); // 양방향 관계 설정
     }
 }

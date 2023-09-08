@@ -1,8 +1,8 @@
-package com.siliconvalley.domain.item.stage.application;
+package com.siliconvalley.domain.stage.application;
 
-import com.siliconvalley.domain.item.stage.code.StageCode;
-import com.siliconvalley.domain.item.stage.dao.StageFindDao;
-import com.siliconvalley.domain.item.stage.domain.Stage;
+import com.siliconvalley.domain.stage.code.StageCode;
+import com.siliconvalley.domain.stage.dao.StageFindDao;
+import com.siliconvalley.domain.stage.domain.Stage;
 import com.siliconvalley.domain.item.subject.dao.SubjectFindDao;
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.global.common.dto.Response;
@@ -21,7 +21,7 @@ public class StageUpdateService {
     public Response updateStage(Long subjectId, Long stageId) {
         Subject subject = subjectFindDao.findById(subjectId);
         Stage stage = stageFindDao.findById(stageId);
-        stage.setSubject(subject);
+        stage.addSubject(subject);
         return Response.of(StageCode.UPDATE_SUCCESS, null);
     }
 }

@@ -4,6 +4,7 @@ import com.siliconvalley.domain.canvas.domain.Canvas;
 import com.siliconvalley.domain.member.domain.Member;
 import com.siliconvalley.domain.point.domain.Point;
 import com.siliconvalley.domain.post.domain.Post;
+import com.siliconvalley.domain.record.domain.Record;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,6 +43,9 @@ public class Profile {
 
     @OneToOne(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Point point;
+
+    @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Record> recordList;
 
     @Builder
     public Profile(String profileName, String profileImage,Member member) {

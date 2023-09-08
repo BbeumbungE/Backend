@@ -35,7 +35,7 @@ public class SubjectItemApi {
     }
 
     @GetMapping("/{itemId}")
-    public ResponseEntity getAvatarItem(
+    public ResponseEntity getSubjectItem(
             @PathVariable("itemId") Long itemId
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(subjectItemFindDao.getSubjectItemById(itemId));

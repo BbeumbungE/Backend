@@ -1,15 +1,18 @@
-package com.siliconvalley.domain.item.stage.domain;
+package com.siliconvalley.domain.stage.domain;
 
 import com.siliconvalley.domain.item.subject.domain.Subject;
+import com.siliconvalley.domain.record.domain.Record;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "stage")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Stage {
 
@@ -18,8 +21,8 @@ public class Stage {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "stage")
-    private int stage;
+    @Column(name = "stage_num")
+    private int stageNum;
 
     @Column(name = "point")
     private int point;
@@ -28,14 +31,16 @@ public class Stage {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
+    @OneToMany(mappedBy = "stage", orphanRemoval = true)
+    private List<Record> recordList;
+
     @Builder
-    public Stage (int stage, int point, Subject subject) {
-        this.stage = stage;
+    public Stage (int stageNum, int point) {
+        this.stageNum = stageNum;
         this.point = point;
-        this.subject = subject;
     }
 
-    public void setSubject(Subject subject) {
+    public void addSubject(Subject subject) {
         this.subject = subject;
     }
 }

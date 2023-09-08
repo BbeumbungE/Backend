@@ -1,6 +1,6 @@
-package com.siliconvalley.domain.item.stage.dto;
+package com.siliconvalley.domain.stage.dto;
 
-import com.siliconvalley.domain.item.stage.domain.Stage;
+import com.siliconvalley.domain.stage.domain.Stage;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,22 +12,22 @@ import javax.validation.Valid;
 public class StageCreateRequest {
 
     @Valid
-    private int stage;
+    private int stageNum;
 
     @Valid
     private int point;
 
     StageCreateRequest(
-            @Valid int stage,
+            @Valid int stageNum,
             @Valid int point
     ) {
-        this.stage = stage;
+        this.stageNum = stageNum;
         this.point = point;
     }
 
     public Stage toEntity() {
         return Stage.builder()
-                .stage(stage)
+                .stageNum(stageNum)
                 .point(point)
                 .build();
     }

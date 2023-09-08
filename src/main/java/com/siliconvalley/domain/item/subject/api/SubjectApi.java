@@ -3,9 +3,8 @@ package com.siliconvalley.domain.item.subject.api;
 import com.siliconvalley.domain.item.sketch.application.SketchCreateService;
 import com.siliconvalley.domain.item.sketch.dao.SketchFindDao;
 import com.siliconvalley.domain.item.sketch.dto.SketchCreateRequest;
-import com.siliconvalley.domain.item.stage.application.StageCreateService;
-import com.siliconvalley.domain.item.stage.application.StageUpdateService;
-import com.siliconvalley.domain.item.stage.dto.StageCreateRequest;
+import com.siliconvalley.domain.stage.application.StageCreateService;
+import com.siliconvalley.domain.stage.application.StageUpdateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ public class SubjectApi {
 
     private final SketchCreateService sketchCreateService;
     private final SketchFindDao sketchFindDao;
-    private final StageCreateService stageCreateService;
     private final StageUpdateService stageUpdateService;
 
 

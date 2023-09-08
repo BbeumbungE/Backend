@@ -1,12 +1,10 @@
-package com.siliconvalley.domain.item.stage.application;
+package com.siliconvalley.domain.stage.application;
 
-import com.siliconvalley.domain.item.stage.code.StageCode;
-import com.siliconvalley.domain.item.stage.dao.StageRepository;
-import com.siliconvalley.domain.item.stage.domain.Stage;
-import com.siliconvalley.domain.item.stage.dto.StageCreateRequest;
-import com.siliconvalley.domain.item.stage.dto.StagePostSuccessResponse;
-import com.siliconvalley.domain.item.subject.dao.SubjectFindDao;
-import com.siliconvalley.domain.item.subject.domain.Subject;
+import com.siliconvalley.domain.stage.code.StageCode;
+import com.siliconvalley.domain.stage.dao.StageRepository;
+import com.siliconvalley.domain.stage.domain.Stage;
+import com.siliconvalley.domain.stage.dto.StageCreateRequest;
+import com.siliconvalley.domain.stage.dto.StagePostSuccessResponse;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

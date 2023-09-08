@@ -13,6 +13,11 @@ import com.siliconvalley.domain.profile.application.ProfilePostingService;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.dto.ProfileCreateOrUpdate;
 import com.siliconvalley.domain.profile.dto.ProfileResponse;
+import com.siliconvalley.domain.record.application.RecordCreateService;
+import com.siliconvalley.domain.record.application.RecordUpdateService;
+import com.siliconvalley.domain.record.dto.RecordCreateRequest;
+import com.siliconvalley.domain.record.dto.RecordUpdateRequest;
+import com.siliconvalley.domain.stage.dao.StageFindDao;
 import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +45,12 @@ public class ProfileApi {
     private final ProfilePostingService profilePostingService;
     private final CanvasFindDao canvasFindDao;
     private final CanvasDeleteService canvasDeleteService;
+
+    //stage
+    private final StageFindDao stageFindDao;
+    // record
+    private final RecordCreateService recordCreateService;
+    private final RecordUpdateService recordUpdateService;
 
     /**
      *
@@ -180,6 +191,37 @@ public class ProfileApi {
     ){
         Response response = canvasDeleteService.deleteCanvas(profileId, canvasId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+    }
+
+    /**
+     *
+     * Record Management
+     *
+     * **/
+
+    @PostMapping("/{profileId}/stages/{stageId}/record")
+    public ResponseEntity createRecord(
+            @PathVariable(name = "profileId") Long profileId,
+            @PathVariable(name = "stageId") Long stageId,
+            @RequestBody RecordCreateRequest dto
+            ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(recordCreateService.createRecord(profileId, stageId, dto));
+    }
+
+    @GetMapping("/{profileId}/stages/records")
+    public ResponseEntity getAllStageWithRecord(
+            @PathVariable(name = "profileId") Long profileId,
+            Pageable pageable
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(stageFindDao.getAllStageWithRecord(profileId, pageable));
+    }
+
+    @PatchMapping("/{profileId}/stages/{stageId}/records/{recordId}")
+    public ResponseEntity updateRecord(
+            @PathVariable(name = "recordId") Long recordId,
+            @RequestBody RecordUpdateRequest dto
+    ) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(recordUpdateService.updateRecord(recordId, dto));
     }
 
 }
