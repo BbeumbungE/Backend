@@ -1,5 +1,6 @@
 package com.siliconvalley.domain.item.myitem.dao;
 
+import com.siliconvalley.domain.item.item.domain.Item;
 import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.item.myitem.dto.MyAvatarItemResponse;
 import com.siliconvalley.domain.item.myitem.dto.MySubjectItemResponse;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -31,5 +33,13 @@ public class MyItemFindDao {
         }
 
         return new PageResponse(myItemResponseList, myItemPage);
+    }
+    public boolean checkHasItem(Long profileId, String category, Item item) {
+        List<MyItem> myItemList = myItemRepository.findByProfileIdAndItemType(profileId, category);
+        boolean hasItem = false;
+        for (MyItem myItem : myItemList) {
+            if (Objects.equals(myItem.getItem(), item)) hasItem = true;
+        }
+        return hasItem;
     }
 }

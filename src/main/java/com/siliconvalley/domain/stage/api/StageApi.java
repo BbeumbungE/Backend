@@ -1,9 +1,8 @@
-package com.siliconvalley.domain.item.stage.api;
+package com.siliconvalley.domain.stage.api;
 
-import com.siliconvalley.domain.item.stage.application.StageCreateService;
-import com.siliconvalley.domain.item.stage.application.StageUpdateService;
-import com.siliconvalley.domain.item.stage.dao.StageFindDao;
-import com.siliconvalley.domain.item.stage.dto.StageCreateRequest;
+import com.siliconvalley.domain.stage.application.StageCreateService;
+import com.siliconvalley.domain.stage.dao.StageFindDao;
+import com.siliconvalley.domain.stage.dto.StageCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -22,9 +21,8 @@ public class StageApi {
 
     @GetMapping()
     public ResponseEntity getAllStage(Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(stageFindDao.getStageList(pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(stageFindDao.getAllStage(pageable));
     }
-
 
     @PostMapping
     public ResponseEntity createStage(

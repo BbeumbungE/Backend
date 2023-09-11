@@ -2,8 +2,7 @@ package com.siliconvalley.domain.item.subject.domain;
 
 import com.siliconvalley.domain.item.item.domain.Item;
 import com.siliconvalley.domain.item.sketch.domain.Sketch;
-import com.siliconvalley.domain.item.stage.domain.Stage;
-import com.siliconvalley.domain.item.stage.dto.StageCreateRequest;
+import com.siliconvalley.domain.stage.domain.Stage;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

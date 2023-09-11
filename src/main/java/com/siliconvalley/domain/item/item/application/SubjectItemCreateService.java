@@ -4,8 +4,6 @@ import com.siliconvalley.domain.item.item.code.ItemCode;
 import com.siliconvalley.domain.item.item.dao.ItemRepository;
 import com.siliconvalley.domain.item.item.domain.Item;
 import com.siliconvalley.domain.item.item.dto.ItemPostSuccessResponse;
-import com.siliconvalley.domain.item.stage.dao.StageRepository;
-import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.item.item.dto.SubjectItemCreateRequest;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,7 @@ public class SubjectItemCreateService {
         Item item = dto.getItem();
 
         // Item과 Subject빌드 및 연관관계 매핑
-        item.addSubject(dto.getSubject());
+        item.addSubject(dto.getSubject(item));
 
         // Item이 저장될 때 Subject 자동 저장
         itemRepository.save(item);

@@ -11,22 +11,14 @@ import javax.validation.Valid;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RecordCreateRequest {
+public class RecordUpdateRequest {
 
     @Valid
     private int score;
 
-    RecordCreateRequest(
+    RecordUpdateRequest(
             @Valid int score
     ) {
         this.score = score;
-    }
-
-    public Record toEntity(Profile profile, Stage stage) {
-        return Record.builder()
-                .score(score)
-                .profile(profile)
-                .stage(stage)
-                .build();
     }
 }

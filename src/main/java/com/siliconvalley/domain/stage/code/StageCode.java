@@ -1,4 +1,4 @@
-package com.siliconvalley.domain.item.stage.code;
+package com.siliconvalley.domain.stage.code;
 
 import com.siliconvalley.global.common.code.ResponseCode;
 import org.springframework.http.HttpStatus;

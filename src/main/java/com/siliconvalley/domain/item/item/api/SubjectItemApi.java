@@ -33,11 +33,4 @@ public class SubjectItemApi {
     public ResponseEntity getAllSubjectItems(Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(subjectItemFindDao.getSubjectItemListByPage(pageable));
     }
-
-    @GetMapping("/{itemId}")
-    public ResponseEntity getAvatarItem(
-            @PathVariable("itemId") Long itemId
-    ) {
-        return ResponseEntity.status(HttpStatus.OK).body(subjectItemFindDao.getSubjectItemById(itemId));
-    }
 }

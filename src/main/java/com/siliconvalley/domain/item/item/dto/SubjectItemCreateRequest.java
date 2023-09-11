@@ -37,10 +37,11 @@ public class SubjectItemCreateRequest {
                 .build();
     }
 
-    public Subject getSubject() {
+    public Subject getSubject(Item item) {
         return Subject.builder()
                 .subjectName(subjectName)
                 .subjectImage(subjectImage)
+                .item(item)
                 .build();
     }
 }

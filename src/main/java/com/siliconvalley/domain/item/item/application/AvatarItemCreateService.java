@@ -22,7 +22,7 @@ public class AvatarItemCreateService {
         Item item = dto.getItem();
 
         // Item과 Avatar 빌드 및 연관관계 매핑
-        item.addAvatar(dto.getAvatar());
+        item.addAvatar(dto.getAvatar(item));
 
         // Item이 저장될 때 Avatar 자동 저장
         itemRepository.save(item);

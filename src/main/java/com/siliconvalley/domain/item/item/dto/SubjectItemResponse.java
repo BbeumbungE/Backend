@@ -12,11 +12,19 @@ public class SubjectItemResponse {
 
     private Long id;
     private Long itemPrice;
+    private boolean hasItem;
     private SubjectResponse subject;
 
     public SubjectItemResponse(final Item item) {
         this.id = item.getId();
         this.itemPrice = item.getItemPrice();
+        this.subject = new SubjectResponse(item.getSubject());
+    }
+
+    public SubjectItemResponse(final Item item, final boolean hasItem) {
+        this.id = item.getId();
+        this.itemPrice = item.getItemPrice();
+        this.hasItem = hasItem;
         this.subject = new SubjectResponse(item.getSubject());
     }
 }
