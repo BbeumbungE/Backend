@@ -2,11 +2,13 @@ package com.siliconvalley.domain.item.myitem.application;
 
 import com.siliconvalley.domain.item.item.dao.ItemFindDao;
 import com.siliconvalley.domain.item.item.domain.Item;
+import com.siliconvalley.domain.item.myitem.code.MyItemCode;
 import com.siliconvalley.domain.item.myitem.dao.MyItemRepository;
 import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.item.myitem.dto.MyItemPostSuccessResponse;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.domain.Profile;
+import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +22,7 @@ public class MyItemCreateService {
     private final ProfileFindDao profileFindDao;
     private final ItemFindDao itemFindDao;
 
-    public MyItemPostSuccessResponse createMyItem(Long profileId, Long itemId, String itemType) {
+    public Response createMyItem(Long profileId, Long itemId, String itemType) {
         Profile profile = profileFindDao.findById(profileId);
         Item item = itemFindDao.findById(itemId);
         MyItem myItem = MyItem.builder()
@@ -30,6 +32,6 @@ public class MyItemCreateService {
                 .build();
 
         myItemRepository.save(myItem);
-        return new MyItemPostSuccessResponse(myItem);
+        return Response.of(MyItemCode.CREATE_SUCCESS, new MyItemPostSuccessResponse(myItem));
     }
 }
