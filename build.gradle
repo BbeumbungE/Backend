@@ -60,6 +60,9 @@ dependencies {
 	// Rabbit MQ
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
+	// S3
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testCompileOnly 'org.projectlombok:lombok'
