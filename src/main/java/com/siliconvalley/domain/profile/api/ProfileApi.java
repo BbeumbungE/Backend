@@ -107,8 +107,7 @@ public class ProfileApi {
             @RequestParam(value = "category", required = false) String category,
             Pageable pageable
     ) {
-        Response response = Response.of(CommonCode.GOOD_REQUEST, myItemFindDao.getMyItemListByPage(profileId, pageable, category));
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(myItemFindDao.getMyItemListByPage(profileId, pageable, category));
     }
     @GetMapping("/{profileId}/items/subjects")
     public ResponseEntity getAllSubjectItemsOfShop(
@@ -131,8 +130,7 @@ public class ProfileApi {
             @PathVariable(name = "itemId") Long itemId,
             @RequestParam(value = "category") String category // subject or avatar
     ) {
-        Response response = Response.of(MyItemCode.CREATE_SUCCESS, myItemCreateService.createMyItem(profileId, itemId, category));
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(myItemCreateService.createMyItem(profileId, itemId, category));
     }
 
 
@@ -155,9 +153,7 @@ public class ProfileApi {
             @PathVariable(name = "profileId") Long profileId,
             @PathVariable(name = "newPointValue") Long newPointValue
     ) {
-        pointManagementService.updatePoint(profileId, newPointValue);
-        Response response = Response.of(PointCode.UPDATE_SUCCESS);
-        return new ResponseEntity(response, HttpStatus.NO_CONTENT);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(pointManagementService.updatePoint(profileId, newPointValue));
     }
 
 
