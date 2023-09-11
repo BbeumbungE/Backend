@@ -55,13 +55,15 @@ public class ProfileManagementService {
         Profile profile = dto.getProfile(memberFindDao.findById(memberId));
 
         // 기본 아이템 제공
-        myItemRepository.save(profile.buildBasicAvatarItem(itemFindDao.findById(1L)));
-        myItemRepository.save(profile.buildBasicSubjectItem(itemFindDao.findById(2L)));
+        MyItem myAvatarItem = profile.buildBasicAvatarItem(itemFindDao.findById(1L));
+        MyItem mySubjectItem = profile.buildBasicSubjectItem(itemFindDao.findById(2L));
 
         // 기본 프로필 적용
-        ProfileItem profileAvatar = dto.getProfileItem(myItemFindDao.findById(1L));
+        ProfileItem profileAvatar = dto.getProfileItem(myAvatarItem);
 
         // 객체 연관관계 설정
+        profile.addMyItem(myAvatarItem);
+        profile.addMyItem(mySubjectItem);
         profile.addProfileAvatar(profileAvatar);
         profile.addPoint(profile.buildPoint());
         profileRepository.save(profile);

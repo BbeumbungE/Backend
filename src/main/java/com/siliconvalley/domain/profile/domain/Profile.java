@@ -44,6 +44,9 @@ public class Profile {
     @OneToOne(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Point point;
 
+    @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<MyItem> myItemList = new ArrayList<>();
+
     @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Record> recordList;
 
@@ -67,6 +70,10 @@ public class Profile {
         return Point.builder()
                 .point(0L)
                 .build();
+    }
+
+    public void addMyItem(MyItem myItem) {
+        this.myItemList.add(myItem);
     }
 
     public MyItem buildBasicAvatarItem(Item item) {
