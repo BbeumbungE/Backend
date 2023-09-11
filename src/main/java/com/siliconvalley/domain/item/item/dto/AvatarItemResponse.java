@@ -12,11 +12,19 @@ public class AvatarItemResponse {
 
     private Long id;
     private Long itemPrice;
+    private boolean hasItem;
     private AvatarResponse avatarResponse;
 
     public AvatarItemResponse(final Item item) {
         this.id = item.getId();
         this.itemPrice = item.getItemPrice();
+        this.avatarResponse = new AvatarResponse(item.getAvatar());
+    }
+
+    public AvatarItemResponse(final Item item, final boolean hasItem) {
+        this.id = item.getId();
+        this.itemPrice = item.getItemPrice();
+        this.hasItem = hasItem;
         this.avatarResponse = new AvatarResponse(item.getAvatar());
     }
 }

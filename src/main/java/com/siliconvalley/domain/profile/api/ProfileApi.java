@@ -2,6 +2,9 @@ package com.siliconvalley.domain.profile.api;
 
 import com.siliconvalley.domain.canvas.dao.CanvasFindDao;
 import com.siliconvalley.domain.canvas.service.CanvasDeleteService;
+import com.siliconvalley.domain.item.item.dao.AvatarItemFindDao;
+import com.siliconvalley.domain.item.item.dao.ItemFindDao;
+import com.siliconvalley.domain.item.item.dao.SubjectItemFindDao;
 import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
 import com.siliconvalley.domain.item.myitem.code.MyItemCode;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
@@ -45,6 +48,9 @@ public class ProfileApi {
     private final ProfilePostingService profilePostingService;
     private final CanvasFindDao canvasFindDao;
     private final CanvasDeleteService canvasDeleteService;
+    //item
+    private final SubjectItemFindDao subjectItemFindDao;
+    private final AvatarItemFindDao avatarItemFindDao;
 
     //stage
     private final StageFindDao stageFindDao;
@@ -91,18 +97,32 @@ public class ProfileApi {
 
     /**
      *
-     *  MyItem Management
+     *  Item Management
      *
      * **/
 
-    @GetMapping("/{profileId}/items")
-    public ResponseEntity getItemsOfProfile(
+    @GetMapping("/{profileId}/my-items")
+    public ResponseEntity getMyItemsOfProfile(
             @PathVariable("profileId") Long profileId,
             @RequestParam(value = "category", required = false) String category,
             Pageable pageable
     ) {
         Response response = Response.of(CommonCode.GOOD_REQUEST, myItemFindDao.getMyItemListByPage(profileId, pageable, category));
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+    @GetMapping("/{profileId}/items/subjects")
+    public ResponseEntity getAllSubjectItemsOfShop(
+            @PathVariable("profileId") Long profileId,
+            Pageable pageable
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(subjectItemFindDao.getSubjectItemListByPage(profileId, pageable));
+    }
+    @GetMapping("/{profileId}/items/avatars")
+    public ResponseEntity getAllAvatarItemsOfShop(
+            @PathVariable("profileId") Long profileId,
+            Pageable pageable
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(avatarItemFindDao.getAvatarItemListByPage(profileId, pageable));
     }
 
     @PostMapping("/{profileId}/items/{itemId}")

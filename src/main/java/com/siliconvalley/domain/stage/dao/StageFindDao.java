@@ -1,5 +1,7 @@
 package com.siliconvalley.domain.stage.dao;
 
+import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
+import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.record.dao.RecordFindDao;
 import com.siliconvalley.domain.record.domain.Record;
 import com.siliconvalley.domain.stage.domain.Stage;
@@ -26,6 +28,7 @@ public class StageFindDao {
 
     private final StageRepository stageRepository;
     private final RecordFindDao recordFindDao;
+    private final MyItemFindDao myItemFindDao;
 
     public Stage findById(Long stageId) {
         Optional<Stage> stageOptional = stageRepository.findById(stageId);
@@ -35,7 +38,10 @@ public class StageFindDao {
 
     public Response getAllStage(Pageable pageable) {
         Page<Stage> stageList = stageRepository.findAll(pageable);
-        List<StageResponse> stageSubjectList = stageList.stream().map(stage -> new StageResponse(stage)).collect(Collectors.toList());
+        List<StageResponse> stageSubjectList = stageList.stream()
+                        .map(stage -> (stage.getSubject() == null) ? new StageResponse(stage) : new StageResponse(stage, stage.getSubject()))
+                        .collect(Collectors.toList());
+
         return Response.of(CommonCode.GOOD_REQUEST, new PageResponse(stageSubjectList, stageList));
     }
 
@@ -43,8 +49,9 @@ public class StageFindDao {
         Page<Stage> stageList = stageRepository.findAll(pageable);
         List<StageWithRecordResponse> stageWithRecordList = stageList.stream()
                         .map(stage -> {
+                            boolean hasItem = myItemFindDao.checkHasItem(profileId, "subject", stage.getSubject().getItem());
                             Optional<Record> recordOptional = recordFindDao.findByProfileIdAndStageId(profileId, stage.getId());
-                            return recordOptional.isPresent() ? new StageWithRecordResponse(stage, recordOptional.get()) : new StageWithRecordResponse(stage);
+                            return recordOptional.isPresent() ? new StageWithRecordResponse(stage, recordOptional.get(), hasItem) : new StageWithRecordResponse(stage, hasItem);
                         })
                         .collect(Collectors.toList());
 
