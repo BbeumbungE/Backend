@@ -2,6 +2,7 @@ package com.siliconvalley.domain.item.myitem.domain;
 
 import com.siliconvalley.domain.item.item.domain.Item;
 import com.siliconvalley.domain.profile.domain.Profile;
+import com.siliconvalley.domain.profile.domain.ProfileItem;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

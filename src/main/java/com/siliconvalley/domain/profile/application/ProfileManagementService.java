@@ -1,13 +1,24 @@
 package com.siliconvalley.domain.profile.application;
 
+import com.siliconvalley.domain.item.item.dao.ItemFindDao;
+import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
+import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
+import com.siliconvalley.domain.item.myitem.dao.MyItemRepository;
+import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.member.dao.MemberFindDao;
 import com.siliconvalley.domain.profile.code.ProfileCode;
+import com.siliconvalley.domain.profile.code.ProfileItemCode;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
+import com.siliconvalley.domain.profile.dao.ProfileItemFindDao;
+import com.siliconvalley.domain.profile.dao.ProfileItemRepository;
 import com.siliconvalley.domain.profile.dao.ProfileRepository;
 import com.siliconvalley.domain.profile.domain.Profile;
-import com.siliconvalley.domain.profile.dto.ProfileCreateOrUpdate;
+import com.siliconvalley.domain.profile.domain.ProfileItem;
+import com.siliconvalley.domain.profile.dto.ProfileCreate;
 import com.siliconvalley.domain.profile.dto.ProfileCreateSuccessResponse;
-import com.siliconvalley.domain.profile.dto.ProfileResponse;
+import com.siliconvalley.domain.profile.dto.ProfileItemUpdate;
+import com.siliconvalley.domain.profile.dto.ProfileNameUpdate;
+import com.siliconvalley.domain.profile.exception.ProfileItemNotFoundException;
 import com.siliconvalley.domain.profile.exception.ProfileNameDuplicateException;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -22,22 +33,52 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProfileManagementService {
 
+    // Member
     private final MemberFindDao memberFindDao;
+
+    // Profile
     private final ProfileRepository profileRepository;
     private final ProfileFindDao profileFindDao;
 
-    public Response createProfile(final String memberId, final ProfileCreateOrUpdate dto) {
+    // Item
+    private final ItemFindDao itemFindDao;
+
+    // MyItem
+    private final MyItemRepository myItemRepository;
+    private final MyItemFindDao myItemFindDao;
+
+    // ProfileItem
+    private final ProfileItemFindDao profileItemFindDao;
+
+    public Response createProfile(final String memberId, final ProfileCreate dto) {
         if (profileRepository.existsByProfileName(dto.getProfileName())) throw new ProfileNameDuplicateException(dto.getProfileName());
-        Profile profile = dto.toEntity(memberFindDao.findById(memberId));
-        profile.setPoint(profile.buildPoint());
+        Profile profile = dto.getProfile(memberFindDao.findById(memberId));
+
+        // 기본 아이템 제공
+        myItemRepository.save(profile.buildBasicAvatarItem(itemFindDao.findById(1L)));
+        myItemRepository.save(profile.buildBasicSubjectItem(itemFindDao.findById(2L)));
+
+        // 기본 프로필 적용
+        ProfileItem profileAvatar = dto.getProfileItem(myItemFindDao.findById(1L));
+
+        // 객체 연관관계 설정
+        profile.addProfileAvatar(profileAvatar);
+        profile.addPoint(profile.buildPoint());
         profileRepository.save(profile);
+
         return Response.of(ProfileCode.CREATE_SUCCESS, new ProfileCreateSuccessResponse(profile));
     }
 
-    public Response updateProfile(final Long profileId, final ProfileCreateOrUpdate dto) {
+    public Response updateProfileName(final Long profileId, final ProfileNameUpdate dto) {
         Profile profile = profileFindDao.findById(profileId);
-        profile.updateProfile(dto.getProfileName(), dto.getProfileImage());
+        profile.updateProfileName(dto);
         return Response.of(ProfileCode.PATCH_SUCCESS, null);
+    }
+
+    public Response updateProfileAvatar(final Long profileItemId,final ProfileItemUpdate dto) {
+        ProfileItem profileItem = profileItemFindDao.findById(profileItemId);
+        profileItem.updateMyItem(myItemFindDao.findById(dto.getMyItemId()));
+        return Response.of(ProfileItemCode.PATCH_SUCCESS, null);
     }
 
     public Response deleteProfile(Long profileId) {
