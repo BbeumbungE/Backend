@@ -23,6 +23,7 @@ public enum ErrorCode {
 
     // 도메인별 에러코드 추가
     MEMBER_NOT_FOUND(400, "M001", "Member Not Found"),
+    FILE_UPLOAD_ERROR(500, "M002", "File Upload Error"),
 
     // Profile
     PROFILE_NAME_DUPLICATE(400, "P001", "Profile Name Duplicate"),
