@@ -1,5 +1,6 @@
 package com.siliconvalley.domain.profile.application;
 
+import com.siliconvalley.domain.item.item.application.BasicItemCreateService;
 import com.siliconvalley.domain.item.item.dao.ItemFindDao;
 import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
@@ -44,8 +45,8 @@ public class ProfileManagementService {
     private final ItemFindDao itemFindDao;
 
     // MyItem
-    private final MyItemRepository myItemRepository;
     private final MyItemFindDao myItemFindDao;
+    private final BasicItemCreateService basicItemCreateService;
 
     // ProfileItem
     private final ProfileItemFindDao profileItemFindDao;
@@ -54,17 +55,17 @@ public class ProfileManagementService {
         if (profileRepository.existsByProfileName(dto.getProfileName())) throw new ProfileNameDuplicateException(dto.getProfileName());
         Profile profile = dto.getProfile(memberFindDao.findById(memberId));
 
-        // 기본 아이템 제공
-        MyItem myAvatarItem = profile.buildBasicAvatarItem(itemFindDao.findById(1L));
-        MyItem mySubjectItem = profile.buildBasicSubjectItem(itemFindDao.findById(2L));
-
-        // 기본 프로필 적용
-        ProfileItem profileAvatar = dto.getProfileItem(myAvatarItem);
-
-        // 객체 연관관계 설정
-        profile.addMyItem(myAvatarItem);
-        profile.addMyItem(mySubjectItem);
-        profile.addProfileAvatar(profileAvatar);
+//        // 기본 아이템 생성
+//        MyItem myAvatarItem = basicItemCreateService.createBasicAvatarItem(profile);
+//        MyItem mySubjectItem = basicItemCreateService.createBasicSubjectItem(profile);
+//
+//        // 기본 프로필 아이템 생성
+//        ProfileItem profileAvatar = dto.getProfileItem(myAvatarItem);
+//
+//        // 객체 연관관계 설정
+//        profile.addMyItem(myAvatarItem);
+//        profile.addMyItem(mySubjectItem);
+//        profile.addProfileAvatar(profileAvatar);
         profile.addPoint(profile.buildPoint());
         profileRepository.save(profile);
 

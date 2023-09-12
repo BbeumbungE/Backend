@@ -76,22 +76,6 @@ public class Profile {
         this.myItemList.add(myItem);
     }
 
-    public MyItem buildBasicAvatarItem(Item item) {
-        return MyItem.builder()
-                .profile(this)
-                .item(item)
-                .itemType("avatar")
-                .build();
-    }
-
-    public MyItem buildBasicSubjectItem(Item item) {
-        return MyItem.builder()
-                .profile(this)
-                .item(item)
-                .itemType("subject")
-                .build();
-    }
-
     public void addProfileAvatar(ProfileItem profileItem) {
         this.profileItem = profileItem;
         profileItem.addProfile(this);
