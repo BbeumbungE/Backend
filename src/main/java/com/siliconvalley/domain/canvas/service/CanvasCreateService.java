@@ -1,23 +1,25 @@
 package com.siliconvalley.domain.canvas.service;
 
+import com.siliconvalley.domain.canvas.dao.CanvasRepository;
 import com.siliconvalley.domain.canvas.domain.Canvas;
 import com.siliconvalley.domain.canvas.dto.CanvasCreateDto;
-import com.siliconvalley.domain.image.service.S3ImageUploadService;
-import com.siliconvalley.domain.profile.domain.Profile;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.transaction.Transactional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class CanvasCreateService {
 
-    private final S3ImageUploadService s3ImageUploadService;
+    private final CanvasRepository canvasRepository;
 
     public Canvas createCanvas(CanvasCreateDto dto){
-        Profile
-        return dto.toEntity();
+        Canvas canvas = dto.toEntity();
+        return canvasRepository.save(canvas);
     }
 
 }

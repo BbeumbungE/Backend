@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +31,19 @@ public class S3ImageUploadService {
         return amazonS3Client.getUrl(bucket, fileKey).toString();
     }
 
-    public void deleteImage(String originalFileName){
-        amazonS3Client.deleteObject(bucket, originalFileName);
+    public void deleteImage(String fileUrl) {
+        try {
+            URL url = new URL(fileUrl);
+            String host = url.getHost();
+            String bucket = host.substring(0, host.indexOf('.'));
+            String key = url.getPath().substring(1);  // 첫 번째 '/'를 제거하고 key를 얻습니다.
+
+            amazonS3Client.deleteObject(bucket, key);
+        } catch (MalformedURLException e) {
+            // URL 파싱 에러 처리
+            System.err.println("Invalid URL format: " + fileUrl);
+            e.printStackTrace();
+        }
     }
+
 }

@@ -9,9 +9,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.temporal.WeekFields;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -30,6 +27,11 @@ public class RankCachingService {
         redisTemplate.opsForList().rightPush(generateRedisKey(), rankingCachingDto);
         // 키의 만료 시간을 4주로 설정
         redisTemplate.expire(generateRedisKey(), 28, TimeUnit.DAYS);
+    }
+
+    public String getTopPostThisWeek(){
+        RankingCachingDto rankingCachingDto = redisTemplate.opsForList().index(generateRedisKey(), -1);
+        return rankingCachingDto.getRankerList().get(0).getCanvasUrl();
     }
 
     private String generateRedisKey() {
