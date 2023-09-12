@@ -1,9 +1,12 @@
 package com.siliconvalley.domain.profile.domain;
 
 import com.siliconvalley.domain.canvas.domain.Canvas;
+import com.siliconvalley.domain.item.item.domain.Item;
+import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.member.domain.Member;
 import com.siliconvalley.domain.point.domain.Point;
 import com.siliconvalley.domain.post.domain.Post;
+import com.siliconvalley.domain.profile.dto.ProfileNameUpdate;
 import com.siliconvalley.domain.record.domain.Record;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,12 +31,12 @@ public class Profile {
     @Column(name = "pf_name",length = 10)
     private String profileName;
 
-    @Column(name = "pf_image")
-    private String profileImage;
-
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToOne(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private ProfileItem profileItem;
 
     @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Canvas> canvasList = new ArrayList<>();
@@ -41,21 +44,24 @@ public class Profile {
     @OneToOne(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Point point;
 
+    @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<MyItem> myItemList = new ArrayList<>();
+
     @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Record> recordList;
 
     @Builder
-    public Profile(String profileName, String profileImage,Member member) {
+    public Profile(String profileName, Member member, ProfileItem profileItem) {
         this.profileName = profileName;
-        this.profileImage = profileImage;
         this.member = member;
+        this.profileItem = profileItem;
     }
 
     public void addCanvas(Canvas canvas){
         this.canvasList.add(canvas);
     }
 
-    public void setPoint(Point point) {
+    public void addPoint(Point point) {
         this.point = point;
         point.setProfile(this);
     }
@@ -66,10 +72,17 @@ public class Profile {
                 .build();
     }
 
-    public void updateProfile(
-            final String profileName,
-            final String profileImage) {
-        this.profileName = profileName;
-        this.profileImage = profileImage;
+    public void addMyItem(MyItem myItem) {
+        this.myItemList.add(myItem);
+    }
+
+    public void addProfileAvatar(ProfileItem profileItem) {
+        this.profileItem = profileItem;
+        profileItem.addProfile(this);
+    }
+
+    public void updateProfileName(
+            final ProfileNameUpdate dto) {
+        this.profileName = dto.getProfileName();
     }
 }

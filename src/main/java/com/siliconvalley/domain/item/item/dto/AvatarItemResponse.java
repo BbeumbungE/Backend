@@ -18,6 +18,7 @@ public class AvatarItemResponse {
     public AvatarItemResponse(final Item item) {
         this.id = item.getId();
         this.itemPrice = item.getItemPrice();
+        this.hasItem = true;
         this.avatarResponse = new AvatarResponse(item.getAvatar());
     }
 

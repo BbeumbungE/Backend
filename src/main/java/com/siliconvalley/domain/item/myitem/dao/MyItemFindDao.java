@@ -4,6 +4,7 @@ import com.siliconvalley.domain.item.item.domain.Item;
 import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.item.myitem.dto.MyAvatarItemResponse;
 import com.siliconvalley.domain.item.myitem.dto.MySubjectItemResponse;
+import com.siliconvalley.domain.item.myitem.exception.MyItemNotFoundException;
 import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import com.siliconvalley.global.common.dto.page.PageResponse;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -24,6 +26,12 @@ import java.util.Objects;
 public class MyItemFindDao {
 
     private final MyItemRepository myItemRepository;
+
+    public MyItem findById(Long myItemId) {
+        Optional<MyItem> myItemOptional = myItemRepository.findById(myItemId);
+        myItemOptional.orElseThrow(() -> new MyItemNotFoundException(myItemId));
+        return myItemOptional.get();
+    }
 
     public Response getMyItemListByPage(Long profileId, Pageable pageable, String category) {
         Page<MyItem> myItemPage = myItemRepository.findByProfileIdAndItemType(profileId, category, pageable);

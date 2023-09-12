@@ -3,19 +3,16 @@ package com.siliconvalley.domain.profile.api;
 import com.siliconvalley.domain.canvas.dao.CanvasFindDao;
 import com.siliconvalley.domain.canvas.service.CanvasDeleteService;
 import com.siliconvalley.domain.item.item.dao.AvatarItemFindDao;
-import com.siliconvalley.domain.item.item.dao.ItemFindDao;
 import com.siliconvalley.domain.item.item.dao.SubjectItemFindDao;
 import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
-import com.siliconvalley.domain.item.myitem.code.MyItemCode;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
 import com.siliconvalley.domain.point.application.PointManagementService;
-import com.siliconvalley.domain.point.code.PointCode;
 import com.siliconvalley.domain.profile.application.ProfileManagementService;
-import com.siliconvalley.domain.profile.code.ProfileCode;
 import com.siliconvalley.domain.profile.application.ProfilePostingService;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
-import com.siliconvalley.domain.profile.dto.ProfileCreateOrUpdate;
-import com.siliconvalley.domain.profile.dto.ProfileResponse;
+import com.siliconvalley.domain.profile.dto.ProfileCreate;
+import com.siliconvalley.domain.profile.dto.ProfileItemUpdate;
+import com.siliconvalley.domain.profile.dto.ProfileNameUpdate;
 import com.siliconvalley.domain.record.application.RecordCreateService;
 import com.siliconvalley.domain.record.application.RecordUpdateService;
 import com.siliconvalley.domain.record.dto.RecordCreateRequest;
@@ -31,7 +28,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,7 +62,7 @@ public class ProfileApi {
 
     @PostMapping
     public ResponseEntity createProfile(
-            @RequestBody @Valid final ProfileCreateOrUpdate dto,
+            @RequestBody @Valid final ProfileCreate dto,
             @AuthenticationPrincipal OAuth2User oAuth2User
     ) {
         String memberId = (String) oAuth2User.getAttributes().get("id");
@@ -80,12 +76,19 @@ public class ProfileApi {
         return ResponseEntity.status(HttpStatus.OK).body(profileFindDao.getProfileById(profileId));
     }
 
-    @PatchMapping("/{profileId}")
-    public ResponseEntity updateProfile(
+    @PatchMapping("/{profileId}/names")
+    public ResponseEntity updateProfileName(
             @PathVariable("profileId") Long profileId,
-        @RequestBody @Valid final ProfileCreateOrUpdate dto
+        @RequestBody @Valid final ProfileNameUpdate dto
     ) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(profileManagementService.updateProfile(profileId, dto));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(profileManagementService.updateProfileName(profileId, dto));
+    }
+    @PatchMapping("/{profileId}/profile-items/{profileItemId}")
+    public ResponseEntity updateProfileAvatar(
+            @PathVariable("profileItemId") Long profileItemId,
+        @RequestBody @Valid final ProfileItemUpdate dto
+    ) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(profileManagementService.updateProfileAvatar(profileItemId,dto));
     }
 
     @DeleteMapping("/{profileId}")
