@@ -21,14 +21,19 @@ public class SubjectItemCreateRequest {
     @Valid
     private String subjectImage;
 
+    @Valid
+    private String sketch;
+
     SubjectItemCreateRequest(
             @Valid Long itemPrice,
             @Valid String subjectName,
-            @Valid String subjectImage
+            @Valid String subjectImage,
+            @Valid String sketch
     ) {
         this.itemPrice = itemPrice;
         this.subjectName = subjectName;
         this.subjectImage = subjectImage;
+        this.sketch = sketch;
     }
 
     public Item getItem() {
@@ -41,6 +46,7 @@ public class SubjectItemCreateRequest {
         return Subject.builder()
                 .subjectName(subjectName)
                 .subjectImage(subjectImage)
+                .sketch(sketch)
                 .item(item)
                 .build();
     }

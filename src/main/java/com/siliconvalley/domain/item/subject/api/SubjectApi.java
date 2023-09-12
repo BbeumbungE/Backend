@@ -1,9 +1,5 @@
 package com.siliconvalley.domain.item.subject.api;
 
-import com.siliconvalley.domain.item.sketch.application.SketchCreateService;
-import com.siliconvalley.domain.item.sketch.dao.SketchFindDao;
-import com.siliconvalley.domain.item.sketch.dto.SketchCreateRequest;
-import com.siliconvalley.domain.stage.application.StageCreateService;
 import com.siliconvalley.domain.stage.application.StageUpdateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,26 +13,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class SubjectApi {
 
-    private final SketchCreateService sketchCreateService;
-    private final SketchFindDao sketchFindDao;
     private final StageUpdateService stageUpdateService;
-
-
-    /**
-     * Sketch Of Subject Management
-     **/
-
-    @PostMapping("/{subjectId}/sketches")
-    public ResponseEntity addSketch(
-            @PathVariable(name = "subjectId") Long subjectId,
-            @RequestBody @Valid SketchCreateRequest dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(sketchCreateService.createSketch(subjectId, dto));
-    }
-
-    @GetMapping("/{subjectId}/sketches")
-    public ResponseEntity getAllSketches(@PathVariable(name = "subjectId") Long subjectId) {
-        return ResponseEntity.status(HttpStatus.OK).body(sketchFindDao.getAllsketches(subjectId));
-    }
 
     @PatchMapping("/{subjectId}/stages/{stageId}")
     public ResponseEntity setSubjectToStage(
