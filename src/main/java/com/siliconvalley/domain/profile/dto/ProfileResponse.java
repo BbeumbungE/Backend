@@ -12,13 +12,13 @@ public class ProfileResponse {
 
     private Long id;
     private String profileName;
-    private String profileImage;
     private MemberResponse member;
+    private ProfileAvatarItemResponse profileAvatar;
 
     public ProfileResponse(final Profile profile) {
         this.id = profile.getId();
         this.profileName = profile.getProfileName();
-        this.profileImage = profile.getProfileImage();
         this.member = new MemberResponse(profile.getMember());
+        this.profileAvatar = new ProfileAvatarItemResponse(profile.getProfileItem());
     }
 }

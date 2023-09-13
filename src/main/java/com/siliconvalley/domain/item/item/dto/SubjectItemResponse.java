@@ -18,6 +18,7 @@ public class SubjectItemResponse {
     public SubjectItemResponse(final Item item) {
         this.id = item.getId();
         this.itemPrice = item.getItemPrice();
+        this.hasItem = true;
         this.subject = new SubjectResponse(item.getSubject());
     }
 

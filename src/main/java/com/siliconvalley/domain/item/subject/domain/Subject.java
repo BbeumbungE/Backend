@@ -1,15 +1,12 @@
 package com.siliconvalley.domain.item.subject.domain;
 
 import com.siliconvalley.domain.item.item.domain.Item;
-import com.siliconvalley.domain.item.sketch.domain.Sketch;
 import com.siliconvalley.domain.stage.domain.Stage;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "subject")
@@ -28,8 +25,8 @@ public class Subject {
     @Column(name = "sub_Image")
     private String subjectImage;
 
-    @OneToMany(mappedBy = "subject")
-    private List<Sketch> sketchList = new ArrayList<>();
+    @Column(name = "sketch")
+    private String sketch;
 
     @OneToOne(mappedBy = "subject", orphanRemoval = true, fetch = FetchType.LAZY)
     private Stage stage;
@@ -39,10 +36,11 @@ public class Subject {
     private Item item;
 
     @Builder
-    public Subject(String subjectName, String subjectImage, Item item) {
+    public Subject(String subjectName, String subjectImage, String sketch, Item item) {
         this.subjectName = subjectName;
         this.subjectImage = subjectImage;
         this.item = item;
+        this.sketch = sketch;
     }
 
     public void setItem(Item item) {
