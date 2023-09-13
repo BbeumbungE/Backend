@@ -1,6 +1,5 @@
 package com.siliconvalley.domain.canvas.dto;
 
-import com.siliconvalley.domain.canvas.service.CanvasConvertService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

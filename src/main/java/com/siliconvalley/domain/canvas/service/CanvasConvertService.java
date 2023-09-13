@@ -51,6 +51,6 @@ public class CanvasConvertService {
 
     public void updateConvertedData(SketchConversionResponse response){
         Canvas canvas = canvasFindDao.findById(response.getCanvasId());
-        canvas.updateSketch(response.getCanvasUrl());
+        canvas.updateCanvas(response.getCanvasUrl());
     }
 }
