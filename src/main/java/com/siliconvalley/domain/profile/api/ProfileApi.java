@@ -79,21 +79,21 @@ public class ProfileApi {
     @PatchMapping("/{profileId}/names")
     public ResponseEntity updateProfileName(
             @PathVariable("profileId") Long profileId,
-        @RequestBody @Valid final ProfileNameUpdate dto
+            @RequestBody @Valid final ProfileNameUpdate dto
     ) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(profileManagementService.updateProfileName(profileId, dto));
     }
     @PatchMapping("/{profileId}/profile-items/{profileItemId}")
     public ResponseEntity updateProfileAvatar(
             @PathVariable("profileItemId") Long profileItemId,
-        @RequestBody @Valid final ProfileItemUpdate dto
+            @RequestBody @Valid final ProfileItemUpdate dto
     ) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(profileManagementService.updateProfileAvatar(profileItemId,dto));
     }
 
     @DeleteMapping("/{profileId}")
     public ResponseEntity deleteProfile(
-        @PathVariable("profileId") Long profileId
+            @PathVariable("profileId") Long profileId
     ) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(profileManagementService.deleteProfile(profileId));
     }

@@ -26,7 +26,7 @@ public class Canvas {
     @Column(name = "sketch", nullable = false)
     private String sketch;
 
-    @Column(name = "converted_sketch", nullable = false)
+    @Column(name = "converted_sketch")
     private String canvas;
 
     @ManyToOne
@@ -47,11 +47,18 @@ public class Canvas {
     }
 
     @Builder
-    public Canvas(String sketch, String canvas, Profile profile, Subject subject){
-        this.sketch = sketch;
-        this.canvas = canvas;
-        this.profile = profile;
+    public Canvas(Subject subject, Profile profile, String sketch){
         this.subject = subject;
+        this.profile = profile;
+        this.sketch = sketch;
+    }
+
+    public void updateSketch(String sketch){
+        this.sketch = sketch;
+    }
+
+    public void updateCanvas(String canvasUrl){
+        this.canvas = canvasUrl;
     }
 
 }
