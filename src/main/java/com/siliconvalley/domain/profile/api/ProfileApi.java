@@ -17,6 +17,7 @@ import com.siliconvalley.domain.record.application.RecordCreateService;
 import com.siliconvalley.domain.record.application.RecordUpdateService;
 import com.siliconvalley.domain.record.dto.RecordCreateRequest;
 import com.siliconvalley.domain.record.dto.RecordUpdateRequest;
+import com.siliconvalley.domain.sse.application.SseEmitterService;
 import com.siliconvalley.domain.stage.dao.StageFindDao;
 import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
@@ -30,6 +31,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
 @RequestMapping("/api/profiles")
@@ -53,6 +55,9 @@ public class ProfileApi {
     // record
     private final RecordCreateService recordCreateService;
     private final RecordUpdateService recordUpdateService;
+    // sse
+    private final SseEmitterService sseEmitterService;
+
 
     /**
      *
@@ -232,6 +237,18 @@ public class ProfileApi {
             @RequestBody RecordUpdateRequest dto
     ) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(recordUpdateService.updateRecord(recordId, dto));
+    }
+
+    /**
+     * SSE Connect
+     **/
+    @GetMapping("/{profileId}/sse/connects")
+    public SseEmitter connect(
+            @PathVariable(name = "profileId") Long profileId,
+            @RequestHeader(value = "Last-Event_ID", required = false, defaultValue = "") String lastEventId
+    )
+    {
+        return sseEmitterService.connect(profileId, lastEventId);
     }
 
 }
