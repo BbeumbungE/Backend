@@ -26,7 +26,7 @@ public class Canvas {
     @Column(name = "sketch", nullable = false)
     private String sketch;
 
-    @Column(name = "converted_sketch", nullable = false)
+    @Column(name = "converted_sketch")
     private String canvas;
 
     @ManyToOne

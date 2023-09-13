@@ -23,23 +23,21 @@ public class CanvasController {
 
     @PostMapping("")
     public ResponseEntity<Response> convertSketchToCanvas(
-            @RequestParam("file") MultipartFile sketchFile,
+            @RequestParam("sketchFile") MultipartFile sketchFile,
             @RequestParam Long profileId,
             @RequestParam Long subjectId
     ) throws IOException {
-        String sketch = s3ImageUploadService.uploadFile(sketchFile, s3PathBuildService.buildPath(profileId, "sketch"));
-        Response response = canvasConvertService.convertSketchToCanvas(profileId, subjectId, sketch);
+        Response response = canvasConvertService.convertSketchToCanvas(profileId, subjectId, sketchFile);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PatchMapping("/{canvasId}")
     public ResponseEntity<Response> updateSketchAndCanvas(
-            @PathVariable(name = "canvasId") Long canvasId,
             @RequestParam ("file") MultipartFile sketchFile,
-            @RequestParam Long profileId
+            @RequestParam Long profileId,
+            @PathVariable Long canvasId
     ) throws IOException {
-        String sketch = s3ImageUploadService.uploadFile(sketchFile, s3PathBuildService.buildPath(profileId, "sketch"));
-        Response response = canvasConvertService.updateSketchAndCanvas(profileId, canvasId, sketch);
+        Response response = canvasConvertService.updateSketchAndCanvas(profileId, canvasId, sketchFile);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
