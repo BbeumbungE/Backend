@@ -41,17 +41,6 @@ public class RabbitMqConfig {
         return new TopicExchange("sketch_conversion_exchange");
     }
 
-
-    @Bean
-    Binding subject1Binding(TopicExchange topicExchange, Queue subject1Queue) {
-        return BindingBuilder.bind(subject1Queue).to(topicExchange).with("subject1.*");
-    }
-
-    @Bean
-    Binding subject2Binding(TopicExchange topicExchange, Queue subject2Queue) {
-        return BindingBuilder.bind(subject2Queue).to(topicExchange).with("subject2.*");
-    }
-
     @Bean
     public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);

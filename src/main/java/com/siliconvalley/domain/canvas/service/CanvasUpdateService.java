@@ -24,7 +24,7 @@ public class CanvasUpdateService {
         s3ImageUploadService.deleteImage(canvas.getCanvas());
         s3ImageUploadService.deleteImage(canvas.getSketch());
         canvas.updateSketch(newSketch);
-        convertRequestSender.sendSketchConversionRequest(newSketch, canvas.getId(), profileId);
+        convertRequestSender.sendSketchConversionRequest(newSketch, canvas.getId(), profileId, canvas.getSubject().getId());
         return Response.of(RabbitMQCode.CONVERSION_RESPONSE_SUCCESS);
     }
 

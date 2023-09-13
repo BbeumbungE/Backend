@@ -16,16 +16,15 @@ public class ConvertRequestSender {
 
     private final RabbitTemplate rabbitTemplate;
     private final RankCachingService rankCachingService;
+    private final GenerateRoutingKeyService generateRoutingKeyService;
 
     @Value("${rabbitmq.exchange}")
     private String exchange;
 
-    @Value("${rabbitmq.requestRoutingKey}")
-    private String requestRoutingKey;
 
-    public Response sendSketchConversionRequest(String sketchUrl, Long canvasId, Long profileId) {
+    public Response sendSketchConversionRequest(String sketchUrl, Long canvasId, Long profileId, Long subjectId) {
         SketchConversionRequest request = new SketchConversionRequest(sketchUrl, canvasId, profileId);
-        rabbitTemplate.convertAndSend(exchange, requestRoutingKey, request);
+        rabbitTemplate.convertAndSend(exchange, generateRoutingKeyService.generateRoutingKey(subjectId), request);
         return Response.of(RabbitMQCode.CONVERSION_REQUEST_SUCCESS,
                 new CanvasConvertResponse(canvasId, rankCachingService.getTopPostThisWeek()));
     }

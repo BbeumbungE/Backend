@@ -33,7 +33,7 @@ public class CanvasConvertService {
         Profile profile = profileFindDao.findById(profileId);
         Subject subject = subjectFindDao.findById(subjectId);
         Canvas canvas = canvasCreateService.createCanvas(CanvasCreateDto.builder().subject(subject).sketchUrl(sketch).profile(profile).build());
-        return convertRequestSender.sendSketchConversionRequest(sketch, canvas.getId(), profileId);
+        return convertRequestSender.sendSketchConversionRequest(sketch, canvas.getId(), profileId, subjectId);
     }
 
     public Response updateSketchAndCanvas(Long profileId, Long canvasId, String sketch){
