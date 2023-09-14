@@ -44,17 +44,14 @@ public class Notification {
         this.receiver = receiver;
     }
 
-    public static Notification toAvatarItemNotification(Profile profile, Item item, NotificationType type) {
+    public static Notification toItemNotification(Profile profile, Item item, NotificationType type) {
         return Notification.builder()
                 .receiver(profile)
-                .content(item.getAvatar().getAvatarName() + type.getMessage())
-                .type(type)
-                .build();
-    }
-    public static Notification toSubjectItemNotification(Profile profile, Item item, NotificationType type) {
-        return Notification.builder()
-                .receiver(profile)
-                .content(item.getSubject().getSubjectName() + type.getMessage())
+                .content(
+                        type.equals(NotificationType.NEW_AVATAR) ?
+                        item.getAvatar().getAvatarName() + type.getMessage() :
+                        item.getSubject().getSubjectName() + type.getMessage()
+                )
                 .type(type)
                 .build();
     }

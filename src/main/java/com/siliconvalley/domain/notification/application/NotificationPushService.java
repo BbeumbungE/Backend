@@ -36,8 +36,8 @@ public class NotificationPushService {
         sseEmitterMap.entrySet().stream().forEach(sseEmitter -> {
             Long profileId = sseEmitter.getKey();
             Profile profile = profileFindDao.findById(profileId);
-            Notification notification = getNotification(profile, item, type);
-            notificationRepository.save(notification); // 알림 객체 저장
+            Notification notification = Notification.toItemNotification(profile, item, type);
+            notificationRepository.save(notification);
 
             NotificationResponse notificationResponse = new NotificationResponse(notification);
             String id = profileId + "_"+ System.currentTimeMillis();
@@ -53,8 +53,8 @@ public class NotificationPushService {
         sseEmitterMap.entrySet().stream().forEach(sseEmitter -> {
             Long profileId = sseEmitter.getKey();
             Profile profile = profileFindDao.findById(profileId);
-            Notification notification = getNotification(profile, type);
-            notificationRepository.save(notification); // 알림 객체 저장
+            Notification notification = Notification.toRankingNotification(profile, type);
+            notificationRepository.save(notification);
 
             NotificationResponse notificationResponse = new NotificationResponse(notification);
             String id = profileId + "_"+ System.currentTimeMillis();
@@ -63,20 +63,4 @@ public class NotificationPushService {
             eventCashRepository.save(id, notificationResponse); // 미전송 알림 저장용
         });
     }
-
-    private static Notification getNotification(Profile profile, Item item, NotificationType type) {
-        Notification notification;
-        if (type.equals(NotificationType.NEW_AVATAR)) {
-            notification = Notification.toAvatarItemNotification(profile, item, type);
-        } else {
-            notification = Notification.toSubjectItemNotification(profile, item, type);
-        }
-
-        return notification;
-    }
-    private static Notification getNotification(Profile profile, NotificationType type) {
-        return Notification.toRankingNotification(profile, type);
-    }
-
-
 }
