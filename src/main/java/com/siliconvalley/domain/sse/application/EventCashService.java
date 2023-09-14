@@ -1,5 +1,7 @@
 package com.siliconvalley.domain.sse.application;
 
+import com.siliconvalley.domain.notification.domain.Notification;
+import com.siliconvalley.domain.notification.dto.NotificationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -14,12 +16,12 @@ public class EventCashService {
     private final EventCashFinder eventCashFinder;
     private final SseEmitterSender sseEmitterSender;
 
-    public void sendNotReceivedEvent(String profileId, String lastEventId, SseEmitter sseEmitter) {
+    public void sendNotReceivedEvent(Long profileId, String lastEventId, SseEmitter sseEmitter) {
         if (!lastEventId.isEmpty()) {
-            Map<String, Object> events = eventCashFinder.findAllById(profileId);
+            Map<String, NotificationResponse> events = eventCashFinder.findAllById(String.valueOf(profileId));
             events.entrySet().stream()
                     .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
-                    .forEach(entry -> sseEmitterSender.send(sseEmitter, entry.getKey(), entry.getValue()));
+                    .forEach(entry -> sseEmitterSender.send(sseEmitter, entry.getKey(), entry.getValue(), profileId));
         }
     }
 }

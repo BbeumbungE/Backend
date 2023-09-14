@@ -37,4 +37,12 @@ public class MyItem {
         this.profile = profile;
         this.item = item;
     }
+
+    public static MyItem toEntity(Profile profile, Item item, String itemType) {
+        return MyItem.builder()
+                .itemType(itemType)
+                .profile(profile)
+                .item(item)
+                .build();
+    }
 }

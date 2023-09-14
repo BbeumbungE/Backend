@@ -7,6 +7,7 @@ import com.siliconvalley.domain.item.item.dao.SubjectItemFindDao;
 import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
 import com.siliconvalley.domain.point.application.PointManagementService;
+import com.siliconvalley.domain.profile.application.ProfileCreateService;
 import com.siliconvalley.domain.profile.application.ProfileManagementService;
 import com.siliconvalley.domain.profile.application.ProfilePostingService;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
@@ -40,22 +41,26 @@ public class ProfileApi {
 
     private final ProfileFindDao profileFindDao;
     private final ProfileManagementService profileManagementService;
+    private final ProfileCreateService profileCreateService;
+
     private final MyItemFindDao myItemFindDao;
     private final MyItemCreateService myItemCreateService;
+
     private final PointManagementService pointManagementService;
+
     private final ProfilePostingService profilePostingService;
+
     private final CanvasFindDao canvasFindDao;
     private final CanvasDeleteService canvasDeleteService;
-    //item
+
     private final SubjectItemFindDao subjectItemFindDao;
     private final AvatarItemFindDao avatarItemFindDao;
 
-    //stage
     private final StageFindDao stageFindDao;
-    // record
+
     private final RecordCreateService recordCreateService;
     private final RecordUpdateService recordUpdateService;
-    // sse
+
     private final SseEmitterService sseEmitterService;
 
 
@@ -71,7 +76,7 @@ public class ProfileApi {
             @AuthenticationPrincipal OAuth2User oAuth2User
     ) {
         String memberId = (String) oAuth2User.getAttributes().get("id");
-        return ResponseEntity.status(HttpStatus.CREATED).body(profileManagementService.createProfile(memberId, dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(profileCreateService.createProfile(memberId, dto));
     }
 
     @GetMapping("/{profileId}")

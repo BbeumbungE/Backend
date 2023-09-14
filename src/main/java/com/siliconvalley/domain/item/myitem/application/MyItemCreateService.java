@@ -13,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -33,5 +36,11 @@ public class MyItemCreateService {
 
         myItemRepository.save(myItem);
         return Response.of(MyItemCode.CREATE_SUCCESS, new MyItemPostSuccessResponse(myItem));
+    }
+
+    public List<MyItem> createBasicItem(Profile profile, String itemType) {
+        return itemFindDao.findAllFreeItem(itemType).stream()
+                .map(item -> MyItem.toEntity(profile, item, itemType))
+                .collect(Collectors.toList());
     }
 }
