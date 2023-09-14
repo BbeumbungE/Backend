@@ -16,6 +16,7 @@ public class NotificationResponse {
     private String content;
     private NotificationType type;
     private String receiver;
+    private boolean isRead;
     private LocalDateTime createAt;
 
     public NotificationResponse(Notification notification) {
@@ -23,6 +24,7 @@ public class NotificationResponse {
         this.content = notification.getContent();
         this.type = notification.getType();
         this.receiver = notification.getReceiver().getProfileName();
+        this.isRead = notification.isRead();
         this.createAt = notification.getCreateAt();
     }
 }

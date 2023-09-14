@@ -29,6 +29,9 @@ public class Notification {
     @Column(name = "type")
     private NotificationType type;
 
+    @Column(name = "is_read")
+    private boolean isRead;
+
     @CreationTimestamp
     @Column(name = "create_at", nullable = false, updatable = false)
     private LocalDateTime createAt;
@@ -38,9 +41,10 @@ public class Notification {
     private Profile receiver;
 
     @Builder
-    private Notification(String content, NotificationType type, Profile receiver) {
+    private Notification(String content, NotificationType type, boolean isRead, Profile receiver) {
         this.content = content;
         this.type = type;
+        this.isRead = isRead;
         this.receiver = receiver;
     }
 
@@ -53,6 +57,7 @@ public class Notification {
                         item.getSubject().getSubjectName() + type.getMessage()
                 )
                 .type(type)
+                .isRead(false)
                 .build();
     }
 
@@ -61,6 +66,7 @@ public class Notification {
                 .receiver(profile)
                 .content(type.getMessage())
                 .type(type)
+                .isRead(false)
                 .build();
     }
 }
