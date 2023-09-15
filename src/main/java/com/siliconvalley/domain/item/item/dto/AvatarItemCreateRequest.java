@@ -5,6 +5,7 @@ import com.siliconvalley.domain.item.item.domain.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -18,17 +19,12 @@ public class AvatarItemCreateRequest {
     @Valid
     private String avatarName;
 
-    @Valid
-    private String avatarImage;
-
     AvatarItemCreateRequest(
             @Valid Long itemPrice,
-            @Valid String avatarName,
-            @Valid String avatarImage
+            @Valid String avatarName
     ) {
         this.itemPrice = itemPrice;
         this.avatarName = avatarName;
-        this.avatarImage = avatarImage;
     }
 
     public Item getItem() {
@@ -37,10 +33,10 @@ public class AvatarItemCreateRequest {
                 .build();
     }
 
-    public Avatar getAvatar(Item item) {
+    public Avatar getAvatar(Item item, String imgUrl) {
         return Avatar.builder()
                 .avatarName(avatarName)
-                .avatarImage(avatarImage)
+                .avatarImage(imgUrl)
                 .item(item)
                 .build();
     }

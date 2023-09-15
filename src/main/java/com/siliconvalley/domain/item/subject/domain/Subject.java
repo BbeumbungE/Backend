@@ -43,6 +43,15 @@ public class Subject {
         this.sketch = sketch;
     }
 
+    public static Subject toEntity(String subjectName, String subjectImgUrl, String sketchImageUrl, Item item) {
+        return Subject.builder()
+                .subjectName(subjectName)
+                .subjectImage(sketchImageUrl)
+                .sketch(sketchImageUrl)
+                .item(item)
+                .build();
+    }
+
     public void setItem(Item item) {
         this.item = item;
     }

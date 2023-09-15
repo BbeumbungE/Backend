@@ -35,6 +35,12 @@ public class Item {
         this.itemPrice = itemPrice;
     }
 
+    public static Item toEntity(Long itemPrice) {
+        return Item.builder()
+                .itemPrice(itemPrice)
+                .build();
+    }
+
     public void addAvatar(Avatar avatar) {
         this.avatar = avatar;
     }
