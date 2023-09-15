@@ -9,12 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostRankingDto {
 
+    private Long profileId;
     private Long canvasId;
     private Long postId;
     private String canvasUrl;
 
     @QueryProjection
-    public PostRankingDto(Long canvasId, String canvasUrl, Long postId){
+    public PostRankingDto(Long profileId, Long canvasId, String canvasUrl, Long postId){
+        this.profileId = profileId;
         this.canvasId = canvasId;
         this.canvasUrl = canvasUrl;
         this.postId = postId;

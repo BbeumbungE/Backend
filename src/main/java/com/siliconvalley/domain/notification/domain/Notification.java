@@ -69,4 +69,8 @@ public class Notification {
                 .isRead(false)
                 .build();
     }
+
+    public void read() {
+        this.isRead = true;
+    }
 }

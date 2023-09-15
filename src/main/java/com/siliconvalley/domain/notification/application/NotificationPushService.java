@@ -5,6 +5,7 @@ import com.siliconvalley.domain.notification.dao.NotificationRepository;
 import com.siliconvalley.domain.notification.domain.Notification;
 import com.siliconvalley.domain.notification.domain.NotificationType;
 import com.siliconvalley.domain.notification.dto.NotificationResponse;
+import com.siliconvalley.domain.post.dto.PostRankingDto;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.sse.application.SseEmitterFinder;
@@ -47,20 +48,19 @@ public class NotificationPushService {
         });
     }
 
-    public void pushNotification(NotificationType type) {
-        Map<Long, SseEmitter> sseEmitterMap = sseEmitterFinder.findALl();
+    public void pushNotification(PostRankingDto postRankingDto) {
+        Long profileId = postRankingDto.getProfileId();
+        SseEmitter sseEmitter = sseEmitterFinder.findByProfileId(profileId);
 
-        sseEmitterMap.entrySet().stream().forEach(sseEmitter -> {
-            Long profileId = sseEmitter.getKey();
-            Profile profile = profileFindDao.findById(profileId);
-            Notification notification = Notification.toRankingNotification(profile, type);
-            notificationRepository.save(notification);
+        Profile profile = profileFindDao.findById(profileId);
 
-            NotificationResponse notificationResponse = new NotificationResponse(notification);
-            String id = profileId + "_"+ System.currentTimeMillis();
+        Notification notification = Notification.toRankingNotification(profile, NotificationType.RANKING);
+        notificationRepository.save(notification);
 
-            sseEmitterSender.send(sseEmitter.getValue(), id, notificationResponse ,profileId); // 알림 전송
-            eventCashRepository.save(id, notificationResponse); // 미전송 알림 저장용
-        });
+        NotificationResponse notificationResponse = new NotificationResponse(notification);
+        String id = profileId + "_"+ System.currentTimeMillis();
+
+        if (sseEmitter != null) sseEmitterSender.send(sseEmitter, id, notificationResponse ,profileId); // 알림 전송
+        eventCashRepository.save(id, notificationResponse); // 미전송 알림 저장용
     }
 }
