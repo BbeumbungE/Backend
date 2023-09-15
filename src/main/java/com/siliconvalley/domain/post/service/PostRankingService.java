@@ -1,5 +1,7 @@
 package com.siliconvalley.domain.post.service;
 
+import com.siliconvalley.domain.item.subject.dao.SubjectFindDao;
+import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.notification.application.NotificationPushService;
 import com.siliconvalley.domain.notification.domain.NotificationType;
 import com.siliconvalley.domain.post.dao.PostCustomRepository;
@@ -22,17 +24,20 @@ public class PostRankingService {
 
     private final RankCachingService rankCachingService;
     private final PostCustomRepository postCustomRepository;
-
+    private final SubjectFindDao subjectFindDao;
     private final NotificationPushService notificationPushService;
 
     @Scheduled(cron = "0 0 * * * *")
     public void updateRanking(){
-        List<PostRankingDto> postRankingDtoList = postCustomRepository.getSubjectRankingThisWeek();
-        log.info("랭킹 개수" + postRankingDtoList.size());
-        for (PostRankingDto postRankingDto : postRankingDtoList){
-            log.info(postRankingDto.getPostId() + "번 포스트");
-            notificationPushService.pushNotification(postRankingDto);
+        List<Subject> subjects = subjectFindDao.findAllSubjects();
+        for (Subject subject : subjects){
+            List<PostRankingDto> postRankingDtoList = postCustomRepository.getSubjectRankingThisWeek(subject.getId());
+            log.info("랭킹 개수" + postRankingDtoList.size());
+            for (PostRankingDto postRankingDto : postRankingDtoList){
+                log.info(postRankingDto.getPostId() + "번 포스트");
+                notificationPushService.pushNotification(postRankingDto);
+            }
+            rankCachingService.cachingRankToRedis(new RankingCachingDto(postRankingDtoList, subject.getSubjectName()));
         }
-        rankCachingService.cachingRankToRedis(new RankingCachingDto(postRankingDtoList));
     }
 }

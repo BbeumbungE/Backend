@@ -54,10 +54,9 @@ public class CanvasConvertService {
 
       public void updateConvertedData(SketchConversionResponse response){
         Canvas canvas = canvasFindDao.findById(response.getCanvasId());
-        String profileId = canvas.getProfile().getId().toString();
+        Long profileId = canvas.getProfile().getId();
         String id = profileId + "_" + System.currentTimeMillis();
         canvas.updateCanvas(response.getCanvasUrl());
-        log.info(sseEmitterFinder.findById(profileId).toString() + "저 여깄어요");
-        sseEmitterSender.send(sseEmitterFinder.findById(profileId), id, new ConvertEventDto(canvas.getId(), response.getCanvasUrl()));
+        sseEmitterSender.send(sseEmitterFinder.findByProfileId(profileId), id, new ConvertEventDto(canvas.getId(), response.getCanvasUrl()), profileId);
     }
 }

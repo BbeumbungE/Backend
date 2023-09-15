@@ -41,9 +41,11 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/posts/ranking")
-    public ResponseEntity<Response> getRankingThisWeek(){
-        Response response = rankCachingService.getRankingThisWeek();
+    @GetMapping("/subjects/{subjectId}/posts/ranking")
+    public ResponseEntity<Response> getRankingThisWeek(
+            @PathVariable Long subjectId
+    ){
+        Response response = rankCachingService.getRankingThisWeekBySubject(subjectId);
         return ResponseEntity.ok(response);
     }
 

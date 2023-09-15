@@ -27,6 +27,6 @@ public class ConvertRequestSender {
         String subjectName = subjectFindDao.findById(subjectId).getSubjectName();
         SketchConversionRequest request = new SketchConversionRequest(sketchUrl, canvasId, profileId, subjectName);
         rabbitTemplate.convertAndSend(exchange, "sketch_conversion_request_queue" , request);
-        return Response.of(RabbitMQCode.CONVERSION_REQUEST_SUCCESS, new CanvasConvertResponse(canvasId, rankCachingService.getTopPostThisWeek()));
+        return Response.of(RabbitMQCode.CONVERSION_REQUEST_SUCCESS, new CanvasConvertResponse(canvasId, rankCachingService.getTopPostThisWeek(subjectName)));
     }
 }
