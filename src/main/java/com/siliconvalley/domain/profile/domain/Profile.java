@@ -3,6 +3,7 @@ package com.siliconvalley.domain.profile.domain;
 import com.siliconvalley.domain.canvas.domain.Canvas;
 import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.member.domain.Member;
+import com.siliconvalley.domain.notification.domain.Notification;
 import com.siliconvalley.domain.point.domain.Point;
 import com.siliconvalley.domain.profile.dto.ProfileNameUpdate;
 import com.siliconvalley.domain.record.domain.Record;
@@ -48,6 +49,9 @@ public class Profile {
     @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Record> recordList;
 
+    @OneToMany(mappedBy = "receiver", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Notification> notificationList;
+
     @Builder
     public Profile(String profileName, Member member, ProfileItem profileItem) {
         this.profileName = profileName;
@@ -61,13 +65,6 @@ public class Profile {
 
     public void addPoint(Point point) {
         this.point = point;
-        point.setProfile(this);
-    }
-
-    public Point buildPoint() {
-        return Point.builder()
-                .point(0L)
-                .build();
     }
 
     public void addMyItem(MyItem myItem) {
@@ -76,7 +73,6 @@ public class Profile {
 
     public void addProfileAvatar(ProfileItem profileItem) {
         this.profileItem = profileItem;
-        profileItem.addProfile(this);
     }
 
     public void updateProfileName(

@@ -1,17 +1,13 @@
 package com.siliconvalley.domain.profile.application;
 
-import com.siliconvalley.domain.item.item.application.BasicItemCreateService;
 import com.siliconvalley.domain.item.item.dao.ItemFindDao;
-import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
-import com.siliconvalley.domain.item.myitem.dao.MyItemRepository;
 import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.member.dao.MemberFindDao;
 import com.siliconvalley.domain.profile.code.ProfileCode;
 import com.siliconvalley.domain.profile.code.ProfileItemCode;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.dao.ProfileItemFindDao;
-import com.siliconvalley.domain.profile.dao.ProfileItemRepository;
 import com.siliconvalley.domain.profile.dao.ProfileRepository;
 import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.profile.domain.ProfileItem;
@@ -19,15 +15,12 @@ import com.siliconvalley.domain.profile.dto.ProfileCreate;
 import com.siliconvalley.domain.profile.dto.ProfileCreateSuccessResponse;
 import com.siliconvalley.domain.profile.dto.ProfileItemUpdate;
 import com.siliconvalley.domain.profile.dto.ProfileNameUpdate;
-import com.siliconvalley.domain.profile.exception.ProfileItemNotFoundException;
 import com.siliconvalley.domain.profile.exception.ProfileNameDuplicateException;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -46,31 +39,9 @@ public class ProfileManagementService {
 
     // MyItem
     private final MyItemFindDao myItemFindDao;
-    private final BasicItemCreateService basicItemCreateService;
 
     // ProfileItem
     private final ProfileItemFindDao profileItemFindDao;
-
-    public Response createProfile(final String memberId, final ProfileCreate dto) {
-        if (profileRepository.existsByProfileName(dto.getProfileName())) throw new ProfileNameDuplicateException(dto.getProfileName());
-        Profile profile = dto.getProfile(memberFindDao.findById(memberId));
-
-//        // 기본 아이템 생성
-//        MyItem myAvatarItem = basicItemCreateService.createBasicAvatarItem(profile);
-//        MyItem mySubjectItem = basicItemCreateService.createBasicSubjectItem(profile);
-//
-//        // 기본 프로필 아이템 생성
-//        ProfileItem profileAvatar = dto.getProfileItem(myAvatarItem);
-//
-//        // 객체 연관관계 설정
-//        profile.addMyItem(myAvatarItem);
-//        profile.addMyItem(mySubjectItem);
-//        profile.addProfileAvatar(profileAvatar);
-        profile.addPoint(profile.buildPoint());
-        profileRepository.save(profile);
-
-        return Response.of(ProfileCode.CREATE_SUCCESS, new ProfileCreateSuccessResponse(profile));
-    }
 
     public Response updateProfileName(final Long profileId, final ProfileNameUpdate dto) {
         Profile profile = profileFindDao.findById(profileId);
