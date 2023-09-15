@@ -1,6 +1,8 @@
 package com.siliconvalley.domain.rabbitMQ.service;
 
 import com.siliconvalley.domain.canvas.dto.CanvasConvertResponse;
+import com.siliconvalley.domain.item.subject.dao.SubjectFindDao;
+import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.post.service.RankCachingService;
 import com.siliconvalley.domain.rabbitMQ.code.RabbitMQCode;
 import com.siliconvalley.domain.rabbitMQ.dto.SketchConversionRequest;
@@ -16,17 +18,15 @@ public class ConvertRequestSender {
 
     private final RabbitTemplate rabbitTemplate;
     private final RankCachingService rankCachingService;
-    private final GenerateRoutingKeyService generateRoutingKeyService;
+    private final SubjectFindDao subjectFindDao;
 
     @Value("${rabbitmq.exchange}")
     private String exchange;
 
-
     public Response sendSketchConversionRequest(String sketchUrl, Long canvasId, Long profileId, Long subjectId) {
-        SketchConversionRequest request = new SketchConversionRequest(sketchUrl, canvasId, profileId);
-        rabbitTemplate.convertAndSend(exchange, generateRoutingKeyService.generateRoutingKey(subjectId), request);
-        return Response.of(RabbitMQCode.CONVERSION_REQUEST_SUCCESS,
-                new CanvasConvertResponse(canvasId, rankCachingService.getTopPostThisWeek()));
+        String subjectName = subjectFindDao.findById(subjectId).getSubjectName();
+        SketchConversionRequest request = new SketchConversionRequest(sketchUrl, canvasId, profileId, subjectName);
+        rabbitTemplate.convertAndSend(exchange, "sketch_conversion_request_queue" , request);
+        return Response.of(RabbitMQCode.CONVERSION_REQUEST_SUCCESS, new CanvasConvertResponse(canvasId, rankCachingService.getTopPostThisWeek()));
     }
-
 }

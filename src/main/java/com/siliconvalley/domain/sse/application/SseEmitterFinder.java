@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @RequiredArgsConstructor
 public class SseEmitterFinder {
 
-    private  final SseEmitterRepository sseEmitterRepository;
+    private final SseEmitterRepository sseEmitterRepository;
 
     public SseEmitter findById(String id) {
         return sseEmitterRepository.findById(id);
