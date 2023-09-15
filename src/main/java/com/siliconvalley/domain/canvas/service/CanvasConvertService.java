@@ -49,7 +49,7 @@ public class CanvasConvertService {
         return canvasUpdateService.updateSketchAndCanvas(canvas, sketch, profileId);
     }
 
-    public void updateConvertedData(SketchConversionResponse response){
+      public void updateConvertedData(SketchConversionResponse response){
         Canvas canvas = canvasFindDao.findById(response.getCanvasId());
         canvas.updateCanvas(response.getCanvasUrl());
     }
