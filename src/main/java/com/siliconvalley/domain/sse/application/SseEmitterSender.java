@@ -13,14 +13,14 @@ public class SseEmitterSender {
 
     private final SseEmitterRepository sseEmitterRepository;
 
-    public void send(SseEmitter sseEmitter, String id, Object data) {
+    public void send(SseEmitter sseEmitter, String id, Object data, Long profileId) {
         try {
             sseEmitter.send(SseEmitter.event()
                     .id(id)
                     .name("sse")
                     .data(data));
         } catch (IOException exception) {
-            sseEmitterRepository.delete(id);
+            sseEmitterRepository.delete(profileId);
             throw new RuntimeException("SSE Connect Fail");
         }
     }

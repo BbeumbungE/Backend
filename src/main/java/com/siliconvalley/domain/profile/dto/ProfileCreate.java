@@ -21,16 +21,10 @@ public class ProfileCreate {
         this.profileName = profileName;
     }
 
-    public Profile getProfile(final Member member) {
+    public Profile toEntity(final Member member) {
         return Profile.builder()
                 .profileName(profileName)
                 .member(member)
-                .build();
-    }
-
-    public ProfileItem getProfileItem(final MyItem myItem) {
-        return ProfileItem.builder()
-                .myItem(myItem)
                 .build();
     }
 }

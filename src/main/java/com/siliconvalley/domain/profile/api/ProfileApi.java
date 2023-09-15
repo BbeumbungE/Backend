@@ -6,7 +6,10 @@ import com.siliconvalley.domain.item.item.dao.AvatarItemFindDao;
 import com.siliconvalley.domain.item.item.dao.SubjectItemFindDao;
 import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
+import com.siliconvalley.domain.notification.application.NotificationDeleteService;
+import com.siliconvalley.domain.notification.dao.NotificationFindDao;
 import com.siliconvalley.domain.point.application.PointManagementService;
+import com.siliconvalley.domain.profile.application.ProfileCreateService;
 import com.siliconvalley.domain.profile.application.ProfileManagementService;
 import com.siliconvalley.domain.profile.application.ProfilePostingService;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
@@ -38,26 +41,40 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @RequiredArgsConstructor
 public class ProfileApi {
 
+    // Profile
     private final ProfileFindDao profileFindDao;
     private final ProfileManagementService profileManagementService;
+    private final ProfileCreateService profileCreateService;
+
+    // MyItem
     private final MyItemFindDao myItemFindDao;
     private final MyItemCreateService myItemCreateService;
+
+    // Point
     private final PointManagementService pointManagementService;
+
+    // Post
     private final ProfilePostingService profilePostingService;
+
+    // Canvas
     private final CanvasFindDao canvasFindDao;
     private final CanvasDeleteService canvasDeleteService;
-    //item
+
+    // Subject
     private final SubjectItemFindDao subjectItemFindDao;
     private final AvatarItemFindDao avatarItemFindDao;
 
-    //stage
+    // Stage
     private final StageFindDao stageFindDao;
-    // record
+
+    // Record
     private final RecordCreateService recordCreateService;
     private final RecordUpdateService recordUpdateService;
-    // sse
-    private final SseEmitterService sseEmitterService;
 
+    // Notification
+    private final SseEmitterService sseEmitterService;
+    private final NotificationFindDao notificationFindDao;
+    private final NotificationDeleteService notificationDeleteService;
 
     /**
      *
@@ -71,7 +88,7 @@ public class ProfileApi {
             @AuthenticationPrincipal OAuth2User oAuth2User
     ) {
         String memberId = (String) oAuth2User.getAttributes().get("id");
-        return ResponseEntity.status(HttpStatus.CREATED).body(profileManagementService.createProfile(memberId, dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(profileCreateService.createProfile(memberId, dto));
     }
 
     @GetMapping("/{profileId}")
@@ -250,5 +267,33 @@ public class ProfileApi {
     {
         return sseEmitterService.connect(profileId, lastEventId);
     }
+
+    /**
+     * Notification
+     **/
+
+    @GetMapping("/{profileId}/notifications")
+    public ResponseEntity getNotificationPage(
+            @PathVariable(name = "profileId") Long profileId,
+            Pageable pageable
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(notificationFindDao.getNotificationPage(profileId, pageable));
+    }
+
+    @GetMapping("/{profileId}/notifications/{notificationId}")
+    public ResponseEntity getNotification(
+            @PathVariable(name = "notificationId") Long notificationId
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(notificationFindDao.getNotification(notificationId));
+    }
+
+    @DeleteMapping("/{profileId}/notifications/{notificationId}")
+    public ResponseEntity deleteNotification(
+            @PathVariable(name = "notificationId") Long notificationId
+    ) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(notificationDeleteService.deleteNotification(notificationId));
+    }
+
+
 
 }

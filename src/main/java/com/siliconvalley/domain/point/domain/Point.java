@@ -31,8 +31,11 @@ public class Point {
         this.profile = profile;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public static Point toEntity(Profile profile) {
+        return Point.builder()
+                .point(0L)
+                .profile(profile)
+                .build();
     }
 
     public void updatePoint(Long newPointValue) {

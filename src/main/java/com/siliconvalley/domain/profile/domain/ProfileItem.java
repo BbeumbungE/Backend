@@ -33,8 +33,11 @@ public class ProfileItem {
         this.myItem = myItem;
     }
 
-    public void addProfile(Profile profile) {
-        this.profile = profile;
+    public static ProfileItem toEntity(Profile profile, MyItem myItem) {
+        return ProfileItem.builder()
+                .myItem(myItem)
+                .profile(profile)
+                .build();
     }
 
     public void updateMyItem(MyItem myItem) {
