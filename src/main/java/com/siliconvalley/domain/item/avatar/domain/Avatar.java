@@ -35,6 +35,13 @@ public class Avatar {
         this.item = item;
     }
 
+    public static Avatar toEntity(String avatarName, Item item, String imgUrl) {
+        return Avatar.builder()
+                .avatarName(avatarName)
+                .item(item)
+                .avatarImage(imgUrl)
+                .build();
+    }
     public void setItem(Item item) {
         this.item = item;
     }

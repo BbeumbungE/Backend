@@ -18,22 +18,12 @@ public class SubjectItemCreateRequest {
     @Valid
     private String subjectName;
 
-    @Valid
-    private String subjectImage;
-
-    @Valid
-    private String sketch;
-
     SubjectItemCreateRequest(
             @Valid Long itemPrice,
-            @Valid String subjectName,
-            @Valid String subjectImage,
-            @Valid String sketch
+            @Valid String subjectName
     ) {
         this.itemPrice = itemPrice;
         this.subjectName = subjectName;
-        this.subjectImage = subjectImage;
-        this.sketch = sketch;
     }
 
     public Item getItem() {
@@ -42,11 +32,11 @@ public class SubjectItemCreateRequest {
                 .build();
     }
 
-    public Subject getSubject(Item item) {
+    public Subject getSubject(Item item, String subjectImgUrl, String sketchImgUrl) {
         return Subject.builder()
                 .subjectName(subjectName)
-                .subjectImage(subjectImage)
-                .sketch(sketch)
+                .subjectImage(subjectImgUrl)
+                .sketch(sketchImgUrl)
                 .item(item)
                 .build();
     }

@@ -1,9 +1,9 @@
 package com.siliconvalley.domain.item.item.application;
 
+import com.siliconvalley.domain.item.avatar.domain.Avatar;
 import com.siliconvalley.domain.item.item.code.ItemCode;
 import com.siliconvalley.domain.item.item.dao.ItemRepository;
 import com.siliconvalley.domain.item.item.domain.Item;
-import com.siliconvalley.domain.item.item.dto.AvatarItemCreateRequest;
 import com.siliconvalley.domain.item.item.dto.ItemPostSuccessResponse;
 import com.siliconvalley.domain.notification.application.NotificationPushService;
 import com.siliconvalley.domain.notification.domain.NotificationType;
@@ -20,11 +20,12 @@ public class AvatarItemCreateService {
     private final ItemRepository itemRepository;
     private final NotificationPushService notificationPushService;
 
-    public Response createAvatarItem(AvatarItemCreateRequest dto) {
-        Item item = dto.getItem();
+    public Response createAvatarItem(Long itemPrice, String avatarName, String imgUrl) {
+
+        Item item = Item.toEntity(itemPrice);
 
         // Item과 Avatar 빌드 및 연관관계 매핑
-        item.addAvatar(dto.getAvatar(item));
+        item.addAvatar(Avatar.toEntity(avatarName, item, imgUrl));
 
         // Item이 저장될 때 Avatar 자동 저장
         itemRepository.save(item);
