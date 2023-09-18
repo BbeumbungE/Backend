@@ -6,6 +6,7 @@ import com.siliconvalley.domain.post.code.PostCode;
 import com.siliconvalley.domain.post.domain.Post;
 import com.siliconvalley.domain.post.dto.PostListResponse;
 import com.siliconvalley.domain.post.dto.PostDetailResponse;
+import com.siliconvalley.domain.post.dto.PostSubjectResponse;
 import com.siliconvalley.domain.post.exception.PostNotFoundException;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +41,8 @@ public class PostFindDao {
     public Response getPostsBySubjectName(Long subjectId, Pageable pageable) {
         Subject subject = subjectFindDao.findById(subjectId);
         Page<Post> posts = postRepository.findByCanvas_Subject_SubjectName(subject.getSubjectName(), pageable);
-        return Response.of(PostCode.POST_RETRIEVE_SUCCESS, posts.map(PostListResponse::new));
+        Page<PostListResponse> postListResponses = posts.map(PostListResponse::new);
+        return Response.of(PostCode.POST_RETRIEVE_SUCCESS, new PostSubjectResponse(subject, postListResponses));
     }
+
 }
