@@ -24,7 +24,7 @@ public class PostCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public List<PostRankingDto> getSubjectRankingThisWeek(){
+    public List<PostRankingDto> getSubjectRankingThisWeek(Long subjectId){
         QPost post = QPost.post;
         QEmotion emotion = QEmotion.emotion;
         QCanvas canvas = QCanvas.canvas1;
@@ -38,7 +38,8 @@ public class PostCustomRepository {
                 .from(emotion)
                 .join(emotion.post, post)
                 .join(post.canvas, canvas)
-                .where(emotion.createdAt.between(startOfWeek, endOfWeek)) // 감정 표현의 생성 시간을 기준으로 필터링
+                .where(emotion.createdAt.between(startOfWeek, endOfWeek).
+                        and(canvas.subject.id.eq(subjectId)))
                 .groupBy(post.id, canvas.id, canvas.canvas)
                 .orderBy(emotion.count().desc(), post.createdAt.asc()) // 추가된 정렬 기준
                 .limit(8)

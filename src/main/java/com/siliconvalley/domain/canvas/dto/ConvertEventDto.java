@@ -6,11 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CanvasConvertResponse {
+public class ConvertEventDto {
+
     private Long canvasId;
-    private String topPost;
-    public CanvasConvertResponse(Long canvasId, String topPost){
+    private String canvasUrl;
+
+    public ConvertEventDto(Long canvasId, String canvasUrl){
         this.canvasId = canvasId;
-        this.topPost = topPost;
+        this.canvasUrl = canvasUrl;
     }
+
 }

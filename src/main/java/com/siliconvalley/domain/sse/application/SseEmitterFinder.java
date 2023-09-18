@@ -12,7 +12,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SseEmitterFinder {
 
-    private  final SseEmitterRepository sseEmitterRepository;
+    private final SseEmitterRepository sseEmitterRepository;
 
     public SseEmitter findByProfileId(Long profileId) {
         return sseEmitterRepository.findById(profileId);

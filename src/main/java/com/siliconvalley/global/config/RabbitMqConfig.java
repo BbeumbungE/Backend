@@ -67,4 +67,14 @@ public class RabbitMqConfig {
     MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
+
+    @Bean
+    public Binding bindingRequestQueue(Queue requestQueue, TopicExchange topicExchange) {
+        return BindingBuilder.bind(requestQueue).to(topicExchange).with("sketch_conversion_request_queue");
+    }
+
+    @Bean
+    public Binding bindingResponseQueue(Queue responseQueue, TopicExchange topicExchange) {
+        return BindingBuilder.bind(responseQueue).to(topicExchange).with("sketch_conversion_response_queue");
+    }
 }

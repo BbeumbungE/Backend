@@ -27,7 +27,8 @@ public class CanvasController {
             @RequestParam Long profileId,
             @RequestParam Long subjectId
     ) throws IOException {
-        Response response = canvasConvertService.convertSketchToCanvas(profileId, subjectId, sketchFile);
+        String sketch = s3ImageUploadService.uploadFile(sketchFile, s3PathBuildService.buildPath(profileId, "sketch"));
+        Response response = canvasConvertService.convertSketchToCanvas(profileId, subjectId, sketch);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -37,7 +38,8 @@ public class CanvasController {
             @RequestParam Long profileId,
             @PathVariable Long canvasId
     ) throws IOException {
-        Response response = canvasConvertService.updateSketchAndCanvas(profileId, canvasId, sketchFile);
+        String sketch = s3ImageUploadService.uploadFile(sketchFile, s3PathBuildService.buildPath(profileId, "sketch"));
+        Response response = canvasConvertService.updateSketchAndCanvas(profileId, canvasId, sketch);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
