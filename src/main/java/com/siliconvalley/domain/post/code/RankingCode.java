@@ -4,7 +4,7 @@ import com.siliconvalley.global.common.code.ResponseCode;
 import org.springframework.http.HttpStatus;
 
 public enum RankingCode implements ResponseCode {
-    UPDATE_RANKING(204, "랭킹이 업데이트 되었습니다.", HttpStatus.NO_CONTENT),
+    UPDATE_RANKING(201, "랭킹이 업데이트 되었습니다.", HttpStatus.CREATED),
     GET_RANKING_SUCCESS(200, "랭킹 조회에 성공하였습니다.", HttpStatus.OK);
 
     private final int code;
