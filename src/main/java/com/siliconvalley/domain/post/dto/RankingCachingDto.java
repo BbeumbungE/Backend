@@ -11,13 +11,13 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RankingCachingDto {
     private String time;
-    private String subjectName;
+    private Long subjectId;
     private List<PostRankingDto> rankerList;
 
-    public RankingCachingDto(List<PostRankingDto> dto, String subjectName){
+    public RankingCachingDto(List<PostRankingDto> dto, Long subjectId){
         this.time = "Update Time : " + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute();
         this.rankerList = dto;
-        this.subjectName = subjectName;
+        this.subjectId = subjectId;
     }
 
 }

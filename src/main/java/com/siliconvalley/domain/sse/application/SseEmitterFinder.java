@@ -18,6 +18,10 @@ public class SseEmitterFinder {
         return sseEmitterRepository.findById(profileId);
     }
 
+    public SseEmitter findByProfileIdWithExceptionHandling(Long profileId){
+        return sseEmitterRepository.findByIdWithExceptionHandling(profileId);
+    }
+
     public Map<Long, SseEmitter> findALl() {
         return sseEmitterRepository.findAll();
     }
