@@ -25,26 +25,26 @@ public class RankCachingService {
 
     public Response getRankingThisWeekBySubject(Long subjectId){
         Subject subject = subjectFindDao.findById(subjectId);
-        RankingCachingDto rankingCachingDto = redisTemplate.opsForList().index(generateRedisKey(subject.getSubjectName()), -1);
+        RankingCachingDto rankingCachingDto = redisTemplate.opsForList().index(generateRedisKey(subject.getId()), -1);
         return Response.of(RankingCode.GET_RANKING_SUCCESS, rankingCachingDto);
     }
 
     public void cachingRankToRedis(RankingCachingDto rankingCachingDto){
-        redisTemplate.opsForList().rightPush(generateRedisKey(rankingCachingDto.getSubjectName()), rankingCachingDto);
+        redisTemplate.opsForList().rightPush(generateRedisKey(rankingCachingDto.getSubjectId()), rankingCachingDto);
         // 키의 만료 시간을 4주로 설정
-        redisTemplate.expire(generateRedisKey(rankingCachingDto.getSubjectName()), 28, TimeUnit.DAYS);
+        redisTemplate.expire(generateRedisKey(rankingCachingDto.getSubjectId()), 28, TimeUnit.DAYS);
     }
 
-    public String getTopPostThisWeek(String subjectName){
-        RankingCachingDto rankingCachingDto = redisTemplate.opsForList().index(generateRedisKey(subjectName), -1);
-        log.info(rankingCachingDto.getRankerList().size() + "개의 리스트");
-        log.info(rankingCachingDto.getRankerList().get(0).getCanvasUrl());
-        log.info(rankingCachingDto.getRankerList().get(0).getPostId() + "번 게시물");
+    public String getTopPostThisWeek(Long subjectId){
+        RankingCachingDto rankingCachingDto = redisTemplate.opsForList().index(generateRedisKey(subjectId), -1);
+        if (rankingCachingDto.getRankerList().isEmpty()){
+            return "ranking is empty";
+        }
         return rankingCachingDto.getRankerList().get(0).getCanvasUrl();
     }
 
-    private String generateRedisKey(String subjectName) {
+    private String generateRedisKey(Long subjectId) {
         RankingPeriodDto dateDto = RankingPeriodDto.builder().build();
-        return "week:" + dateDto.getWeekOfYear() + ":day:" + dateDto.getDayOfWeek() + ':' + subjectName + ":rank";
+        return "week:" + dateDto.getWeekOfYear() + ":day:" + dateDto.getDayOfWeek() + ':' + "subject:" + subjectId + ":rank";
     }
 }

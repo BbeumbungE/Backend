@@ -4,7 +4,7 @@ import com.siliconvalley.global.common.code.ResponseCode;
 import org.springframework.http.HttpStatus;
 
 public enum RabbitMQCode implements ResponseCode {
-    CONVERSION_REQUEST_SUCCESS(200, "변환 요청에 성공하였습니다.", HttpStatus.OK),
+    CONVERSION_REQUEST_SUCCESS(201, "변환 요청에 성공하였습니다.", HttpStatus.CREATED),
     CONVERSION_REQUEST_FAILURE(400, "변환 요청에 실패하였습니다.", HttpStatus.BAD_REQUEST),
     CONVERSION_RESPONSE_SUCCESS(200, "변환 응답을 성공적으로 수신하였습니다.", HttpStatus.OK),
     CONVERSION_RESPONSE_FAILURE(500, "변환 응답 수신에 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
