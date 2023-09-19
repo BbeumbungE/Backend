@@ -22,6 +22,10 @@ public class RecordFindDao {
         return recordOptional.get();
     }
 
+    public Optional<Record> findByProfileId(Long profileId) {
+        return recordRepository.findByProfileId(profileId);
+    }
+
     public Optional<Record> findByProfileIdAndStageId(Long profileId, Long stageId) {
         return recordRepository.findByProfileIdAndStageId(profileId, stageId);
     }
