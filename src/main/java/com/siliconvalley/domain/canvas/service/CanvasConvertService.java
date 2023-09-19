@@ -10,6 +10,8 @@ import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.rabbitMQ.dto.SketchConversionResponse;
 import com.siliconvalley.domain.rabbitMQ.service.ConvertRequestSender;
+import com.siliconvalley.domain.sse.application.CanvasSseEmitterFInder;
+import com.siliconvalley.domain.sse.application.ConvertResultSender;
 import com.siliconvalley.domain.sse.application.SseEmitterFinder;
 import com.siliconvalley.domain.sse.application.SseEmitterSender;
 import com.siliconvalley.global.common.dto.Response;
@@ -32,8 +34,9 @@ public class CanvasConvertService {
     private final ConvertRequestSender convertRequestSender;
     private final CanvasUpdateService canvasUpdateService;
     private final CanvasCreateService canvasCreateService;
-    private final SseEmitterSender sseEmitterSender;
-    private final SseEmitterFinder sseEmitterFinder;
+    private final CanvasSseEmitterFInder canvasSseEmitterFInder;
+    private final ConvertResultSender convertResultSender;
+
 
     public Response convertSketchToCanvas(Long profileId, Long subjectId, String sketch){
         Profile profile = profileFindDao.findById(profileId);
@@ -51,7 +54,7 @@ public class CanvasConvertService {
         Canvas canvas = canvasFindDao.findById(response.getCanvasId());
         canvas.updateCanvas(response.getCanvasUrl());
         Long profileId = canvas.getProfile().getId();
-        String id = profileId + "_" + System.currentTimeMillis();
-        sseEmitterSender.send(sseEmitterFinder.findByProfileIdWithExceptionHandling(profileId), id, new ConvertEventDto(canvas.getId(), response.getCanvasUrl()), profileId);
+        ConvertEventDto convertEventDto = new ConvertEventDto(canvas.getId(), response.getCanvasUrl());
+        convertResultSender.send(canvasSseEmitterFInder.findByProfileId(profileId), convertEventDto, profileId);
     }
 }

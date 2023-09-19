@@ -6,25 +6,20 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 @Repository
-public class SseEmitterRepository {
+public class CanvasSseEmitterRepository {
+    private final Map<Long , SseEmitter> sseEmitterMap = new ConcurrentHashMap<>();
 
-    private final Map<Long, SseEmitter> sseEmitterMap = new ConcurrentHashMap<>();
+    public SseEmitter findById(Long id) {
+        return sseEmitterMap.get(id);
+    }
+
     public void save(Long id, SseEmitter sseEmitter) {
         sseEmitterMap.put(id, sseEmitter);
     }
 
     public void delete(Long id) {
         sseEmitterMap.remove(id);
-    }
-
-    public SseEmitter findById(Long id) {
-        return sseEmitterMap.get(id);
-    }
-
-    public Map<Long, SseEmitter> findAll() {
-        return sseEmitterMap;
     }
 
 }
