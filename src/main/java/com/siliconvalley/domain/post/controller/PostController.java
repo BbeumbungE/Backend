@@ -2,8 +2,6 @@ package com.siliconvalley.domain.post.controller;
 
 import com.siliconvalley.domain.post.code.RankingCode;
 import com.siliconvalley.domain.post.dao.PostFindDao;
-import com.siliconvalley.domain.post.dto.EmotionCreateRequest;
-import com.siliconvalley.domain.post.dto.RankingCachingDto;
 import com.siliconvalley.domain.post.service.*;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -81,6 +79,16 @@ public class PostController {
     ){
         Response response = postEmoteService.emoteToPost(postId, emotionTypeId, profileId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PatchMapping("/posts/{postId}/profiles/{profileId}/emotions")
+    public ResponseEntity<Response> updateEmotionFromPost(
+            @PathVariable Long postId,
+            @PathVariable Long profileId,
+            @RequestParam Long emotionTypeId
+    ){
+        Response response = postEmoteService.updateEmote(postId, profileId, emotionTypeId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
     @DeleteMapping("/posts/{postId}/profiles/{profileId}/emotions")
