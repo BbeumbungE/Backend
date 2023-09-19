@@ -3,6 +3,7 @@ package com.siliconvalley.domain.item.subject.dao;
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.item.subject.exception.SubjectNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
