@@ -6,8 +6,6 @@ import com.siliconvalley.domain.canvas.dto.CanvasCreateDto;
 import com.siliconvalley.domain.canvas.dto.ConvertEventDto;
 import com.siliconvalley.domain.item.subject.dao.SubjectFindDao;
 import com.siliconvalley.domain.item.subject.domain.Subject;
-import com.siliconvalley.domain.pix2pix.dao.Pix2PixFindDao;
-import com.siliconvalley.domain.pix2pix.dto.UseModelDto;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.rabbitMQ.dto.SketchConversionResponse;
@@ -51,9 +49,9 @@ public class CanvasConvertService {
 
       public void updateConvertedData(SketchConversionResponse response){
         Canvas canvas = canvasFindDao.findById(response.getCanvasId());
+        canvas.updateCanvas(response.getCanvasUrl());
         Long profileId = canvas.getProfile().getId();
         String id = profileId + "_" + System.currentTimeMillis();
-        canvas.updateCanvas(response.getCanvasUrl());
-        sseEmitterSender.send(sseEmitterFinder.findByProfileId(profileId), id, new ConvertEventDto(canvas.getId(), response.getCanvasUrl()), profileId);
+        sseEmitterSender.send(sseEmitterFinder.findByProfileIdWithExceptionHandling(profileId), id, new ConvertEventDto(canvas.getId(), response.getCanvasUrl()), profileId);
     }
 }

@@ -36,7 +36,7 @@ public class PostRankingService {
                 log.info(postRankingDto.getPostId() + "번 포스트");
                 notificationPushService.pushNotification(postRankingDto);
             }
-            rankCachingService.cachingRankToRedis(new RankingCachingDto(postRankingDtoList, subject.getSubjectName()));
+            rankCachingService.cachingRankToRedis(new RankingCachingDto(postRankingDtoList, subject));
         }
     }
 }

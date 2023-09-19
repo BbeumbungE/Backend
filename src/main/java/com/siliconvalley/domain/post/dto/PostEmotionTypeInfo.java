@@ -3,7 +3,6 @@ package com.siliconvalley.domain.post.dto;
 import com.querydsl.core.annotations.QueryProjection;
 import com.siliconvalley.domain.post.domain.EmotionType;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
