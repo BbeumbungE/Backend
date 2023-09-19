@@ -1,6 +1,7 @@
 package com.siliconvalley.domain.item.subject.domain;
 
 import com.siliconvalley.domain.item.item.domain.Item;
+import com.siliconvalley.domain.pix2pix.domain.Pix2Pix;
 import com.siliconvalley.domain.stage.domain.Stage;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +35,9 @@ public class Subject {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
+
+    @OneToOne(mappedBy = "subject", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    private Pix2Pix pix2Pix;
 
     @Builder
     public Subject(String subjectName, String subjectImage, String sketch, Item item) {

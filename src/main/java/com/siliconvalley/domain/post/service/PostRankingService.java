@@ -8,6 +8,7 @@ import com.siliconvalley.domain.post.dto.PostRankingDto;
 import com.siliconvalley.domain.post.dto.RankingCachingDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,7 @@ public class PostRankingService {
                 log.info(postRankingDto.getPostId() + "번 포스트");
                 notificationPushService.pushNotification(postRankingDto);
             }
-            rankCachingService.cachingRankToRedis(new RankingCachingDto(postRankingDtoList, subject.getId()));
+            rankCachingService.cachingRankToRedis(new RankingCachingDto(postRankingDtoList, subject));
         }
     }
 }

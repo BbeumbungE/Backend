@@ -6,6 +6,7 @@ import com.siliconvalley.domain.post.dao.EmotionRepository;
 import com.siliconvalley.domain.post.dao.EmotionTypeFindDao;
 import com.siliconvalley.domain.post.dao.PostFindDao;
 import com.siliconvalley.domain.post.domain.Emotion;
+import com.siliconvalley.domain.post.domain.EmotionType;
 import com.siliconvalley.domain.post.domain.Post;
 import com.siliconvalley.domain.post.dto.EmotionCreatedResponse;
 import com.siliconvalley.domain.post.exception.IllegalDeleteException;
@@ -33,6 +34,12 @@ public class PostEmoteService {
         Emotion emotion = post.addEmotion(emotionTypeFindDao.findById(emotionTypeId), profile);
         emotionRepository.save(emotion);
         return Response.of(EmotionCode.EMOTE_SUCCESS, new EmotionCreatedResponse(emotion));
+    }
+
+    public Response updateEmote(Long postId, Long requestProfileId, Long emotionTypeId){
+        EmotionType emotionType = emotionTypeFindDao.findById(emotionTypeId);
+        emotionFindDao.findByPostIdAndProfileId(postId, requestProfileId).updateEmotion(emotionType);
+        return Response.of(EmotionCode.CANCEL_EMOTION_SUCCESS, null);
     }
 
     public Response cancelEmote(Long postId, Long requestProfileId){

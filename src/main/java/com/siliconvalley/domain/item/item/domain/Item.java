@@ -1,8 +1,6 @@
 package com.siliconvalley.domain.item.item.domain;
 
-import com.siliconvalley.domain.item.avatar.domain.Avatar;
-import com.siliconvalley.domain.item.item.dto.AvatarItemCreateRequest;
-import com.siliconvalley.domain.item.item.dto.SubjectItemCreateRequest;
+import com.siliconvalley.domain.item.avatar.domain.Avatar;;
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import lombok.Builder;
 import lombok.Getter;

@@ -45,4 +45,8 @@ public class Emotion {
         this.post = post;
     }
 
+    public void updateEmotion(EmotionType emotionType){
+        this.emotionType = emotionType;
+    }
+
 }

@@ -10,12 +10,12 @@ public class SketchConversionRequest {
     private String sketchUrl;
     private Long canvasId;
     private Long profileId;
-    private String subjectName;
+    private String modelName;
 
-    public SketchConversionRequest(String sketchUrl, Long canvasId, Long profileId, String subjectName){
+    public SketchConversionRequest(String sketchUrl, Long canvasId, Long profileId, String modelName){
         this.sketchUrl = sketchUrl;
         this.canvasId = canvasId;
         this.profileId = profileId;
-        this.subjectName = subjectName;
+        this.modelName = modelName;
     }
 }

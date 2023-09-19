@@ -15,7 +15,6 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "canvas")
-@Slf4j
 public class Canvas {
 
     @Id
