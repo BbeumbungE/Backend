@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 
 public enum RecordCode implements ResponseCode {
 
-    CREATE_SUCCESS(201, "스테이지 기록 생성에 성공했습니다.", HttpStatus.CREATED),
-    UPDATE_SUCCESS(204, "스테이지 기록 변경에 성공했습니다.", HttpStatus.NO_CONTENT);
+    CREATE_SUCCESS(201, "스테이지 기록 생성 및 리워드 지급에 성공했습니다.", HttpStatus.CREATED),
+    UPDATE_SUCCESS(200, "스테이지 기록 변경 및 리워드 지급에 성공했습니다.", HttpStatus.NO_CONTENT);
 
     private final int code;
     private final String message;

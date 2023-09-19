@@ -253,7 +253,7 @@ public class ProfileApi {
             @PathVariable(name = "recordId") Long recordId,
             @RequestBody RecordUpdateRequest dto
     ) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(recordUpdateService.updateRecord(recordId, dto));
+        return ResponseEntity.status(HttpStatus.OK).body(recordUpdateService.updateRecord(recordId, dto));
     }
 
     /**
