@@ -17,7 +17,8 @@ public class ConvertResultSender {
         try {
             sseEmitter.send(SseEmitter.event()
                     .name("sse")
-                    .data(data));
+                    .data(data)
+                    .reconnectTime(3000L)); // 재연결 시도
         } catch (IOException exception) {
             canvasSseEmitterRepository.delete(profileId);
             throw new RuntimeException("SSE Connect Fail");
