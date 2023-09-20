@@ -43,7 +43,7 @@ public class NotificationPushService {
             if (profileOptional.isPresent()) {
                 Notification notification = Notification.toItemNotification(profileOptional.get(), item, type);
                 notificationRepository.save(notification);
-    
+
                 NotificationResponse notificationResponse = new NotificationResponse(notification);
                 String id = profileId + "_"+ System.currentTimeMillis();
 
