@@ -2,6 +2,7 @@ package com.siliconvalley.domain.rabbitMQ.service;
 
 import com.siliconvalley.domain.canvas.dto.CanvasConvertResponse;
 import com.siliconvalley.domain.item.subject.domain.Subject;
+import com.siliconvalley.domain.pix2pix.dto.Pix2PixAndSubjectDto;
 import com.siliconvalley.domain.post.service.RankCachingService;
 import com.siliconvalley.domain.rabbitMQ.code.RabbitMQCode;
 import com.siliconvalley.domain.rabbitMQ.dto.SketchConversionRequest;

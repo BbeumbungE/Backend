@@ -5,6 +5,7 @@ import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.member.domain.Member;
 import com.siliconvalley.domain.notification.domain.Notification;
 import com.siliconvalley.domain.point.domain.Point;
+import com.siliconvalley.domain.post.domain.Emotion;
 import com.siliconvalley.domain.profile.dto.ProfileNameUpdate;
 import com.siliconvalley.domain.record.domain.Record;
 import lombok.AccessLevel;
@@ -42,6 +43,9 @@ public class Profile {
 
     @OneToOne(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Point point;
+
+    @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Emotion> emotions;
 
     @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<MyItem> myItemList = new ArrayList<>();

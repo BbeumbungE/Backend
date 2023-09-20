@@ -47,6 +47,7 @@ public class Subject {
         this.sketch = sketch;
     }
 
+
     public static Subject toEntity(String subjectName, String subjectImgUrl, String sketchImageUrl, Item item) {
         return Subject.builder()
                 .subjectName(subjectName)
