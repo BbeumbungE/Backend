@@ -44,6 +44,9 @@ public class Profile {
     @OneToOne(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Point point;
 
+    @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Emotion> emotions;
+
     @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<MyItem> myItemList = new ArrayList<>();
 
