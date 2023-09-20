@@ -44,6 +44,7 @@ public class ProfileManagementService {
     private final ProfileItemFindDao profileItemFindDao;
 
     public Response updateProfileName(final Long profileId, final ProfileNameUpdate dto) {
+        if (profileFindDao.existsByProfileName(dto.getProfileName())) throw new ProfileNameDuplicateException(dto.getProfileName());
         Profile profile = profileFindDao.findById(profileId);
         profile.updateProfileName(dto);
         return Response.of(ProfileCode.PATCH_SUCCESS, null);

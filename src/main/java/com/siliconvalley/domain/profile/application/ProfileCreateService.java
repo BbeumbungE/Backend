@@ -6,6 +6,7 @@ import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.member.dao.MemberFindDao;
 import com.siliconvalley.domain.point.domain.Point;
 import com.siliconvalley.domain.profile.code.ProfileCode;
+import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.dao.ProfileRepository;
 import com.siliconvalley.domain.profile.domain.BasicProfileItem;
 import com.siliconvalley.domain.profile.domain.Profile;
@@ -27,10 +28,11 @@ public class ProfileCreateService {
 
     private final MemberFindDao memberFindDao;
     private final ProfileRepository profileRepository;
+    private final ProfileFindDao profileFindDao;
     private final MyItemCreateService myItemCreateService;
 
     public Response createProfile(final String memberId, final ProfileCreate dto) {
-        if (profileRepository.existsByProfileName(dto.getProfileName())) throw new ProfileNameDuplicateException(dto.getProfileName());
+        if (profileFindDao.existsByProfileName(dto.getProfileName())) throw new ProfileNameDuplicateException(dto.getProfileName());
         Profile profile = dto.toEntity(memberFindDao.findById(memberId));
 
         // 기본 myItem(Avatar) 생성
