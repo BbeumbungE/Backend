@@ -18,7 +18,9 @@ public class SseEmitterSender {
             sseEmitter.send(SseEmitter.event()
                     .id(id)
                     .name("sse")
-                    .data(data));
+                    .data(data)
+                    .reconnectTime(0));
+
         } catch (IOException exception) {
             sseEmitterRepository.delete(profileId);
             throw new RuntimeException("SSE Connect Fail");

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,10 @@ public class ProfileFindDao {
         final Optional<Profile> profileOptional = profileRepository.findById(id);
         profileOptional.orElseThrow(() -> new ProfileNotFoundException(id));
         return profileOptional.get();
+    }
+
+    public Optional<Profile> findOptionalById(final Long id) {
+        return profileRepository.findById(id);
     }
 
     public Response getProfileById(final Long id) {
