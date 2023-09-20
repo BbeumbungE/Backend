@@ -20,6 +20,6 @@ public class SubjectApi {
             @PathVariable(name = "subjectId") Long subjectId,
             @PathVariable(name = "stageId") Long stageId
     ) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(stageUpdateService.updateStage(subjectId, stageId));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(stageUpdateService.updateStageSubject(subjectId, stageId));
     }
 }

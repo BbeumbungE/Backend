@@ -39,4 +39,8 @@ public class ProfileFindDao {
         List<Profile> profileList = profileRepository.findByMemberId(userId);
         return Response.of(CommonCode.GOOD_REQUEST, new ProfileResponseList(profileList));
     }
+
+    public boolean existsByProfileName(String profileName) {
+        return profileRepository.existsByProfileName(profileName);
+    }
 }

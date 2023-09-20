@@ -56,6 +56,9 @@ public class Profile {
     @OneToMany(mappedBy = "receiver", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Notification> notificationList;
 
+    @OneToMany(mappedBy = "profile", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Emotion> emotionList;
+
     @Builder
     public Profile(String profileName, Member member, ProfileItem profileItem) {
         this.profileName = profileName;
