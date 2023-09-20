@@ -36,6 +36,11 @@ public class StageFindDao {
         return stageOptional.get();
     }
 
+    public Response getStage(Long stageId) {
+        Stage stage = findById(stageId);
+        return Response.of(CommonCode.GOOD_REQUEST, (stage.getSubject() == null) ? new StageResponse(stage) : new StageResponse(stage, stage.getSubject()));
+    }
+
     public Response getAllStage(Pageable pageable) {
         Page<Stage> stageList = stageRepository.findAll(pageable);
         List<StageResponse> stageSubjectList = stageList.stream()

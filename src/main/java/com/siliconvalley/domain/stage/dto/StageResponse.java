@@ -14,12 +14,14 @@ public class StageResponse {
     private Long id;
     private int stageNum;
     private int point;
+    private int timeLimit;
     private SubjectResponse subject;
 
     public StageResponse(final Stage stage, final Subject subject) {
         this.id = stage.getId();
         this.stageNum = stage.getStageNum();
         this.point = stage.getPoint();
+        this.timeLimit = stage.getTimeLimit();
         this.subject = new SubjectResponse(subject);
     }
 
@@ -27,6 +29,7 @@ public class StageResponse {
         this.id = stage.getId();
         this.stageNum = stage.getStageNum();
         this.point = stage.getPoint();
+        this.timeLimit = stage.getTimeLimit();
         this.subject = null;
     }
 }

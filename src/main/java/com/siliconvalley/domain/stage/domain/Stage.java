@@ -27,6 +27,9 @@ public class Stage {
     @Column(name = "point")
     private int point;
 
+    @Column(name = "time_limit")
+    private int timeLimit;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
     private Subject subject;
@@ -35,12 +38,18 @@ public class Stage {
     private List<Record> recordList;
 
     @Builder
-    public Stage (int stageNum, int point) {
+    public Stage (int stageNum, int point, int timeLimit) {
         this.stageNum = stageNum;
         this.point = point;
+        this.timeLimit = timeLimit;
     }
 
     public void addSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public void updateStage(int point, int timeLimit) {
+        this.point = point;
+        this.timeLimit = timeLimit;
     }
 }

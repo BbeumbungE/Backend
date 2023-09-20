@@ -14,14 +14,12 @@ public class StageWithRecordResponse {
 
     private Long id;
     private int stageNum;
-    private int point;
     private SubjectItemResponse subjectItem;
     private RecordResponse record;
 
     public StageWithRecordResponse(final Stage stage, final Record record, final boolean hasItem) {
         this.id = stage.getId();
         this.stageNum = stage.getStageNum();
-        this.point = stage.getPoint();
         this.subjectItem = new SubjectItemResponse(stage.getSubject().getItem(), hasItem);
         this.record = new RecordResponse(record);
     }
@@ -29,7 +27,6 @@ public class StageWithRecordResponse {
     public StageWithRecordResponse(final Stage stage, final boolean hasItem) {
         this.id = stage.getId();
         this.stageNum = stage.getStageNum();
-        this.point = stage.getPoint();
         this.subjectItem = new SubjectItemResponse(stage.getSubject().getItem(), hasItem);
         this.record = null;
     }
