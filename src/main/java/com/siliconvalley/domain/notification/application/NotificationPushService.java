@@ -12,6 +12,7 @@ import com.siliconvalley.domain.sse.application.SseEmitterFinder;
 import com.siliconvalley.domain.sse.application.SseEmitterSender;
 import com.siliconvalley.domain.sse.repository.EventCashRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -21,6 +22,7 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class NotificationPushService {
 
     private final ProfileFindDao profileFindDao;
@@ -44,6 +46,7 @@ public class NotificationPushService {
             String id = profileId + "_"+ System.currentTimeMillis();
 
             sseEmitterSender.send(sseEmitter.getValue(), id, notificationResponse ,profileId); // 알림 전송
+            log.info(profileId + "번 프로필로 알림을 전송했습니다.");
             eventCashRepository.save(id, notificationResponse); // 미전송 알림 저장용
         });
     }
@@ -61,6 +64,7 @@ public class NotificationPushService {
         String id = profileId + "_"+ System.currentTimeMillis();
 
         if (sseEmitter != null) sseEmitterSender.send(sseEmitter, id, notificationResponse ,profileId); // 알림 전송
+
         eventCashRepository.save(id, notificationResponse); // 미전송 알림 저장용
     }
 }
