@@ -232,12 +232,12 @@ public class ProfileApi {
      * **/
 
     @PostMapping("/{profileId}/stages/{stageId}/record")
-    public ResponseEntity createRecord(
+    public ResponseEntity evaluateCanvasAndcreateRecord(
             @PathVariable(name = "profileId") Long profileId,
             @PathVariable(name = "stageId") Long stageId,
             @RequestBody RecordCreateRequest dto
             ) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(recordCreateService.createRecord(profileId, stageId, dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(recordCreateService.evaluateCanvasAndcreateRecord(profileId, stageId, dto));
     }
 
     @GetMapping("/{profileId}/stages/records")
@@ -249,11 +249,11 @@ public class ProfileApi {
     }
 
     @PatchMapping("/{profileId}/stages/{stageId}/records/{recordId}")
-    public ResponseEntity updateRecord(
+    public ResponseEntity evaluateCanvasAndupdateRecord(
             @PathVariable(name = "recordId") Long recordId,
             @RequestBody RecordUpdateRequest dto
     ) {
-        return ResponseEntity.status(HttpStatus.OK).body(recordUpdateService.updateRecord(recordId, dto));
+        return ResponseEntity.status(HttpStatus.OK).body(recordUpdateService.evaluateCanvasAndupdateRecord(recordId, dto));
     }
 
     /**

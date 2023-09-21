@@ -8,13 +8,15 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RecordPostSuccessResponse {
+public class RecordResponseWithPointInfo {
 
     private Long id;
+    private int score;
     private RewardPointInfo pointInfo;
 
-    public RecordPostSuccessResponse(Record record, RewardPointInfo rewardPointInfo) {
+    public RecordResponseWithPointInfo(Record record, RewardPointInfo rewardPointInfo) {
         this.id = record.getId();
+        this.score = record.getScore();
         this.pointInfo = rewardPointInfo;
     }
 }
