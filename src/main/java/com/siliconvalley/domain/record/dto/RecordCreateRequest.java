@@ -14,19 +14,11 @@ import javax.validation.Valid;
 public class RecordCreateRequest {
 
     @Valid
-    private int score;
+    private Long canvasId;
 
     RecordCreateRequest(
-            @Valid int score
+            @Valid Long canvasId
     ) {
-        this.score = score;
-    }
-
-    public Record toEntity(Profile profile, Stage stage) {
-        return Record.builder()
-                .score(score)
-                .profile(profile)
-                .stage(stage)
-                .build();
+        this.canvasId = canvasId;
     }
 }
