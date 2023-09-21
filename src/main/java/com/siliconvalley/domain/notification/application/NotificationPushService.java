@@ -47,7 +47,7 @@ public class NotificationPushService {
                 NotificationResponse notificationResponse = new NotificationResponse(notification);
                 String id = profileId + "_"+ System.currentTimeMillis();
 
-                sseEmitterSender.send(sseEmitter.getValue(), id, notificationResponse ,profileId); // 알림 전송
+                sseEmitterSender.send(sseEmitter.getValue(), id, notificationResponse ,profileId, "message"); // 알림 전송
                 log.info(profileId + "번 프로필로 알림을 전송했습니다.");
                 eventCashRepository.save(id, notificationResponse); // 미전송 알림 저장용
             }
@@ -66,7 +66,7 @@ public class NotificationPushService {
         NotificationResponse notificationResponse = new NotificationResponse(notification);
         String id = profileId + "_"+ System.currentTimeMillis();
 
-        if (sseEmitter != null) sseEmitterSender.send(sseEmitter, id, notificationResponse ,profileId); // 알림 전송
+        if (sseEmitter != null) sseEmitterSender.send(sseEmitter, id, notificationResponse ,profileId, "alarm"); // 알림 전송
 
         eventCashRepository.save(id, notificationResponse); // 미전송 알림 저장용
     }
