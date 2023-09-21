@@ -1,6 +1,7 @@
 package com.siliconvalley.domain.sse.application;
 
 import com.siliconvalley.domain.sse.code.SseCode;
+import com.siliconvalley.domain.sse.dto.SseConnectSuccessResponse;
 import com.siliconvalley.domain.sse.repository.EventCashRepository;
 import com.siliconvalley.domain.sse.repository.SseEmitterRepository;
 import com.siliconvalley.global.common.dto.Response;
@@ -31,13 +32,11 @@ public class SseEmitterService {
 
         String id = profileId + "_" + System.currentTimeMillis();
         SseEmitter sseEmitter = sseEmitterCreater.createEmitter(profileId);
-        sseEmitterSender.send(sseEmitter, id, SseCode.CONNECT_SUCCESS.getMessage() + " | Profile Id : " + profileId, profileId);
+        sseEmitterSender.send(sseEmitter, id, new SseConnectSuccessResponse(profileId), profileId, "initial");
 
         // 클라이언트가 미수신한 Event 목록이 존재할 경우 전송하여 Event 유실을 예방
         eventCashService.sendNotReceivedEvent(profileId, lastEventId, sseEmitter);
 
         return sseEmitter;
     }
-
-
 }
