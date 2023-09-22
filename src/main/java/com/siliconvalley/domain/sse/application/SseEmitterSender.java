@@ -1,5 +1,6 @@
 package com.siliconvalley.domain.sse.application;
 
+import com.siliconvalley.domain.sse.code.SseCode;
 import com.siliconvalley.domain.sse.repository.SseEmitterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,15 +14,17 @@ public class SseEmitterSender {
 
     private final SseEmitterRepository sseEmitterRepository;
 
-    public void send(SseEmitter sseEmitter, String id, Object data, Long profileId) {
+    public void send(SseEmitter sseEmitter, String id, Object data, Long profileId, String name) {
         try {
             sseEmitter.send(SseEmitter.event()
                     .id(id)
-                    .name("sse")
-                    .data(data));
+                    .name(name)
+                    .data(data)
+                    .reconnectTime(0));
+
         } catch (IOException exception) {
             sseEmitterRepository.delete(profileId);
-            throw new RuntimeException("SSE Connect Fail");
+            throw new RuntimeException(SseCode.CONNECT_FAIL.getMessage());
         }
     }
 

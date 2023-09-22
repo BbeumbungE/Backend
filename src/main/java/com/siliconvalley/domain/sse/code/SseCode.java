@@ -4,7 +4,8 @@ import com.siliconvalley.global.common.code.ResponseCode;
 import org.springframework.http.HttpStatus;
 
 public enum SseCode implements ResponseCode {
-    CONNECT_SUCCESS(200, "연결에 성공했습니다.", HttpStatus.OK);
+    CONNECT_SUCCESS(200, "연결에 성공했습니다.", HttpStatus.OK),
+    CONNECT_FAIL(400, "연결에 실패했습니다.", HttpStatus.BAD_REQUEST);
 
     private final int code;
     private final String message;
