@@ -33,12 +33,24 @@ public class RabbitMqConfig {
 
     @Bean
     Queue responseQueue() {
-        return new Queue("sketch_conversion_response_queue", true);
+        return QueueBuilder.durable("sketch_conversion_response_queue")
+                .withArgument("x-dead-letter-exchange", "sketch_conversion_dead_letter_exchange")
+                .withArgument("x-dead-letter-routing-key", "sketch_conversion_dead_letter_queue")
+                .build();
+    }
+    @Bean
+    Queue deadLetterQueue() {
+        return new Queue("sketch_conversion_dead_letter_queue", true);
     }
 
     @Bean
     TopicExchange topicExchange() {
         return new TopicExchange("sketch_conversion_exchange");
+    }
+
+    @Bean
+    Exchange deadLetterExchange() {
+        return ExchangeBuilder.topicExchange("sketch_conversion_dead_letter_exchange").durable(true).build();
     }
 
     @Bean
@@ -77,4 +89,13 @@ public class RabbitMqConfig {
     public Binding bindingResponseQueue(Queue responseQueue, TopicExchange topicExchange) {
         return BindingBuilder.bind(responseQueue).to(topicExchange).with("sketch_conversion_response_queue");
     }
+
+    @Bean
+    public Binding deadLetterBinding() {
+        return BindingBuilder.bind(deadLetterQueue())
+                .to(deadLetterExchange())
+                .with("sketch_conversion_dead_letter_queue")
+                .noargs();
+    }
+
 }

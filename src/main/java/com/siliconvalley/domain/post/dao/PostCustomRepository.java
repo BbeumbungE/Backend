@@ -6,7 +6,6 @@ import com.siliconvalley.domain.post.domain.QEmotion;
 import com.siliconvalley.domain.post.domain.QPost;
 import com.siliconvalley.domain.post.dto.PostRankingDto;
 import com.siliconvalley.domain.post.dto.QPostRankingDto;
-import com.siliconvalley.domain.profile.domain.QProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
