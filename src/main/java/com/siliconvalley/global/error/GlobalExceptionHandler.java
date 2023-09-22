@@ -4,6 +4,8 @@ import com.siliconvalley.global.error.exception.BusinessException;
 
 import com.siliconvalley.global.error.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -104,6 +106,20 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleIOException(IOException e) {
         log.error("handleIOException", e);
         final ErrorResponse response = ErrorResponse.of(ErrorCode.FILE_UPLOAD_ERROR); // 적절한 ErrorCode 값을 사용하세요
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(AmqpRejectAndDontRequeueException.class)
+    protected ResponseEntity<ErrorResponse> handleAmqpRejectAndDontRequeueException(AmqpRejectAndDontRequeueException e) {
+        log.error("handleAmqpRejectAndDontRequeueException", e);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.RABBITMQ_MESSAGE_REJECTED); // 적절한 ErrorCode를 정의하고 사용하세요
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(AmqpException.class)
+    protected ResponseEntity<ErrorResponse> handleAmqpException(AmqpException e) {
+        log.error("handleAmqpException", e);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.RABBITMQ_ERROR); // 적절한 ErrorCode를 정의하고 사용하세요
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
