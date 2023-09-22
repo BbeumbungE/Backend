@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "subject")
@@ -26,8 +27,8 @@ public class Subject {
     @Column(name = "sub_Image")
     private String subjectImage;
 
-    @Column(name = "sketch")
-    private String sketch;
+    @OneToMany(mappedBy = "subject", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Sketch> sketchList;
 
     @OneToOne(mappedBy = "subject", orphanRemoval = true, fetch = FetchType.LAZY)
     private Stage stage;
@@ -40,19 +41,17 @@ public class Subject {
     private Pix2Pix pix2Pix;
 
     @Builder
-    public Subject(String subjectName, String subjectImage, String sketch, Item item) {
+    public Subject(String subjectName, String subjectImage, Item item) {
         this.subjectName = subjectName;
         this.subjectImage = subjectImage;
         this.item = item;
-        this.sketch = sketch;
     }
 
 
-    public static Subject toEntity(String subjectName, String subjectImgUrl, String sketchImageUrl, Item item) {
+    public static Subject toEntity(String subjectName, String sketchImageUrl, Item item) {
         return Subject.builder()
                 .subjectName(subjectName)
                 .subjectImage(sketchImageUrl)
-                .sketch(sketchImageUrl)
                 .item(item)
                 .build();
     }

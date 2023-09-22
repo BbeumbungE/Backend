@@ -22,12 +22,12 @@ public class SubjectItemCreateService {
     private final ItemRepository itemRepository;
     private final NotificationPushService notificationPushService;
 
-    public Response createSubjectItem(Long itemPrice, String subjectName, String subjectImgUrl, String sketchImgUrl) throws IOException {
+    public Response createSubjectItem(Long itemPrice, String subjectName, String subjectImgUrl) {
 
         Item item = Item.toEntity(itemPrice);
 
         // Item과 Subject빌드 및 연관관계 매핑
-        item.addSubject(Subject.toEntity(subjectName, subjectImgUrl, sketchImgUrl, item));
+        item.addSubject(Subject.toEntity(subjectName, subjectImgUrl, item));
 
         // Item이 저장될 때 Subject 자동 저장
         itemRepository.save(item);

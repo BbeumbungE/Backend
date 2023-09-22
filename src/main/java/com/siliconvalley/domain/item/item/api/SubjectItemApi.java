@@ -33,13 +33,11 @@ public class SubjectItemApi {
     @PostMapping
     public ResponseEntity createSubjectItem(
             @RequestParam("subjectImage") MultipartFile subjectImage,
-            @RequestParam("sketchImage") MultipartFile sketchImage,
             @RequestParam("itemPrice") Long itemPrice,
             @RequestParam("subjectName") String subjectName
     ) throws IOException {
         String subjectImgUrl = s3ImageUploadService.uploadFile(subjectImage, s3PathBuildService.buildPathForItem("subject"));
-        String sketchImgUrl = s3ImageUploadService.uploadFile(sketchImage, s3PathBuildService.buildPathForItem("subject/sketch"));
-        return ResponseEntity.status(HttpStatus.CREATED).body(subjectItemCreateService.createSubjectItem(itemPrice, subjectName, subjectImgUrl, sketchImgUrl));
+        return ResponseEntity.status(HttpStatus.CREATED).body(subjectItemCreateService.createSubjectItem(itemPrice, subjectName, subjectImgUrl));
     }
 
     @GetMapping

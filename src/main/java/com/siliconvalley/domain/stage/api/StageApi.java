@@ -46,4 +46,12 @@ public class StageApi {
             @RequestBody @Valid StageUpdateRequest dto) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(stageUpdateService.updateStageInfo(stageId, dto));
     }
+
+    @PatchMapping("/{stageId}/subjects/{subjectId}")
+    public ResponseEntity setSubjectToStage(
+            @PathVariable(name = "subjectId") Long subjectId,
+            @PathVariable(name = "stageId") Long stageId
+    ) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(stageUpdateService.updateStageSubject(subjectId, stageId));
+    }
 }

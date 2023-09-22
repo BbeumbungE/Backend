@@ -11,7 +11,6 @@ public class Pix2PixAndSubjectDto {
 
     private Long subjectId;
     private String subjectName;
-    private String sketchUrl;
     private String subjectImage;
     private Long modelId;
     private String modelName;
@@ -19,7 +18,6 @@ public class Pix2PixAndSubjectDto {
     public Pix2PixAndSubjectDto(Subject subject){
         this.subjectId = subject.getId();
         this.subjectName = subject.getSubjectName();
-        this.sketchUrl = subject.getSketch();
         this.subjectImage = subject.getSubjectImage();
         this.modelId = subject.getPix2Pix().getId();
         this.modelName = subject.getPix2Pix().getModelName();
@@ -28,7 +26,6 @@ public class Pix2PixAndSubjectDto {
     public Subject toSubjectEntity(){
         return Subject.builder()
                 .subjectName(subjectName)
-                .sketch(sketchUrl)
                 .build();
     }
 
