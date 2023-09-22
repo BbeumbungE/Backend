@@ -53,6 +53,6 @@ public class CanvasConvertService {
         canvas.updateCanvas(response.getCanvasUrl());
         Long profileId = canvas.getProfile().getId();
         ConvertEventDto convertEventDto = new ConvertEventDto(canvas.getId(), response.getCanvasUrl());
-        convertResultSender.send(canvasSseEmitterFInder.findByProfileId(profileId), convertEventDto, profileId);
+        convertResultSender.send(canvasSseEmitterFInder.findByProfileId(profileId), convertEventDto, profileId, "drawing");
     }
 }
