@@ -169,8 +169,7 @@ public class ProfileApi {
     public ResponseEntity getPoint(
             @PathVariable(name = "profileId") Long profileId
     ) {
-        Response response = Response.of(CommonCode.GOOD_REQUEST, pointManagementService.getPoint(profileId));
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(pointManagementService.getPoint(profileId));
     }
 
     @PatchMapping("/{profileId}/points/{newPointValue}")
