@@ -36,7 +36,6 @@ public class SubjectItemCreateRequest {
         return Subject.builder()
                 .subjectName(subjectName)
                 .subjectImage(subjectImgUrl)
-                .sketch(sketchImgUrl)
                 .item(item)
                 .build();
     }

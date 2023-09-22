@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class PostFindDao {
 
     private final PostRepository postRepository;
-    private final SubjectFindDao subjectFindDao;
+    private final PostCustomRepository postCustomRepository;
 
     public Post findById(Long targetId){
         final Optional<Post> post = postRepository.findById(targetId);
@@ -35,14 +35,12 @@ public class PostFindDao {
 
     public Response findAll(Pageable pageable){
         final Page<Post> posts = postRepository.findAll(pageable);
-        return Response.of(PostCode.POST_RETRIEVE_SUCCESS, posts.map(PostListResponse::new));
+        return Response.of(PostCode.POST_RETRIEVE_SUCCESS, posts);
     }
 
     public Response getPostsBySubjectName(Long subjectId, Pageable pageable) {
-        Subject subject = subjectFindDao.findById(subjectId);
-        Page<Post> posts = postRepository.findByCanvas_Subject_SubjectName(subject.getSubjectName(), pageable);
-        Page<PostListResponse> postListResponses = posts.map(PostListResponse::new);
-        return Response.of(PostCode.POST_RETRIEVE_SUCCESS, new PostSubjectResponse(subject, postListResponses));
+        Page<PostListResponse> postListResponses = postCustomRepository.findBySubjectId(subjectId, pageable);
+        return Response.of(PostCode.POST_RETRIEVE_SUCCESS, postListResponses);
     }
 
 }

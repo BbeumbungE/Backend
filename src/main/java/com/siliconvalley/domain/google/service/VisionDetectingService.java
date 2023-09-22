@@ -26,5 +26,4 @@ public class VisionDetectingService {
 
         return Score.determineScore(detectionScore);
     }
-
 }
