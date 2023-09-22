@@ -13,12 +13,12 @@ public class ConvertResultSender {
 
     private final CanvasSseEmitterRepository canvasSseEmitterRepository;
 
-    public void send(SseEmitter sseEmitter, Object data, Long profileId) {
+    public void send(SseEmitter sseEmitter, Object data, Long profileId, String eventName) {
         try {
             sseEmitter.send(SseEmitter.event()
-                    .name("sse")
+                    .name(eventName)
                     .data(data)
-                    .reconnectTime(3000L)); // 재연결 시도
+                    .reconnectTime(0L)); // 재연결 시도
         } catch (IOException exception) {
             canvasSseEmitterRepository.delete(profileId);
             throw new RuntimeException("SSE Connect Fail");
