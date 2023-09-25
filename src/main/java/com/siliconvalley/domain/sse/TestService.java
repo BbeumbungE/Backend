@@ -32,8 +32,8 @@ public class TestService {
         Notification avatarNotification = Notification.toItemNotification(profile, avatarItem, NotificationType.NEW_AVATAR);
         Notification subjectNotification = Notification.toItemNotification(profile, subjectItem, NotificationType.NEW_SUBJECT);
         Notification rankNotification = Notification.toRankingNotification(profile, NotificationType.RANKING);
-        sseEmitterSender.send(sseEmitter, id, new NotificationResponse(avatarNotification),profileId, "massage");
-        sseEmitterSender.send(sseEmitter, id, new NotificationResponse(subjectNotification), profileId, "massage");
-        sseEmitterSender.send(sseEmitter, id, new NotificationResponse(rankNotification),profileId, "massage");
+        sseEmitterSender.send(sseEmitter, id, new NotificationResponse(avatarNotification),profileId, "message");
+        sseEmitterSender.send(sseEmitter, id, new NotificationResponse(subjectNotification), profileId, "message");
+        sseEmitterSender.send(sseEmitter, id, new NotificationResponse(rankNotification),profileId, "message");
     }
 }
