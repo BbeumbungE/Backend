@@ -1,10 +1,11 @@
 package com.siliconvalley.domain.post.dao;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.siliconvalley.domain.canvas.domain.QCanvas;
 import com.siliconvalley.domain.post.domain.QPost;
+
 import com.siliconvalley.domain.post.dto.PostListResponse;
+
 import com.siliconvalley.domain.post.dto.QPostListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

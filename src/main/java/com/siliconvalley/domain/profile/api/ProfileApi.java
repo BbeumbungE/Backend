@@ -229,6 +229,21 @@ public class ProfileApi {
      *
      * **/
 
+    @GetMapping("/{profileId}/stages")
+    public ResponseEntity getAllStageWithRecord(
+            @PathVariable(name = "profileId") Long profileId,
+            Pageable pageable
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(stageFindDao.getAllStageWithRecord(profileId, pageable));
+    }
+
+    @GetMapping("/{profileId}/stages/{stageId}")
+    public ResponseEntity getStageWithRecord(
+            @PathVariable(name = "profileId") Long profileId,
+            @PathVariable(name = "stageId") Long stageId) {
+        return ResponseEntity.status(HttpStatus.OK).body(stageFindDao.getStageWithRecord(profileId, stageId));
+    }
+
     @PostMapping("/{profileId}/stages/{stageId}/record")
     public ResponseEntity evaluateCanvasAndcreateRecord(
             @PathVariable(name = "profileId") Long profileId,
@@ -236,14 +251,6 @@ public class ProfileApi {
             @RequestBody RecordCreateRequest dto
             ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(recordCreateService.evaluateCanvasAndcreateRecord(profileId, stageId, dto));
-    }
-
-    @GetMapping("/{profileId}/stages/records")
-    public ResponseEntity getAllStageWithRecord(
-            @PathVariable(name = "profileId") Long profileId,
-            Pageable pageable
-    ) {
-        return ResponseEntity.status(HttpStatus.OK).body(stageFindDao.getAllStageWithRecord(profileId, pageable));
     }
 
     @PatchMapping("/{profileId}/stages/{stageId}/records/{recordId}")

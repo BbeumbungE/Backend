@@ -66,7 +66,7 @@ public class NotificationPushService {
         NotificationResponse notificationResponse = new NotificationResponse(notification);
         String id = profileId + "_"+ System.currentTimeMillis();
 
-        if (sseEmitter != null) sseEmitterSender.send(sseEmitter, id, notificationResponse ,profileId, "alarm"); // 알림 전송
+        if (sseEmitter != null) sseEmitterSender.send(sseEmitter, id, notificationResponse ,profileId, "message"); // 알림 전송
 
         eventCashRepository.save(id, notificationResponse); // 미전송 알림 저장용
     }
