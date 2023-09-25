@@ -22,7 +22,6 @@ import com.siliconvalley.domain.record.dto.RecordCreateRequest;
 import com.siliconvalley.domain.record.dto.RecordUpdateRequest;
 import com.siliconvalley.domain.sse.application.SseEmitterService;
 import com.siliconvalley.domain.stage.dao.StageFindDao;
-import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
@@ -292,7 +291,4 @@ public class ProfileApi {
     ) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(notificationDeleteService.deleteNotification(notificationId));
     }
-
-
-
 }
