@@ -7,10 +7,15 @@ import java.util.List;
 
 @Getter
 public class PageResponse<T, P> {
-    private final List<T> data;
+    private final Object data;
     private final PageInfoResponse pageInfo;
 
     public PageResponse(List<T> data, Page<P> page) {
+        this.data = data;
+        this.pageInfo = new PageInfoResponse(page);
+    }
+
+    public PageResponse(Object data, Page<P> page) {
         this.data = data;
         this.pageInfo = new PageInfoResponse(page);
     }
