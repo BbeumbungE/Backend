@@ -2,6 +2,7 @@ package com.siliconvalley.domain.stage.dao;
 
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
 import com.siliconvalley.domain.item.subject.domain.Subject;
+import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.record.dao.RecordFindDao;
 import com.siliconvalley.domain.record.domain.Record;
 import com.siliconvalley.domain.record.dto.RecordResponseWithHighestClearedStageNumber;
@@ -73,5 +74,16 @@ public class StageFindDao {
         }
 
         return Response.of(CommonCode.GOOD_REQUEST, new PageResponse(new RecordResponseWithHighestClearedStageNumber(highestClearedStageNumber, stageWithRecordList), stageList));
+    }
+
+    public Response getStageWithRecord(Long profileId, Long stageId) {
+        Stage stage = findById(stageId);
+        Optional<Record> recordOptional = recordFindDao.findByProfileIdAndStageId(profileId, stageId);
+        boolean hasItem = myItemFindDao.checkHasItem(profileId, "subject", stage.getSubject().getItem());
+
+        return Response.of(CommonCode.GOOD_REQUEST,
+                (recordOptional.isPresent()) ?
+                        new StageWithRecordResponse(stage, recordOptional.get(), hasItem)
+                        : new StageWithRecordResponse(stage, hasItem));
     }
 }

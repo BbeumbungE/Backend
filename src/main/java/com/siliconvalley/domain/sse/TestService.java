@@ -27,7 +27,7 @@ public class TestService {
         SseEmitter sseEmitter = sseEmitterFinder.findByProfileId(profileId);
         String id = profileId + "_" + System.currentTimeMillis();
         Item avatarItem = itemFindDao.findById(4L);
-        Item subjectItem = itemFindDao.findById(1L);
+        Item subjectItem = itemFindDao.findById(8L);
         Profile profile = profileFindDao.findById(profileId);
         Notification avatarNotification = Notification.toItemNotification(profile, avatarItem, NotificationType.NEW_AVATAR);
         Notification subjectNotification = Notification.toItemNotification(profile, subjectItem, NotificationType.NEW_SUBJECT);
