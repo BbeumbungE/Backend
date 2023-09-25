@@ -34,10 +34,12 @@ public class SubjectItemApi {
     public ResponseEntity createSubjectItem(
             @RequestParam("subjectImage") MultipartFile subjectImage,
             @RequestParam("itemPrice") Long itemPrice,
-            @RequestParam("subjectName") String subjectName
+            @RequestParam("subjectName") String subjectName,
+            @RequestParam("modelName") String modelName,
+            @RequestParam("visionName") String visionName
     ) throws IOException {
         String subjectImgUrl = s3ImageUploadService.uploadFile(subjectImage, s3PathBuildService.buildPathForItem("subject"));
-        return ResponseEntity.status(HttpStatus.CREATED).body(subjectItemCreateService.createSubjectItem(itemPrice, subjectName, subjectImgUrl));
+        return ResponseEntity.status(HttpStatus.CREATED).body(subjectItemCreateService.createSubjectItem(itemPrice, subjectName, subjectImgUrl, modelName, visionName));
     }
 
     @GetMapping
