@@ -43,7 +43,7 @@ public class CanvasController {
     ) throws IOException {
         String sketch = s3ImageUploadService.uploadFile(sketchFile, s3PathBuildService.buildPath(profileId, "sketch"));
         Response response = canvasConvertService.updateSketchAndCanvas(profileId, canvasId, sketch);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/profile/{profileId}/sse")
