@@ -1,6 +1,7 @@
 package com.siliconvalley.domain.stage.dto;
 
 import com.siliconvalley.domain.item.item.dto.SubjectItemResponse;
+import com.siliconvalley.domain.item.subject.dto.SubjectResponse;
 import com.siliconvalley.domain.record.domain.Record;
 import com.siliconvalley.domain.record.dto.RecordResponse;
 import com.siliconvalley.domain.stage.domain.Stage;
@@ -14,20 +15,23 @@ public class StageWithRecordResponse {
 
     private Long id;
     private int stageNum;
-    private SubjectItemResponse subjectItem;
+    private int timeLimit;
+    private SubjectResponse subjectItem;
     private RecordResponse record;
 
-    public StageWithRecordResponse(final Stage stage, final Record record, final boolean hasItem) {
+    public StageWithRecordResponse(final Stage stage, final Record record) {
         this.id = stage.getId();
         this.stageNum = stage.getStageNum();
-        this.subjectItem = new SubjectItemResponse(stage.getSubject().getItem(), hasItem);
+        this.timeLimit = stage.getTimeLimit();
+        this.subjectItem = new SubjectResponse(stage.getSubject());
         this.record = new RecordResponse(record);
     }
 
-    public StageWithRecordResponse(final Stage stage, final boolean hasItem) {
+    public StageWithRecordResponse(final Stage stage) {
         this.id = stage.getId();
         this.stageNum = stage.getStageNum();
-        this.subjectItem = new SubjectItemResponse(stage.getSubject().getItem(), hasItem);
+        this.timeLimit = stage.getTimeLimit();
+        this.subjectItem = new SubjectResponse(stage.getSubject());
         this.record = null;
     }
 }

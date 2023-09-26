@@ -62,14 +62,13 @@ public class StageFindDao {
 
 
         for (Stage stage : stageList) {
-            boolean hasItem = myItemFindDao.checkHasItem(profileId, "subject", stage.getSubject().getItem());
             Optional<Record> recordOptional = recordFindDao.findByProfileIdAndStageId(profileId, stage.getId());
 
             if (recordOptional.isPresent()) {
-                stageWithRecordList.add(new StageWithRecordResponse(stage, recordOptional.get(), hasItem));
+                stageWithRecordList.add(new StageWithRecordResponse(stage, recordOptional.get()));
             } else {
                 if (highestClearedStageNumber == 0) highestClearedStageNumber = stage.getStageNum() - 1;
-                stageWithRecordList.add(new StageWithRecordResponse(stage, hasItem));
+                stageWithRecordList.add(new StageWithRecordResponse(stage));
             }
         }
 
@@ -79,11 +78,10 @@ public class StageFindDao {
     public Response getStageWithRecord(Long profileId, Long stageId) {
         Stage stage = findById(stageId);
         Optional<Record> recordOptional = recordFindDao.findByProfileIdAndStageId(profileId, stageId);
-        boolean hasItem = myItemFindDao.checkHasItem(profileId, "subject", stage.getSubject().getItem());
 
         return Response.of(CommonCode.GOOD_REQUEST,
                 (recordOptional.isPresent()) ?
-                        new StageWithRecordResponse(stage, recordOptional.get(), hasItem)
-                        : new StageWithRecordResponse(stage, hasItem));
+                        new StageWithRecordResponse(stage, recordOptional.get())
+                        : new StageWithRecordResponse(stage));
     }
 }
