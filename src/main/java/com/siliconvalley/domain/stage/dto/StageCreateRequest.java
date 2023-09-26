@@ -17,18 +17,24 @@ public class StageCreateRequest {
     @Valid
     private int point;
 
+    @Valid
+    private int timeLimit;
+
     StageCreateRequest(
             @Valid int stageNum,
-            @Valid int point
+            @Valid int point,
+            @Valid int timeLimit
     ) {
         this.stageNum = stageNum;
         this.point = point;
+        this.timeLimit = timeLimit;
     }
 
     public Stage toEntity() {
         return Stage.builder()
                 .stageNum(stageNum)
                 .point(point)
+                .timeLimit(timeLimit)
                 .build();
     }
 }

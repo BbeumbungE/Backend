@@ -38,6 +38,14 @@ public class Record {
         this.profile = profile;
     }
 
+    public static Record toEntity(Profile profile, Stage stage, int score) {
+        return Record.builder()
+                .score(score)
+                .profile(profile)
+                .stage(stage)
+                .build();
+    }
+
     public void updateScore(int score) {
         this.score = score;
     }

@@ -22,7 +22,6 @@ import com.siliconvalley.domain.record.dto.RecordCreateRequest;
 import com.siliconvalley.domain.record.dto.RecordUpdateRequest;
 import com.siliconvalley.domain.sse.application.SseEmitterService;
 import com.siliconvalley.domain.stage.dao.StageFindDao;
-import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
@@ -169,8 +168,7 @@ public class ProfileApi {
     public ResponseEntity getPoint(
             @PathVariable(name = "profileId") Long profileId
     ) {
-        Response response = Response.of(CommonCode.GOOD_REQUEST, pointManagementService.getPoint(profileId));
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(pointManagementService.getPoint(profileId));
     }
 
     @PatchMapping("/{profileId}/points/{newPointValue}")
@@ -231,16 +229,7 @@ public class ProfileApi {
      *
      * **/
 
-    @PostMapping("/{profileId}/stages/{stageId}/record")
-    public ResponseEntity createRecord(
-            @PathVariable(name = "profileId") Long profileId,
-            @PathVariable(name = "stageId") Long stageId,
-            @RequestBody RecordCreateRequest dto
-            ) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(recordCreateService.createRecord(profileId, stageId, dto));
-    }
-
-    @GetMapping("/{profileId}/stages/records")
+    @GetMapping("/{profileId}/stages")
     public ResponseEntity getAllStageWithRecord(
             @PathVariable(name = "profileId") Long profileId,
             Pageable pageable
@@ -248,12 +237,28 @@ public class ProfileApi {
         return ResponseEntity.status(HttpStatus.OK).body(stageFindDao.getAllStageWithRecord(profileId, pageable));
     }
 
+    @GetMapping("/{profileId}/stages/{stageId}")
+    public ResponseEntity getStageWithRecord(
+            @PathVariable(name = "profileId") Long profileId,
+            @PathVariable(name = "stageId") Long stageId) {
+        return ResponseEntity.status(HttpStatus.OK).body(stageFindDao.getStageWithRecord(profileId, stageId));
+    }
+
+    @PostMapping("/{profileId}/stages/{stageId}/record")
+    public ResponseEntity evaluateCanvasAndcreateRecord(
+            @PathVariable(name = "profileId") Long profileId,
+            @PathVariable(name = "stageId") Long stageId,
+            @RequestBody RecordCreateRequest dto
+            ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(recordCreateService.evaluateCanvasAndcreateRecord(profileId, stageId, dto));
+    }
+
     @PatchMapping("/{profileId}/stages/{stageId}/records/{recordId}")
-    public ResponseEntity updateRecord(
+    public ResponseEntity evaluateCanvasAndupdateRecord(
             @PathVariable(name = "recordId") Long recordId,
             @RequestBody RecordUpdateRequest dto
     ) {
-        return ResponseEntity.status(HttpStatus.OK).body(recordUpdateService.updateRecord(recordId, dto));
+        return ResponseEntity.status(HttpStatus.OK).body(recordUpdateService.evaluateCanvasAndupdateRecord(recordId, dto));
     }
 
     /**
@@ -293,7 +298,4 @@ public class ProfileApi {
     ) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(notificationDeleteService.deleteNotification(notificationId));
     }
-
-
-
 }

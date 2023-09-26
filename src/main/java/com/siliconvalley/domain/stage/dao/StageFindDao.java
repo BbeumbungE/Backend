@@ -2,8 +2,11 @@ package com.siliconvalley.domain.stage.dao;
 
 import com.siliconvalley.domain.item.myitem.dao.MyItemFindDao;
 import com.siliconvalley.domain.item.subject.domain.Subject;
+import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.record.dao.RecordFindDao;
 import com.siliconvalley.domain.record.domain.Record;
+import com.siliconvalley.domain.record.dto.RecordResponseWithHighestClearedStageNumber;
+import com.siliconvalley.domain.record.dto.RecordResponseWithPointInfo;
 import com.siliconvalley.domain.stage.domain.Stage;
 import com.siliconvalley.domain.stage.dto.StageResponse;
 import com.siliconvalley.domain.stage.dto.StageWithRecordResponse;
@@ -17,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +40,11 @@ public class StageFindDao {
         return stageOptional.get();
     }
 
+    public Response getStage(Long stageId) {
+        Stage stage = findById(stageId);
+        return Response.of(CommonCode.GOOD_REQUEST, (stage.getSubject() == null) ? new StageResponse(stage) : new StageResponse(stage, stage.getSubject()));
+    }
+
     public Response getAllStage(Pageable pageable) {
         Page<Stage> stageList = stageRepository.findAll(pageable);
         List<StageResponse> stageSubjectList = stageList.stream()
@@ -47,14 +56,34 @@ public class StageFindDao {
 
     public Response getAllStageWithRecord(Long profileId, Pageable pageable) {
         Page<Stage> stageList = stageRepository.findAll(pageable);
-        List<StageWithRecordResponse> stageWithRecordList = stageList.stream()
-                        .map(stage -> {
-                            boolean hasItem = myItemFindDao.checkHasItem(profileId, "subject", stage.getSubject().getItem());
-                            Optional<Record> recordOptional = recordFindDao.findByProfileIdAndStageId(profileId, stage.getId());
-                            return recordOptional.isPresent() ? new StageWithRecordResponse(stage, recordOptional.get(), hasItem) : new StageWithRecordResponse(stage, hasItem);
-                        })
-                        .collect(Collectors.toList());
 
-        return Response.of(CommonCode.GOOD_REQUEST, new PageResponse(stageWithRecordList, stageList));
+        int highestClearedStageNumber = 0;
+        List<StageWithRecordResponse> stageWithRecordList = new LinkedList<>();
+
+
+        for (Stage stage : stageList) {
+            boolean hasItem = myItemFindDao.checkHasItem(profileId, "subject", stage.getSubject().getItem());
+            Optional<Record> recordOptional = recordFindDao.findByProfileIdAndStageId(profileId, stage.getId());
+
+            if (recordOptional.isPresent()) {
+                stageWithRecordList.add(new StageWithRecordResponse(stage, recordOptional.get(), hasItem));
+            } else {
+                if (highestClearedStageNumber == 0) highestClearedStageNumber = stage.getStageNum() - 1;
+                stageWithRecordList.add(new StageWithRecordResponse(stage, hasItem));
+            }
+        }
+
+        return Response.of(CommonCode.GOOD_REQUEST, new PageResponse(new RecordResponseWithHighestClearedStageNumber(highestClearedStageNumber, stageWithRecordList), stageList));
+    }
+
+    public Response getStageWithRecord(Long profileId, Long stageId) {
+        Stage stage = findById(stageId);
+        Optional<Record> recordOptional = recordFindDao.findByProfileIdAndStageId(profileId, stageId);
+        boolean hasItem = myItemFindDao.checkHasItem(profileId, "subject", stage.getSubject().getItem());
+
+        return Response.of(CommonCode.GOOD_REQUEST,
+                (recordOptional.isPresent()) ?
+                        new StageWithRecordResponse(stage, recordOptional.get(), hasItem)
+                        : new StageWithRecordResponse(stage, hasItem));
     }
 }

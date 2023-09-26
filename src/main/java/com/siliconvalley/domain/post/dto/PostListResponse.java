@@ -1,5 +1,6 @@
 package com.siliconvalley.domain.post.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.siliconvalley.domain.post.domain.Post;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,9 +12,10 @@ public class PostListResponse {
     private Long postId;
     private String canvasUrl;
 
-    public PostListResponse(Post post){
-        this.postId = post.getId();
-        this.canvasUrl = post.getCanvas().getCanvas();
+    @QueryProjection
+    public PostListResponse(Long postId, String canvasUrl){
+        this.postId = postId;
+        this.canvasUrl = canvasUrl;
     }
 
 }

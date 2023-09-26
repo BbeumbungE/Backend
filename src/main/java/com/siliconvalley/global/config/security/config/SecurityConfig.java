@@ -75,7 +75,7 @@ public class SecurityConfig {
         // 로그아웃 설정
         httpSecurity.logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("https://localhost:3000");
+                .logoutSuccessUrl("http://localhost:3000");
 
         return httpSecurity.build();
     }

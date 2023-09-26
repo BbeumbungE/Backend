@@ -27,9 +27,14 @@ public enum ErrorCode {
 
     // Profile
     PROFILE_NAME_DUPLICATE(400, "P001", "Profile Name Duplicate"),
+    PROFILE_NAME_INCLUDE_BAD_WORD(400, "P002", "Profile Name Has Bad Word"),
 
     // Item
-    INVALID_CATEROTY(400,"I001", "Invalid category");
+    INVALID_CATEGORY(400,"I001", "Invalid category"),
+
+    // RabbitMQ
+    RABBITMQ_MESSAGE_REJECTED(400, "R001", "Rejected messaging"),
+    RABBITMQ_ERROR(400, "R002", "Message Error");
 
     private final String code;
     private final String message;

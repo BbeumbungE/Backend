@@ -14,11 +14,11 @@ import javax.validation.Valid;
 public class RecordUpdateRequest {
 
     @Valid
-    private int score;
+    private Long canvasId;
 
     RecordUpdateRequest(
-            @Valid int score
+            @Valid Long canvasId
     ) {
-        this.score = score;
+        this.canvasId = canvasId;
     }
 }

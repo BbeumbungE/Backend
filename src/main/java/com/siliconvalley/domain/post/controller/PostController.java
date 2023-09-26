@@ -99,6 +99,4 @@ public class PostController {
         Response response = postEmoteService.cancelEmote(postId, profileId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
-
-
 }

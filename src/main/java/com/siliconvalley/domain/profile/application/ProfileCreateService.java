@@ -1,6 +1,5 @@
 package com.siliconvalley.domain.profile.application;
 
-import com.siliconvalley.domain.item.item.dao.ItemFindDao;
 import com.siliconvalley.domain.item.myitem.application.MyItemCreateService;
 import com.siliconvalley.domain.item.myitem.domain.MyItem;
 import com.siliconvalley.domain.member.dao.MemberFindDao;
@@ -12,7 +11,6 @@ import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.profile.domain.ProfileItem;
 import com.siliconvalley.domain.profile.dto.ProfileCreate;
 import com.siliconvalley.domain.profile.dto.ProfileCreateSuccessResponse;
-import com.siliconvalley.domain.profile.exception.ProfileNameDuplicateException;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,9 +26,11 @@ public class ProfileCreateService {
     private final MemberFindDao memberFindDao;
     private final ProfileRepository profileRepository;
     private final MyItemCreateService myItemCreateService;
+    private final ProfileNameFilterService profileNameFilterService;
 
     public Response createProfile(final String memberId, final ProfileCreate dto) {
-        if (profileRepository.existsByProfileName(dto.getProfileName())) throw new ProfileNameDuplicateException(dto.getProfileName());
+        profileNameFilterService.profileNameFilter(dto.getProfileName());
+        // 프로필 네임 필터 통과시 로직
         Profile profile = dto.toEntity(memberFindDao.findById(memberId));
 
         // 기본 myItem(Avatar) 생성

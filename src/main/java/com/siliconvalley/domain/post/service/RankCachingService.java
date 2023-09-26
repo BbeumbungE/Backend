@@ -32,7 +32,7 @@ public class RankCachingService {
     public void cachingRankToRedis(RankingCachingDto rankingCachingDto){
         redisTemplate.opsForList().rightPush(generateRedisKey(rankingCachingDto.getSubjectId()), rankingCachingDto);
         // 키의 만료 시간을 4주로 설정
-        redisTemplate.expire(generateRedisKey(rankingCachingDto.getSubjectId()), 28, TimeUnit.DAYS);
+        redisTemplate.expire(generateRedisKey(rankingCachingDto.getSubjectId()), 1, TimeUnit.HOURS);
     }
 
     public String getTopPostThisWeek(Long subjectId){

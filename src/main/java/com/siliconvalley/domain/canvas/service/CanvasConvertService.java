@@ -12,8 +12,6 @@ import com.siliconvalley.domain.rabbitMQ.dto.SketchConversionResponse;
 import com.siliconvalley.domain.rabbitMQ.service.ConvertRequestSender;
 import com.siliconvalley.domain.sse.application.CanvasSseEmitterFInder;
 import com.siliconvalley.domain.sse.application.ConvertResultSender;
-import com.siliconvalley.domain.sse.application.SseEmitterFinder;
-import com.siliconvalley.domain.sse.application.SseEmitterSender;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +53,6 @@ public class CanvasConvertService {
         canvas.updateCanvas(response.getCanvasUrl());
         Long profileId = canvas.getProfile().getId();
         ConvertEventDto convertEventDto = new ConvertEventDto(canvas.getId(), response.getCanvasUrl());
-        convertResultSender.send(canvasSseEmitterFInder.findByProfileId(profileId), convertEventDto, profileId);
+        convertResultSender.send(canvasSseEmitterFInder.findByProfileId(profileId), convertEventDto, profileId, "drawing");
     }
 }
