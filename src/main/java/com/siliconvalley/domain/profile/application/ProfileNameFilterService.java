@@ -16,8 +16,8 @@ public class ProfileNameFilterService {
     private final ProfileFindDao profileFindDao;
 
     public void profileNameFilter(String profileName){
-        if (!duplicateFilter(profileName)) throw new ProfileNameDuplicateException(profileName);
-        if (!badWordFilter(profileName)) throw new ProfileNameIncludeBadWordException(profileName);
+        if (duplicateFilter(profileName)) throw new ProfileNameDuplicateException(profileName);
+        if (badWordFilter(profileName)) throw new ProfileNameIncludeBadWordException(profileName);
     }
 
     private boolean badWordFilter(String profileName){
