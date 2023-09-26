@@ -22,10 +22,6 @@ public class CanvasSseEmitterService {
         }
         SseEmitter sseEmitter = canvasSseEmitterCreater.createEmitter(profileId);
 
-        // 연결 후 즉시 알림을 보내지 않으면 연결이 끊길 수 있으므로 연결 성공 알림 보내기
-        String id = profileId + "_" + System.currentTimeMillis();
-        sseEmitterSender.send(sseEmitter, id, new SseConnectSuccessResponse(profileId), profileId, "initial");
-
         return sseEmitter;
     }
 }
