@@ -7,6 +7,7 @@ import com.siliconvalley.global.config.security.jwt.JwtTokenProvider;
 import com.siliconvalley.global.config.security.oauth.OAuth2AuthenticationSuccessHandler;
 import com.siliconvalley.global.config.security.oauth.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -33,6 +34,9 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final AuthenticationConfiguration authenticationConfiguration;
+
+    @Value("${spring.security.logout-redirect-url}")
+    private String redirectUrl;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -75,7 +79,7 @@ public class SecurityConfig {
         // 로그아웃 설정
         httpSecurity.logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("http://localhost:3000");
+                .logoutSuccessUrl(redirectUrl);
 
         return httpSecurity.build();
     }
