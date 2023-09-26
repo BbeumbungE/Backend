@@ -7,7 +7,6 @@ import com.siliconvalley.domain.item.item.dto.ItemPostSuccessResponse;
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.notification.application.NotificationPushService;
 import com.siliconvalley.domain.notification.domain.NotificationType;
-import com.siliconvalley.domain.pix2pix.dao.Pix2PixRepository;
 import com.siliconvalley.domain.pix2pix.domain.Pix2Pix;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class SubjectItemCreateService {
 
     private final ItemRepository itemRepository;
-    private final Pix2PixRepository pix2PixRepository;
     private final NotificationPushService notificationPushService;
 
     public Response createSubjectItem(Long itemPrice, String subjectName, String subjectImgUrl, String modelName, String visionName) {
