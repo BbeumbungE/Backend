@@ -1,5 +1,6 @@
 package com.siliconvalley.global.config.security.jwt;
 
+import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.siliconvalley.global.config.security.response.JsonResponser;
@@ -30,6 +31,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
             JsonResponser.sendJsonResponse(response, ErrorCode.UNCONNECTED_REDIS);
         } else if (e instanceof TokenExpiredException) {
             JsonResponser.sendJsonResponse(response, ErrorCode.EXPIRED_TOKEN);
+        } else if (e instanceof SignatureVerificationException){
+            JsonResponser.sendJsonResponse(response, ErrorCode.INVALID_TOKEN);
         } else {
             JsonResponser.sendJsonResponse(response, ErrorCode.UNAUTHORIZATION);
         }

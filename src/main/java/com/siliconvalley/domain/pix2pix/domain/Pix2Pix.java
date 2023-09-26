@@ -21,14 +21,26 @@ public class Pix2Pix {
     @Column(name = "model_name")
     private String modelName;
 
+    @Column(name = "vision_name")
+    private String visionName;
+
     @OneToOne
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
     @Builder
-    public Pix2Pix(String modelName, Subject subject){
+    public Pix2Pix(String modelName, String visionName, Subject subject){
         this.modelName = modelName;
+        this.visionName = visionName;
         this.subject = subject;
+    }
+
+    public static Pix2Pix toEntity(Subject subject, String modelName, String visionName){
+        return Pix2Pix.builder()
+                .modelName(modelName)
+                .visionName(visionName)
+                .subject(subject)
+                .build();
     }
 
 }

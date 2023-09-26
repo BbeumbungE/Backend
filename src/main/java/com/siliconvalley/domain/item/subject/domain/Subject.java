@@ -41,10 +41,11 @@ public class Subject {
     private Pix2Pix pix2Pix;
 
     @Builder
-    public Subject(String subjectName, String subjectImage, Item item) {
+    public Subject(String subjectName, String subjectImage, Item item, Pix2Pix pix2Pix) {
         this.subjectName = subjectName;
         this.subjectImage = subjectImage;
         this.item = item;
+        this.pix2Pix = pix2Pix;
     }
 
 
@@ -56,6 +57,9 @@ public class Subject {
                 .build();
     }
 
+    public void setPix2Pix(Pix2Pix pix2Pix){
+        this.pix2Pix = pix2Pix;
+    }
     public void setItem(Item item) {
         this.item = item;
     }

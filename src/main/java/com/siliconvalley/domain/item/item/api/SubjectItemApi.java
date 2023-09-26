@@ -3,7 +3,6 @@ package com.siliconvalley.domain.item.item.api;
 import com.siliconvalley.domain.image.service.S3ImageUploadService;
 import com.siliconvalley.domain.image.service.S3PathBuildService;
 import com.siliconvalley.domain.item.item.dao.SubjectItemFindDao;
-import com.siliconvalley.domain.item.item.dto.SubjectItemCreateRequest;
 import com.siliconvalley.domain.item.item.application.SubjectItemCreateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -34,10 +32,12 @@ public class SubjectItemApi {
     public ResponseEntity createSubjectItem(
             @RequestParam("subjectImage") MultipartFile subjectImage,
             @RequestParam("itemPrice") Long itemPrice,
-            @RequestParam("subjectName") String subjectName
+            @RequestParam("subjectName") String subjectName,
+            @RequestParam("modelName") String modelName,
+            @RequestParam("visionName") String visionName
     ) throws IOException {
         String subjectImgUrl = s3ImageUploadService.uploadFile(subjectImage, s3PathBuildService.buildPathForItem("subject"));
-        return ResponseEntity.status(HttpStatus.CREATED).body(subjectItemCreateService.createSubjectItem(itemPrice, subjectName, subjectImgUrl));
+        return ResponseEntity.status(HttpStatus.CREATED).body(subjectItemCreateService.createSubjectItem(itemPrice, subjectName, subjectImgUrl, modelName, visionName));
     }
 
     @GetMapping
