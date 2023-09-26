@@ -19,6 +19,7 @@ import java.io.IOException;
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final RedirectUrlCreator redirectUrlCreator;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
@@ -39,9 +40,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         // token 발급 or 예외 리다이렉트
         String redirectUrl;
         if (request.getAttribute("exception") != null) {
-            redirectUrl = RedirectUrlCreator.createTargetUrl(request);
+            redirectUrl = redirectUrlCreator.createTargetUrl(request);
         } else {
-            redirectUrl = RedirectUrlCreator.createTargetUrl(accessToken, (String) oAuth2User.getAttributes().get("userId"));
+            redirectUrl = redirectUrlCreator.createTargetUrl(accessToken, (String) oAuth2User.getAttributes().get("userId"));
         }
 
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
