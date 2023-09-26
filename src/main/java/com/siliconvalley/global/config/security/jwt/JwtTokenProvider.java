@@ -2,10 +2,10 @@ package com.siliconvalley.global.config.security.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.siliconvalley.domain.member.dao.MemberFindDao;
 import com.siliconvalley.domain.member.domain.Member;
-import com.siliconvalley.domain.member.dao.MemberRepository;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -127,6 +126,8 @@ public class JwtTokenProvider {
 
             request.setAttribute("exception", e);
 
+        } catch (SignatureVerificationException e) {
+            request.setAttribute("exception", e);
         }
         return null;
     }
