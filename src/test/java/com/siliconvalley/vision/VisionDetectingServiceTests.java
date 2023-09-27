@@ -41,7 +41,7 @@ public class VisionDetectingServiceTests {
         Canvas mockCanvas = mock(Canvas.class, RETURNS_DEEP_STUBS);
         when(canvasFindDao.findById(canvasId)).thenReturn(mockCanvas);
         when(mockCanvas.getCanvas()).thenReturn("sampleCanvasData");
-        when(visionService.detectLabels("sampleCanvasData")).thenReturn(Map.of("anotherModelName", 0.8f)); // 수정된 점수
+        when(visionService.detectObjects("sampleCanvasData")).thenReturn(Map.of("anotherModelName", 0.8f)); // 수정된 점수
         when(mockCanvas.getSubject().getPix2Pix().getModelName()).thenReturn("sampleModelName");
 
         // When
@@ -59,7 +59,7 @@ public class VisionDetectingServiceTests {
         Canvas mockCanvas = mock(Canvas.class, RETURNS_DEEP_STUBS);
         when(canvasFindDao.findById(canvasId)).thenReturn(mockCanvas);
         when(mockCanvas.getCanvas()).thenReturn("sampleCanvasData");
-        when(visionService.detectLabels("sampleCanvasData")).thenReturn(Map.of("sampleModelName", 0.3f)); // 수정된 점수
+        when(visionService.detectObjects("sampleCanvasData")).thenReturn(Map.of("sampleModelName", 0.3f)); // 수정된 점수
         when(mockCanvas.getSubject().getPix2Pix().getModelName()).thenReturn("sampleModelName");
 
         // When
@@ -77,7 +77,7 @@ public class VisionDetectingServiceTests {
         Canvas mockCanvas = mock(Canvas.class, RETURNS_DEEP_STUBS);
         when(canvasFindDao.findById(canvasId)).thenReturn(mockCanvas);
         when(mockCanvas.getCanvas()).thenReturn("sampleCanvasData");
-        when(visionService.detectLabels("sampleCanvasData")).thenReturn(Map.of("sampleModelName", 0.8f)); // 수정된 점수
+        when(visionService.detectObjects("sampleCanvasData")).thenReturn(Map.of("sampleModelName", 0.8f)); // 수정된 점수
         when(mockCanvas.getSubject().getPix2Pix().getModelName()).thenReturn("sampleModelName");
 
         // When
@@ -97,7 +97,7 @@ public class VisionDetectingServiceTests {
         when(mockCanvas.getCanvas()).thenReturn("sampleCanvasData");
 
         // 탐지된 물체가 없을 경우 빈 Map 반환
-        when(visionService.detectLabels("sampleCanvasData")).thenReturn(Map.of());
+        when(visionService.detectObjects("sampleCanvasData")).thenReturn(Map.of());
 
         // When
         Score result = visionDetectingService.calculateCanvasScore(canvasId);
@@ -116,7 +116,7 @@ public class VisionDetectingServiceTests {
         when(mockCanvas.getCanvas()).thenReturn("sampleCanvasData");
 
         // 탐지된 물체가 없을 경우 빈 Map 반환
-        when(visionService.detectLabels("sampleCanvasData")).thenReturn(Map.of("Error", -1f));
+        when(visionService.detectObjects("sampleCanvasData")).thenReturn(Map.of("Error", -1f));
 
         // When
         Score result = visionDetectingService.calculateCanvasScore(canvasId);
