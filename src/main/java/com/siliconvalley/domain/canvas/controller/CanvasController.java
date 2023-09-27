@@ -53,11 +53,11 @@ public class CanvasController {
        return canvasSseEmitterService.connect(profileId);
     }
 
-    @GetMapping("")
+    @PostMapping("/demo")
     public ResponseEntity<Response> convertSketchToCanvasTest(
-            @RequestParam MultipartFile sketchFile
+            @RequestParam ("sketchFile") MultipartFile sketchFile
     )throws IOException{
-        String sketchUrl = s3ImageUploadService.uploadFile(sketchFile, "rendingPage");
+        String sketchUrl = s3ImageUploadService.uploadFile(sketchFile, "demo");
         Response response = canvasConvertService.convertSketchToCanvasDemo(sketchUrl);
         return ResponseEntity.ok(response);
     }

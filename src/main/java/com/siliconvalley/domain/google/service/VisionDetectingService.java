@@ -27,7 +27,7 @@ public class VisionDetectingService {
     public Score calculateCanvasScore(Long canvasId) {
         Canvas canvas = canvasFindDao.findById(canvasId);
         Map<String, Float> detectResult = visionService.detectLabels(canvas.getCanvas());
-        if (detectResult.size() == 0 || canvas.getSubject().getPix2Pix().getVisionName().equals(null)) {return Score.LOW;}
+        if (detectResult.size() == 0) {return Score.LOW;}
         Float detectionScore = detectResult.get(canvas.getSubject().getPix2Pix().getVisionName());
 
         return Score.determineScore(detectionScore);
@@ -41,7 +41,6 @@ public class VisionDetectingService {
         }
 
         return Response.of(CommonCode.GOOD_REQUEST,  results);
-
     }
 
 }

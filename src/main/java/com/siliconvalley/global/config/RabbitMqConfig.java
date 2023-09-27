@@ -41,6 +41,15 @@ public class RabbitMqConfig {
                 .withArgument("x-dead-letter-routing-key", "sketch_conversion_dead_letter_queue")
                 .build();
     }
+
+    @Bean
+    Queue demoConversionResponseQueue() {
+        return QueueBuilder.durable("demo_conversion_response_queue")
+                .withArgument("x-dead-letter-exchange", "sketch_conversion_dead_letter_exchange")
+                .withArgument("x-dead-letter-routing-key", "sketch_conversion_dead_letter_queue")
+                .build();
+    }
+
     @Bean
     Queue deadLetterQueue() {
         return new Queue("sketch_conversion_dead_letter_queue", true);
@@ -96,6 +105,11 @@ public class RabbitMqConfig {
     @Bean
     public Binding bindingResponseQueue(Queue responseQueue, TopicExchange topicExchange) {
         return BindingBuilder.bind(responseQueue).to(topicExchange).with("sketch_conversion_response_queue");
+    }
+
+    @Bean
+    public Binding bindingDemoResponseQueue(Queue demoConversionResponseQueue, TopicExchange topicExchange){
+        return BindingBuilder.bind(demoConversionResponseQueue).to(topicExchange).with("demo_conversion_response_queue");
     }
 
     @Bean

@@ -45,6 +45,7 @@ public class CanvasConvertService {
     }
 
     public Response convertSketchToCanvasDemo(String sketch){
+        convertRequestSender.sendDemoConversionRequest(sketch);
         return Response.of(CommonCode.GOOD_REQUEST, null);
     }
 
