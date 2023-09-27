@@ -1,6 +1,7 @@
 package com.siliconvalley.domain.post.dto;
 
 import com.siliconvalley.domain.item.subject.domain.Subject;
+import com.siliconvalley.domain.item.subject.dto.SubjectCachingDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,10 @@ public class PostSubjectResponse {
     private int currentPage;
     private int totalPages;
 
-    public PostSubjectResponse(Subject subject, Page<PostListResponse> postPage){
-        this.subjectId = subject.getId();
-        this.subjectName = subject.getSubjectName();
-        this.subjectImage = subject.getSubjectImage();
+    public PostSubjectResponse(SubjectCachingDto dto, Page<PostListResponse> postPage){
+        this.subjectId = dto.getSubjectId();
+        this.subjectName = dto.getSubjectName();
+        this.subjectImage = dto.getSubjectImage();
         this.postLists = postPage.getContent();
         this.currentPage = postPage.getNumber();
         this.totalPages = postPage.getTotalPages();

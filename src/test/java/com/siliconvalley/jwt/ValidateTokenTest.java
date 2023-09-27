@@ -16,6 +16,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.util.Date;
 
 @SpringBootTest
+@DisplayName("Validate Token Test")
 public class ValidateTokenTest {
 
     @Autowired
