@@ -3,8 +3,6 @@ package com.siliconvalley.domain.google.service;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.vision.v1.*;
-import com.google.cloud.vision.v1.ImageAnnotatorClient;
-import com.google.cloud.vision.v1.ImageAnnotatorSettings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,14 +22,17 @@ public class GoogleVisionApiService {
     @Value("${google.service.account.key}")
     private String serviceAccountKey;
 
-    public Map<String, Float> detectObjects(String filePath) {
+    public Map<String, Float> detectLabels(String filePath) {
         List<AnnotateImageRequest> requests = new ArrayList<>();
         Map<String, Float> results = new HashMap<>();
 
         try {
             ImageSource imageSource = ImageSource.newBuilder().setImageUri(filePath).build();
             Image img = Image.newBuilder().setSource(imageSource).build();
-            Feature feat = Feature.newBuilder().setType(Feature.Type.OBJECT_LOCALIZATION).build();
+
+            // LABEL_DETECTION 유형으로 변경
+            Feature feat = Feature.newBuilder().setType(Feature.Type.LABEL_DETECTION).build();
+
             AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
                     .addFeatures(feat)
                     .setImage(img)
@@ -56,9 +57,10 @@ public class GoogleVisionApiService {
                         continue;
                     }
 
-                    for (LocalizedObjectAnnotation entity : res.getLocalizedObjectAnnotationsList()) {
-                        log.info("Detected object: " + entity.getName() + " with confidence: " + entity.getScore());
-                        results.put(entity.getName().toLowerCase(), entity.getScore());
+                    // EntityAnnotation 리스트로 변경
+                    for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
+                        log.info("Detected label: " + annotation.getDescription() + " with confidence: " + annotation.getScore());
+                        results.put(annotation.getDescription().toLowerCase(), annotation.getScore());
                     }
                 }
             }

@@ -43,6 +43,10 @@ public class CanvasConvertService {
         return convertRequestSender.sendSketchConversionRequest(sketch, canvas.getId(), profileId, subject);
     }
 
+    public Response convertSketchToCanvasDemo(String sketch){
+
+    }
+
     public Response updateSketchAndCanvas(Long profileId, Long canvasId, String sketch){
         Canvas canvas = canvasFindDao.findById(canvasId);
         return canvasUpdateService.updateSketchAndCanvas(canvas, sketch, profileId);
