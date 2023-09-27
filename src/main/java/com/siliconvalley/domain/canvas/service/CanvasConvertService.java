@@ -12,6 +12,7 @@ import com.siliconvalley.domain.rabbitMQ.dto.SketchConversionResponse;
 import com.siliconvalley.domain.rabbitMQ.service.ConvertRequestSender;
 import com.siliconvalley.domain.sse.application.CanvasSseEmitterFInder;
 import com.siliconvalley.domain.sse.application.ConvertResultSender;
+import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,7 @@ public class CanvasConvertService {
     }
 
     public Response convertSketchToCanvasDemo(String sketch){
-
+        return Response.of(CommonCode.GOOD_REQUEST, null);
     }
 
     public Response updateSketchAndCanvas(Long profileId, Long canvasId, String sketch){
