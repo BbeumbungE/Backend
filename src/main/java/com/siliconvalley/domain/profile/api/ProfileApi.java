@@ -244,7 +244,7 @@ public class ProfileApi {
         return ResponseEntity.status(HttpStatus.OK).body(stageFindDao.getStageWithRecord(profileId, stageId));
     }
 
-    @PostMapping("/{profileId}/stages/{stageId}/record")
+    @PostMapping("/{profileId}/stages/{stageId}/records")
     public ResponseEntity evaluateCanvasAndcreateRecord(
             @PathVariable(name = "profileId") Long profileId,
             @PathVariable(name = "stageId") Long stageId,
