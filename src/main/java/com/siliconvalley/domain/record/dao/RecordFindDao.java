@@ -29,4 +29,5 @@ public class RecordFindDao {
     public Optional<Record> findByProfileIdAndStageId(Long profileId, Long stageId) {
         return recordRepository.findByProfileIdAndStageId(profileId, stageId);
     }
+
 }

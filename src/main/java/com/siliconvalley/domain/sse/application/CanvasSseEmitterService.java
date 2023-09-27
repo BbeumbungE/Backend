@@ -12,7 +12,6 @@ public class CanvasSseEmitterService {
 
     private final CanvasSseEmitterRepository canvasSseEmitterRepository;
     private final CanvasSseEmitterCreater canvasSseEmitterCreater;
-    private final SseEmitterSender sseEmitterSender;
 
     public SseEmitter connect(Long profileId) {
 
