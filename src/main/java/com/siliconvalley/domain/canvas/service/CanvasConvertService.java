@@ -12,6 +12,7 @@ import com.siliconvalley.domain.rabbitMQ.dto.SketchConversionResponse;
 import com.siliconvalley.domain.rabbitMQ.service.ConvertRequestSender;
 import com.siliconvalley.domain.sse.application.CanvasSseEmitterFInder;
 import com.siliconvalley.domain.sse.application.ConvertResultSender;
+import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,10 @@ public class CanvasConvertService {
         Subject subject = subjectFindDao.findById(subjectId);
         Canvas canvas = canvasCreateService.createCanvas(CanvasCreateDto.builder().subject(subject).sketchUrl(sketch).profile(profile).build());
         return convertRequestSender.sendSketchConversionRequest(sketch, canvas.getId(), profileId, subject);
+    }
+
+    public Response convertSketchToCanvasDemo(String sketch){
+        return Response.of(CommonCode.GOOD_REQUEST, null);
     }
 
     public Response updateSketchAndCanvas(Long profileId, Long canvasId, String sketch){

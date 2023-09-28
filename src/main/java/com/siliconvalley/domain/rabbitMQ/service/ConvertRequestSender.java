@@ -4,6 +4,7 @@ import com.siliconvalley.domain.canvas.dto.CanvasConvertResponse;
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.post.service.RankCachingService;
 import com.siliconvalley.domain.rabbitMQ.code.RabbitMQCode;
+import com.siliconvalley.domain.rabbitMQ.dto.DemoConversionRequest;
 import com.siliconvalley.domain.rabbitMQ.dto.SketchConversionRequest;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,11 @@ public class ConvertRequestSender {
         SketchConversionRequest request = new SketchConversionRequest(sketchUrl, canvasId, profileId, subject.getPix2Pix().getModelName());
         rabbitTemplate.convertAndSend(exchange, "sketch_conversion_request_queue" , request);
         return Response.of(RabbitMQCode.CONVERSION_REQUEST_SUCCESS, new CanvasConvertResponse(canvasId, rankCachingService.getTopPostThisWeek(subject.getId())));
+    }
+
+    public Response sendDemoConversionRequest(String sketchUrl){
+        DemoConversionRequest request = new DemoConversionRequest(sketchUrl, "panda");
+        rabbitTemplate.convertAndSend(exchange, "demo_conversion_request_queue", request);
+        return Response.of(RabbitMQCode.CONVERSION_REQUEST_SUCCESS);
     }
 }

@@ -36,7 +36,7 @@ public class RecordCreateService {
         Profile profile = profileFindDao.findById(profileId);
         Stage stage = stageFindDao.findById(stageId);
 
-        if (recordFindDao.findByProfileId(profileId).isPresent()) {
+        if (recordFindDao.findByProfileIdAndStageId(profileId, stageId).isPresent()) {
             throw new RecordAlreadyExist(stage.getStageNum() + "번 스테이지 기록");
         }
 

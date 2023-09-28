@@ -14,7 +14,7 @@ public class Pix2PixFindDao {
 
     private final Pix2PixRepository pix2PixRepository;
 
-    @Cacheable(key = "'subject:'+ #subject", value = "subjectCache")
+    @Cacheable(key = "'subject:'+ #subject", value = "subjectAndModelCache")
     public UseModelDto findBySubjectId(Long subjectId){
         Pix2Pix pix2Pix = pix2PixRepository.findBySubjectId(subjectId);
         return new UseModelDto(pix2Pix);

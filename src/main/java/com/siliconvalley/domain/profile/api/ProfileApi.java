@@ -244,7 +244,8 @@ public class ProfileApi {
         return ResponseEntity.status(HttpStatus.OK).body(stageFindDao.getStageWithRecord(profileId, stageId));
     }
 
-    @PostMapping("/{profileId}/stages/{stageId}/record")
+
+    @PostMapping("/{profileId}/stages/{stageId}/records")
     public ResponseEntity evaluateCanvasAndcreateRecord(
             @PathVariable(name = "profileId") Long profileId,
             @PathVariable(name = "stageId") Long stageId,
@@ -254,7 +255,7 @@ public class ProfileApi {
     }
 
     @PatchMapping("/{profileId}/stages/{stageId}/records/{recordId}")
-    public ResponseEntity evaluateCanvasAndupdateRecord(
+    public ResponseEntity evaluateCanvasAndUpdateRecord(
             @PathVariable(name = "recordId") Long recordId,
             @RequestBody RecordUpdateRequest dto
     ) {
