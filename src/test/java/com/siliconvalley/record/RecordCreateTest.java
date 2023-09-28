@@ -36,7 +36,6 @@ public class RecordCreateTest {
     @InjectMocks
     RecordCreateService recordCreateService;
 
-
     @Mock RecordRepository recordRepository;
     @Mock RecordFindDao recordFindDao;
     @Mock ProfileFindDao profileFindDao;
