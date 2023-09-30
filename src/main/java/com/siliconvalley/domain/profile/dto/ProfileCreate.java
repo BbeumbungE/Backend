@@ -17,7 +17,7 @@ public class ProfileCreate {
     @Valid
     private String profileName;
 
-    ProfileCreate(@Valid String profileName, @Valid Long myItemId) {
+    ProfileCreate(@Valid String profileName) {
         this.profileName = profileName;
     }
 
