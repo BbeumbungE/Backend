@@ -33,11 +33,15 @@ public class TempIdCreateService {
     }
 
     private String createTempIdForSse(){
-        String tempId = UUID.randomUUID().toString();
+        String tempId = generateUUID();
         while (canvasSseEmitterFinder.findByTempId(tempId) != null){
-            tempId = UUID.randomUUID().toString();
+            tempId = generateUUID();
         }
         return tempId;
+    }
+
+    protected String generateUUID(){
+        return UUID.randomUUID().toString();
     }
 
 }
