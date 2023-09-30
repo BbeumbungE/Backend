@@ -32,7 +32,6 @@ public class StageFindDao {
 
     private final StageRepository stageRepository;
     private final RecordFindDao recordFindDao;
-    private final MyItemFindDao myItemFindDao;
 
     public Stage findById(Long stageId) {
         Optional<Stage> stageOptional = stageRepository.findById(stageId);
@@ -46,11 +45,15 @@ public class StageFindDao {
     }
 
     public Response getAllStage(Pageable pageable) {
+        final int stageViewSize = 3;
         Page<Stage> stageList = stageRepository.findAll(pageable);
         List<StageResponse> stageSubjectList = stageList.stream()
                         .map(stage -> (stage.getSubject() == null) ? new StageResponse(stage) : new StageResponse(stage, stage.getSubject()))
                         .collect(Collectors.toList());
-
+        while (stageSubjectList.size() < stageViewSize && !stageSubjectList.isEmpty()){
+            int stageNumber = stageSubjectList.get(stageSubjectList.size()-1).getStageNum()+1;
+            stageSubjectList.add(new StageResponse(stageNumber));
+        }
         return Response.of(CommonCode.GOOD_REQUEST, new PageResponse(stageSubjectList, stageList));
     }
 

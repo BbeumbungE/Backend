@@ -20,7 +20,6 @@ import java.io.IOException;
 public class CanvasController {
 
     private final CanvasConvertService canvasConvertService;
-    private final CanvasSseEmitterService canvasSseEmitterService;
     private final S3ImageUploadService s3ImageUploadService;
     private final S3PathBuildService s3PathBuildService;
 
@@ -46,20 +45,13 @@ public class CanvasController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/profile/{profileId}/sse")
-    public SseEmitter connectSseForConvertedCanvas(
-            @PathVariable Long profileId
-    ){
-       return canvasSseEmitterService.connect(profileId);
-    }
-
-    @GetMapping("")
+    @PostMapping("/demo/tempId/{tempId}")
     public ResponseEntity<Response> convertSketchToCanvasTest(
-            @RequestParam MultipartFile sketchFile
+            @RequestParam ("sketchFile") MultipartFile sketchFile,
+            @PathVariable String tempId
     )throws IOException{
-        String sketchUrl = s3ImageUploadService.uploadFile(sketchFile, "rendingPage");
-        Response response = canvasConvertService.convertSketchToCanvasDemo(sketchUrl);
+        String sketchUrl = s3ImageUploadService.uploadFile(sketchFile, "demo");
+        Response response = canvasConvertService.convertSketchToCanvasDemo(sketchUrl, tempId);
         return ResponseEntity.ok(response);
     }
-
 }

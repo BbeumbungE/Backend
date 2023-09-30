@@ -30,8 +30,8 @@ public class ConvertRequestSender {
         return Response.of(RabbitMQCode.CONVERSION_REQUEST_SUCCESS, new CanvasConvertResponse(canvasId, rankCachingService.getTopPostThisWeek(subject.getId())));
     }
 
-    public Response sendDemoConversionRequest(String sketchUrl){
-        DemoConversionRequest request = new DemoConversionRequest(sketchUrl, "panda");
+    public Response sendDemoConversionRequest(String sketchUrl, String tempId){
+        DemoConversionRequest request = new DemoConversionRequest(sketchUrl, "panda", tempId);
         rabbitTemplate.convertAndSend(exchange, "demo_conversion_request_queue", request);
         return Response.of(RabbitMQCode.CONVERSION_REQUEST_SUCCESS);
     }
