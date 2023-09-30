@@ -32,4 +32,8 @@ public class StageResponse {
         this.timeLimit = stage.getTimeLimit();
         this.subject = null;
     }
+
+    public StageResponse(int stageNum){
+        this.stageNum = stageNum;
+    }
 }
