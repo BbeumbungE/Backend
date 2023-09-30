@@ -20,7 +20,6 @@ import java.io.IOException;
 public class CanvasController {
 
     private final CanvasConvertService canvasConvertService;
-    private final CanvasSseEmitterService canvasSseEmitterService;
     private final S3ImageUploadService s3ImageUploadService;
     private final S3PathBuildService s3PathBuildService;
 
