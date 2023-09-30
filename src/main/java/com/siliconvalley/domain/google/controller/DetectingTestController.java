@@ -14,11 +14,18 @@ public class DetectingTestController {
 
     private final VisionDetectingService visionDetectingService;
 
-    @GetMapping("{canvasId}")
+    @GetMapping("/{canvasId}")
     public ResponseEntity<Response> test(
             @PathVariable Long canvasId
             ){
         return ResponseEntity.ok(visionDetectingService.testLabelDetecting(canvasId));
+    }
+
+    @GetMapping("/{canvasId}/score")
+    public ResponseEntity<Response> scoreTest(
+            @PathVariable Long canvasId
+    ){
+        return ResponseEntity.ok(Response.of(CommonCode.GOOD_REQUEST, visionDetectingService.calculateCanvasScore(canvasId).getScoreValue()));
     }
 
 }

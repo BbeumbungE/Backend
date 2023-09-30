@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 public class DemoConversionRequest {
     private String sketchUrl;
     private String modelName;
+    private String tempId;
 
-    public DemoConversionRequest(String sketchUrl, String modelName){
+    public DemoConversionRequest(String sketchUrl, String modelName, String tempId){
         this.sketchUrl = sketchUrl;
         this.modelName = modelName;
+        this.tempId = tempId;
     }
 }
