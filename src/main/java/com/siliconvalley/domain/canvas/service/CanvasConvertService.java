@@ -8,9 +8,10 @@ import com.siliconvalley.domain.item.subject.dao.SubjectFindDao;
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.domain.Profile;
+import com.siliconvalley.domain.rabbitMQ.dto.DemoConversionResponse;
 import com.siliconvalley.domain.rabbitMQ.dto.SketchConversionResponse;
 import com.siliconvalley.domain.rabbitMQ.service.ConvertRequestSender;
-import com.siliconvalley.domain.sse.application.CanvasSseEmitterFInder;
+import com.siliconvalley.domain.sse.application.CanvasSseEmitterFinder;
 import com.siliconvalley.domain.sse.application.ConvertResultSender;
 import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
@@ -33,7 +34,7 @@ public class CanvasConvertService {
     private final ConvertRequestSender convertRequestSender;
     private final CanvasUpdateService canvasUpdateService;
     private final CanvasCreateService canvasCreateService;
-    private final CanvasSseEmitterFInder canvasSseEmitterFInder;
+    private final CanvasSseEmitterFinder canvasSseEmitterFinder;
     private final ConvertResultSender convertResultSender;
 
 
@@ -44,8 +45,8 @@ public class CanvasConvertService {
         return convertRequestSender.sendSketchConversionRequest(sketch, canvas.getId(), profileId, subject);
     }
 
-    public Response convertSketchToCanvasDemo(String sketch){
-        convertRequestSender.sendDemoConversionRequest(sketch);
+    public Response convertSketchToCanvasDemo(String sketch, String tempId){
+        convertRequestSender.sendDemoConversionRequest(sketch, tempId);
         return Response.of(CommonCode.GOOD_REQUEST, null);
     }
 
@@ -54,11 +55,14 @@ public class CanvasConvertService {
         return canvasUpdateService.updateSketchAndCanvas(canvas, sketch, profileId);
     }
 
-      public void updateConvertedData(SketchConversionResponse response){
+    public void updateConvertedData(SketchConversionResponse response){
         Canvas canvas = canvasFindDao.findById(response.getCanvasId());
         canvas.updateCanvas(response.getCanvasUrl());
         Long profileId = canvas.getProfile().getId();
         ConvertEventDto convertEventDto = new ConvertEventDto(canvas.getId(), response.getCanvasUrl());
-        convertResultSender.send(canvasSseEmitterFInder.findByProfileId(profileId), convertEventDto, profileId, "drawing");
+        convertResultSender.send(canvasSseEmitterFinder.findByProfileId(profileId), convertEventDto, profileId, "drawing");
+    }
+    public void sendConvertedDemoCanvas(DemoConversionResponse response){
+        convertResultSender.send(canvasSseEmitterFinder.findByTempId(response.getTempId()), response.getCanvasUrl(), response.getTempId(), "demo");
     }
 }

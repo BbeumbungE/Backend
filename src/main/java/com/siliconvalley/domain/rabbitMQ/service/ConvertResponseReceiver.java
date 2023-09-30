@@ -36,6 +36,7 @@ public class ConvertResponseReceiver {
     public void receiveMessage(DemoConversionResponse response, Message message, Channel channel) throws IOException {
         log.info("Received message: {}", response);
         try {
+            canvasConvertService.sendConvertedDemoCanvas(response);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false); // 메시지 승인
         } catch (Exception e) {
             log.error("Error processing the message: {}", e.getMessage());

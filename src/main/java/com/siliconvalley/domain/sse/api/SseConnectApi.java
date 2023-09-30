@@ -36,4 +36,14 @@ public class SseConnectApi {
         return canvasSseEmitterService.connect(profileId);
     }
 
+    /**
+     * Demo Canvas SSE Connect
+     **/
+    @GetMapping("canvases/demoId/{tempId}")
+    public SseEmitter connectSseForConvertedDemoCanvas(
+            @PathVariable String tempId
+    ){
+        return canvasSseEmitterService.connect(tempId);
+    }
+
 }
