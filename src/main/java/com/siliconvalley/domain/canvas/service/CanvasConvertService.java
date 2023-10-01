@@ -52,8 +52,7 @@ public class CanvasConvertService {
 
     public Response convertSketchToCanvasDemo(String sketch, String tempId, Long subjectId){
         UseModelDto dto = pix2PixFindDao.findBySubjectId(subjectId);
-        convertRequestSender.sendDemoConversionRequest(sketch, tempId, dto.getModelName());
-        return Response.of(CommonCode.GOOD_REQUEST, null);
+        return convertRequestSender.sendDemoConversionRequest(sketch, tempId, dto.getModelName());
     }
 
     public Response updateSketchAndCanvas(Long profileId, Long canvasId, String sketch){
