@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 
 public enum SseCode implements ResponseCode {
     CONNECT_SUCCESS(200, "연결에 성공했습니다.", HttpStatus.OK),
+    TEMP_ID_GENERATE_SUCCESS(201, "임시 아이디 발급에 성공하였습니다.", HttpStatus.CREATED),
     CONNECT_FAIL(400, "연결에 실패했습니다.", HttpStatus.BAD_REQUEST);
 
     private final int code;

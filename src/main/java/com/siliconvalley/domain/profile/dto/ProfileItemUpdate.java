@@ -13,7 +13,7 @@ public class ProfileItemUpdate {
     @Valid
     private Long myItemId;
 
-    ProfileItemUpdate(@Valid Long myItemId) {
+    public ProfileItemUpdate(@Valid Long myItemId) {
         this.myItemId = myItemId;
     }
 }
