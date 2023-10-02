@@ -34,4 +34,10 @@ public class StageWithRecordResponse {
         this.subjectItem = new SubjectResponse(stage.getSubject());
         this.record = null;
     }
+
+    public StageWithRecordResponse(int stageNum){
+        this.stageNum = stageNum;
+        this.subjectItem = null;
+        this.record = null;
+    }
 }

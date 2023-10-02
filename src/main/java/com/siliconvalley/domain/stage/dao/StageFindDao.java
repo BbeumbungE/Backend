@@ -15,6 +15,7 @@ import com.siliconvalley.global.common.code.CommonCode;
 import com.siliconvalley.global.common.dto.Response;
 import com.siliconvalley.global.common.dto.page.PageResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class StageFindDao {
@@ -63,7 +65,6 @@ public class StageFindDao {
         int highestClearedStageNumber = 0;
         List<StageWithRecordResponse> stageWithRecordList = new LinkedList<>();
 
-
         for (Stage stage : stageList) {
             Optional<Record> recordOptional = recordFindDao.findByProfileIdAndStageId(profileId, stage.getId());
 
@@ -73,6 +74,12 @@ public class StageFindDao {
                 if (highestClearedStageNumber == 0) highestClearedStageNumber = stage.getStageNum() - 1;
                 stageWithRecordList.add(new StageWithRecordResponse(stage));
             }
+        }
+
+        while (stageWithRecordList.size() < pageable.getPageSize() && !stageWithRecordList.isEmpty()){
+
+            int stageNumber = stageWithRecordList.get(stageWithRecordList.size()-1).getStageNum()+1;
+            stageWithRecordList.add(new StageWithRecordResponse(stageNumber));
         }
 
         return Response.of(CommonCode.GOOD_REQUEST, new PageResponse(new RecordResponseWithHighestClearedStageNumber(highestClearedStageNumber, stageWithRecordList), stageList));
