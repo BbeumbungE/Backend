@@ -21,11 +21,9 @@ import java.util.concurrent.TimeUnit;
 public class RankCachingService {
 
     private final RedisTemplate<String, RankingCachingDto> redisTemplate;
-    private final SubjectFindDao subjectFindDao;
 
     public Response getRankingThisWeekBySubject(Long subjectId){
-        Subject subject = subjectFindDao.findById(subjectId);
-        RankingCachingDto rankingCachingDto = redisTemplate.opsForList().index(generateRedisKey(subject.getId()), -1);
+        RankingCachingDto rankingCachingDto = redisTemplate.opsForList().index(generateRedisKey(subjectId), -1);
         return Response.of(RankingCode.GET_RANKING_SUCCESS, rankingCachingDto);
     }
 

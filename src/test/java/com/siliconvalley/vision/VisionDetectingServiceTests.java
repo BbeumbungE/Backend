@@ -42,7 +42,7 @@ public class VisionDetectingServiceTests {
         when(canvasFindDao.findById(canvasId)).thenReturn(mockCanvas);
         when(mockCanvas.getCanvas()).thenReturn("sampleCanvasData");
         when(visionService.detectLabels("sampleCanvasData")).thenReturn(Map.of("anotherModelName", 0.8f)); // 수정된 점수
-        when(mockCanvas.getSubject().getPix2Pix().getModelName()).thenReturn("sampleModelName");
+        when(mockCanvas.getSubject().getPix2Pix().getVisionName()).thenReturn("sampleModelName");
 
         // When
         Score result = visionDetectingService.calculateCanvasScore(canvasId);
@@ -60,7 +60,7 @@ public class VisionDetectingServiceTests {
         when(canvasFindDao.findById(canvasId)).thenReturn(mockCanvas);
         when(mockCanvas.getCanvas()).thenReturn("sampleCanvasData");
         when(visionService.detectLabels("sampleCanvasData")).thenReturn(Map.of("sampleModelName", 0.3f)); // 수정된 점수
-        when(mockCanvas.getSubject().getPix2Pix().getModelName()).thenReturn("sampleModelName");
+        when(mockCanvas.getSubject().getPix2Pix().getVisionName()).thenReturn("sampleModelName");
 
         // When
         Score result = visionDetectingService.calculateCanvasScore(canvasId);
@@ -78,7 +78,7 @@ public class VisionDetectingServiceTests {
         when(canvasFindDao.findById(canvasId)).thenReturn(mockCanvas);
         when(mockCanvas.getCanvas()).thenReturn("sampleCanvasData");
         when(visionService.detectLabels("sampleCanvasData")).thenReturn(Map.of("sampleModelName", 0.8f)); // 수정된 점수
-        when(mockCanvas.getSubject().getPix2Pix().getModelName()).thenReturn("sampleModelName");
+        when(mockCanvas.getSubject().getPix2Pix().getVisionName()).thenReturn("sampleModelName");
 
         // When
         Score result = visionDetectingService.calculateCanvasScore(canvasId);

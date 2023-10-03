@@ -11,10 +11,12 @@ public class CanvasResponse {
     private Long canvasId;
     private String canvasUrl;
     private String sketchUrl;
+    private String subjectName;
     public CanvasResponse(Canvas canvas){
         this.canvasId = canvas.getId();
         this.canvasUrl = canvas.getCanvas();
         this.sketchUrl = canvas.getSketch();
+        this.subjectName = canvas.getSubject().getSubjectName();
     }
 
 }
