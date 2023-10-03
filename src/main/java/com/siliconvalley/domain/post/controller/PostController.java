@@ -20,7 +20,7 @@ public class PostController {
     private final PostDetailService postDetailService;
     private final RankCachingService rankCachingService;
     private final PostingService postingService;
-    private final PostRankingService postRankingService;
+    private final UpdateRankService postRankingService;
 
     @PostMapping("/canvases/{canvasId}/posts")
     public ResponseEntity<Response> postForCanvas(
