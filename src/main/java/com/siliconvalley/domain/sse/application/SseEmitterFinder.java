@@ -17,7 +17,7 @@ public class SseEmitterFinder {
         return sseEmitterRepository.findById(profileId);
     }
 
-    public Map<Long, SseEmitter> findALl() {
+    public Map<Long, SseEmitter> findAll() {
         return sseEmitterRepository.findAll();
     }
 }
