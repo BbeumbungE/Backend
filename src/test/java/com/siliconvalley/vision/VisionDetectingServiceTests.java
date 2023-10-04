@@ -4,6 +4,8 @@ import com.siliconvalley.domain.canvas.dao.CanvasFindDao;
 import com.siliconvalley.domain.canvas.domain.Canvas;
 import com.siliconvalley.domain.google.service.GoogleVisionApiService;
 import com.siliconvalley.domain.google.service.VisionDetectingService;
+import com.siliconvalley.domain.item.subject.domain.Subject;
+import com.siliconvalley.domain.pix2pix.domain.Pix2Pix;
 import com.siliconvalley.domain.stage.domain.Score;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Map;
 
@@ -28,10 +32,11 @@ public class VisionDetectingServiceTests {
     private VisionDetectingService visionDetectingService;
 
     @Mock
-    private CanvasFindDao canvasFindDao;
+    private GoogleVisionApiService visionService;
 
     @Mock
-    private GoogleVisionApiService visionService;
+    private CanvasFindDao canvasFindDao;
+
 
     @Test
     @DisplayName(value = "다른 물체만 감지되었을 때 그림의 점수를 LOW(1)로 반환")
@@ -124,5 +129,4 @@ public class VisionDetectingServiceTests {
         // Then
         assertEquals(Score.LOW, result);
     }
-
 }

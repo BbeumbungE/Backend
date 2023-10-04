@@ -22,14 +22,14 @@ public class GoogleVisionApiTests {
     void 라벨_추출_테스트(){
 
         // given
-        String imageUrl = "https://aicanvas-mw.s3.ap-northeast-2.amazonaws.com/subject/car.png";
+        String imageUrl = "https://aicanvas-mw.s3.ap-northeast-2.amazonaws.com/profile/36/canvas/handbag/1696378614753525592.JPG";
 
         // when
         Map<String, Float> results = googleVisionApiService.detectLabels(imageUrl);
 
         // then
         assertFalse(results.isEmpty());
-        assertTrue(results.containsKey("car"));
+        assertTrue(results.containsKey("bag"));
         assertTrue(results.keySet().stream().allMatch(key -> key.equals(key.toLowerCase())));
     }
 
