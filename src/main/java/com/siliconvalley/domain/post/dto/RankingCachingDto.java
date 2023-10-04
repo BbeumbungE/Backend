@@ -1,6 +1,5 @@
 package com.siliconvalley.domain.post.dto;
 
-import com.siliconvalley.domain.item.subject.domain.Subject;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +15,11 @@ public class RankingCachingDto {
     private String subjectName;
     private List<PostRankingDto> rankerList;
 
-    public RankingCachingDto(List<PostRankingDto> dto, Subject subject){
+    public RankingCachingDto(List<PostRankingDto> dto, String subjectName, Long subjectId){
         this.time = "Update Time : " + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute();
         this.rankerList = dto;
-        this.subjectId = subject.getId();
-        this.subjectName = subject.getSubjectName();
+        this.subjectId = subjectId;
+        this.subjectName = subjectName;
     }
 
 }

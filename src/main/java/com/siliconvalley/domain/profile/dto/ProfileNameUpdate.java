@@ -13,7 +13,7 @@ public class ProfileNameUpdate {
     @Valid
     private String profileName;
 
-    ProfileNameUpdate(@Valid String profileName){
+    public ProfileNameUpdate(@Valid String profileName){
         this.profileName = profileName;
     }
 }

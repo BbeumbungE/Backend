@@ -35,7 +35,7 @@ public class NotificationPushService {
     private final NotificationRepository notificationRepository;
 
     public void pushNotification(Item item, NotificationType type) {
-        Map<Long, SseEmitter> sseEmitterMap = sseEmitterFinder.findALl();
+        Map<Long, SseEmitter> sseEmitterMap = sseEmitterFinder.findAll();
 
         sseEmitterMap.entrySet().stream().forEach(sseEmitter -> {
             Long profileId = sseEmitter.getKey();

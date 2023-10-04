@@ -246,7 +246,7 @@ public class ProfileApi {
 
 
     @PostMapping("/{profileId}/stages/{stageId}/records")
-    public ResponseEntity evaluateCanvasAndcreateRecord(
+    public ResponseEntity evaluateCanvasAndCreateRecord(
             @PathVariable(name = "profileId") Long profileId,
             @PathVariable(name = "stageId") Long stageId,
             @RequestBody RecordCreateRequest dto

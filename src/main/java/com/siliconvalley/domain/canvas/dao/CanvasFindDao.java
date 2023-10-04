@@ -6,6 +6,7 @@ import com.siliconvalley.domain.canvas.dto.CanvasListResponse;
 import com.siliconvalley.domain.canvas.dto.CanvasResponse;
 import com.siliconvalley.domain.canvas.exception.CanvasNotFoundException;
 import com.siliconvalley.global.common.dto.Response;
+import com.siliconvalley.global.common.dto.page.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,9 +30,11 @@ public class CanvasFindDao {
     }
 
     public Response findByProfileId(Long profileId, Pageable pageable){
-        Page<CanvasListResponse> canvases = canvasRepository.findCanvasByProfileId(profileId, pageable);
-        return Response.of(CanvasCode.GET_CANVAS_SUCCESS, canvases);
+        Page<CanvasListResponse> canvasPage = canvasRepository.findCanvasByProfileId(profileId, pageable);
+        List<CanvasListResponse> canvases = canvasPage.getContent();
+        return Response.of(CanvasCode.GET_CANVAS_SUCCESS, new PageResponse<>(canvases, canvasPage));
     }
+
 
     public Response findCanvasDetail(Long profileId, Long canvasId){
         Optional<Canvas> canvas = canvasRepository.findCanvasByIdAndProfileId(canvasId, profileId);

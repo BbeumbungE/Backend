@@ -4,8 +4,12 @@ import com.siliconvalley.domain.canvas.dao.CanvasFindDao;
 import com.siliconvalley.domain.canvas.domain.Canvas;
 import com.siliconvalley.domain.canvas.dto.CanvasCreateDto;
 import com.siliconvalley.domain.canvas.dto.ConvertEventDto;
+import com.siliconvalley.domain.canvas.dto.DemoConversionDto;
 import com.siliconvalley.domain.item.subject.dao.SubjectFindDao;
 import com.siliconvalley.domain.item.subject.domain.Subject;
+import com.siliconvalley.domain.item.subject.dto.SubjectCachingDto;
+import com.siliconvalley.domain.pix2pix.dao.Pix2PixFindDao;
+import com.siliconvalley.domain.pix2pix.dto.UseModelDto;
 import com.siliconvalley.domain.profile.dao.ProfileFindDao;
 import com.siliconvalley.domain.profile.domain.Profile;
 import com.siliconvalley.domain.rabbitMQ.dto.DemoConversionResponse;
@@ -36,6 +40,7 @@ public class CanvasConvertService {
     private final CanvasCreateService canvasCreateService;
     private final CanvasSseEmitterFinder canvasSseEmitterFinder;
     private final ConvertResultSender convertResultSender;
+    private final Pix2PixFindDao pix2PixFindDao;
 
 
     public Response convertSketchToCanvas(Long profileId, Long subjectId, String sketch){
@@ -45,9 +50,9 @@ public class CanvasConvertService {
         return convertRequestSender.sendSketchConversionRequest(sketch, canvas.getId(), profileId, subject);
     }
 
-    public Response convertSketchToCanvasDemo(String sketch, String tempId){
-        convertRequestSender.sendDemoConversionRequest(sketch, tempId);
-        return Response.of(CommonCode.GOOD_REQUEST, null);
+    public Response convertSketchToCanvasDemo(String sketch, String tempId, Long subjectId){
+        UseModelDto dto = pix2PixFindDao.findBySubjectId(subjectId);
+        return convertRequestSender.sendDemoConversionRequest(sketch, tempId, dto.getModelName());
     }
 
     public Response updateSketchAndCanvas(Long profileId, Long canvasId, String sketch){
@@ -63,6 +68,7 @@ public class CanvasConvertService {
         convertResultSender.send(canvasSseEmitterFinder.findByProfileId(profileId), convertEventDto, profileId, "drawing");
     }
     public void sendConvertedDemoCanvas(DemoConversionResponse response){
-        convertResultSender.send(canvasSseEmitterFinder.findByTempId(response.getTempId()), response.getCanvasUrl(), response.getTempId(), "demo");
+        DemoConversionDto dto = new DemoConversionDto(response.getCanvasUrl());
+        convertResultSender.send(canvasSseEmitterFinder.findByTempId(response.getTempId()), dto, response.getTempId(), "demo");
     }
 }
