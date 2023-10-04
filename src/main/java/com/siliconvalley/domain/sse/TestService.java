@@ -23,7 +23,7 @@ public class TestService {
     private final ItemFindDao itemFindDao;
 
     public void sernTestMessage(Long profileId) {
-        System.out.println(sseEmitterFinder.findALl().size());
+        System.out.println(sseEmitterFinder.findAll().size());
         SseEmitter sseEmitter = sseEmitterFinder.findByProfileId(profileId);
         String id = profileId + "_" + System.currentTimeMillis();
         Item avatarItem = itemFindDao.findById(4L);
