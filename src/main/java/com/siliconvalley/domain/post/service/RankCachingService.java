@@ -35,6 +35,9 @@ public class RankCachingService {
 
     public String getTopPostThisWeek(Long subjectId){
         RankingCachingDto rankingCachingDto = redisTemplate.opsForList().index(generateRedisKey(subjectId), -1);
+        if (rankingCachingDto == null){
+            return null;
+        }
         if (rankingCachingDto.getRankerList().isEmpty()){
             return null;
         }
