@@ -4,7 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
+rich-suprstate-386908-7630a2d1a95f.json
 ### STS ###
 .apt_generated
 .classpath
