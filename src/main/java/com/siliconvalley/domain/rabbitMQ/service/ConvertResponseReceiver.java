@@ -27,7 +27,7 @@ public class ConvertResponseReceiver {
             canvasConvertService.updateConvertedData(response);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false); // 메시지 승인
         } catch (Exception e) {
-            log.error("Error processing the message: {}", e.getMessage());
+            log.error("Error processing the message: {}",  e);
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false); // 메시지 거부, 글로벌 핸들링
         }
     }
