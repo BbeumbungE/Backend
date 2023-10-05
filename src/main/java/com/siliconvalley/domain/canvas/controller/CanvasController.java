@@ -6,6 +6,7 @@ import com.siliconvalley.domain.image.service.S3PathBuildService;
 import com.siliconvalley.domain.sse.application.CanvasSseEmitterService;
 import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/canvases")
+@Slf4j
 public class CanvasController {
 
     private final CanvasConvertService canvasConvertService;
@@ -29,6 +31,7 @@ public class CanvasController {
             @RequestParam Long profileId,
             @RequestParam Long subjectId
     ) throws IOException {
+        log.info(profileId + "번 프로필의 " + subjectId + "번 주제에 대한 최초 변환 요청");
         String sketch = s3ImageUploadService.uploadFile(sketchFile, s3PathBuildService.buildPath(profileId, "sketch"));
         Response response = canvasConvertService.convertSketchToCanvas(profileId, subjectId, sketch);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -40,6 +43,7 @@ public class CanvasController {
             @RequestParam Long profileId,
             @PathVariable Long canvasId
     ) throws IOException {
+        log.info(profileId + "번 프로필의 " + canvasId + "번 그림에 대한 변환 요청");
         String sketch = s3ImageUploadService.uploadFile(sketchFile, s3PathBuildService.buildPath(profileId, "sketch"));
         Response response = canvasConvertService.updateSketchAndCanvas(profileId, canvasId, sketch);
         return ResponseEntity.status(HttpStatus.OK).body(response);
