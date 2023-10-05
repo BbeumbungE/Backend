@@ -4,6 +4,7 @@ import com.siliconvalley.domain.item.subject.dao.SubjectFindDao;
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.item.subject.dto.SubjectListDto;
 import com.siliconvalley.domain.notification.application.NotificationPushService;
+import com.siliconvalley.domain.point.application.PointManagementService;
 import com.siliconvalley.domain.post.dao.RankingRepository;
 import com.siliconvalley.domain.post.dto.PostRankingDto;
 import com.siliconvalley.domain.post.dto.RankingCachingDto;
@@ -22,10 +23,11 @@ import java.util.List;
 @Slf4j
 public class UpdateRankService {
 
-    private final RankCachingService rankCachingService;
     private final RankingRepository postCustomRepository;
     private final SubjectFindDao subjectFindDao;
     private final NotificationPushService notificationPushService;
+    private final PointManagementService pointManagementService;
+    private final RankCachingService rankCachingService;
 
     @PostConstruct
     public void initialRankingUpdate(){
@@ -45,4 +47,19 @@ public class UpdateRankService {
             rankCachingService.cachingRankToRedis(new RankingCachingDto(postRankingDtoList, dto.getSubjectName(), dto.getSubjectId()));
         }
     }
+
+    @Scheduled(cron = "0 59 23 ? * SUN")
+    public void distributePoints() {
+        List<SubjectListDto> subjects = subjectFindDao.findAllSubjects();
+        for (SubjectListDto dto : subjects){
+            List<PostRankingDto> postRankingDtoList = postCustomRepository.getSubjectRankingThisWeek(dto.getSubjectId());
+            Long award = 80L;
+            for (PostRankingDto postRankingDto : postRankingDtoList){
+                pointManagementService.updatePoint(postRankingDto.getProfileId(), award);
+                notificationPushService.pushNotification(postRankingDto.getProfileId(), award);
+                award -= 10L;
+            }
+        }
+    }
+
 }
