@@ -63,6 +63,13 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/subjects/{subjectId}/posts/top")
+    public ResponseEntity<Response> getTopPostsBySubject(
+            @PathVariable Long subjectId
+    ){
+      return ResponseEntity.ok(postDetailService.getTopPostBySubject(subjectId));
+    }
+
     @GetMapping("/posts/{postId}")
     public ResponseEntity<Response> getPostDetail(
             @PathVariable Long postId,

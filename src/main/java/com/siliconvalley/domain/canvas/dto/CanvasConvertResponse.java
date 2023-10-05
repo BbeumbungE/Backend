@@ -13,4 +13,8 @@ public class CanvasConvertResponse {
         this.canvasId = canvasId;
         this.topPost = topPost;
     }
+
+    public CanvasConvertResponse(String topPost){
+        this.topPost = topPost;
+    }
 }
