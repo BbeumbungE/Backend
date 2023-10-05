@@ -19,7 +19,13 @@ jobs:
           touch ./src/main/resources/application.yml 
           echo "${{ secrets.PROPERTIES_PROD }}" > ./src/main/resources/application.yml
         shell: bash
-
+        
+      - name: Make key.json
+        run: |
+          touch ./src/main/resources/key.json
+          echo "${{ secrets.VISION_KEY }}" > ./src/main/resources/key.json
+        shell: bash
+        
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
