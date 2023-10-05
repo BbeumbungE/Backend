@@ -35,6 +35,17 @@ public class VisionDetectingService {
         return Score.determineScore(detectionScore);
     }
 
+    public Score calculateCanvasScore(String filePath, String visionName) {
+        Map<String, Float> detectResult = visionService.detectLabels(filePath);
+        log.info(detectResult.size() + "개");
+        if (detectResult.size() == 0 || detectResult.containsKey("Error")) {return Score.LOW;}
+        log.info(detectResult + "점");
+        Float detectionScore = detectResult.get(visionName);
+
+        return Score.determineScore(detectionScore);
+    }
+
+
     public Response testLabelDetecting(Long canvasId){
         Canvas canvas = canvasFindDao.findById(canvasId);
         List<LabelResultDto> results = new ArrayList<>();
