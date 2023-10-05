@@ -3,6 +3,7 @@ package com.siliconvalley.domain.sse.application;
 import com.siliconvalley.domain.sse.repository.CanvasSseEmitterRepository;
 import com.siliconvalley.domain.sse.repository.DemoCanvasSseEmitterRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ConvertResultSender {
 
     private final CanvasSseEmitterRepository canvasSseEmitterRepository;
@@ -21,7 +23,9 @@ public class ConvertResultSender {
                     .name(eventName)
                     .data(data)
                     .reconnectTime(0L)); // 재연결 시도
+            log.info(profileId + "번 프로필 SSE 전송 성공");
         } catch (IOException exception) {
+            log.info("에러 발생, SSE 삭제");
             canvasSseEmitterRepository.delete(profileId);
             throw new RuntimeException("SSE Connect Fail");
         }

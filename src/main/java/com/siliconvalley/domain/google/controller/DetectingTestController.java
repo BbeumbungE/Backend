@@ -28,4 +28,12 @@ public class DetectingTestController {
         return ResponseEntity.ok(Response.of(CommonCode.GOOD_REQUEST, visionDetectingService.calculateCanvasScore(canvasId).getScoreValue()));
     }
 
+    @GetMapping("/score")
+    public ResponseEntity<Response> scoreTest2(
+            @RequestParam String filePath,
+            @RequestParam String visionName
+    ){
+        return ResponseEntity.ok(Response.of(CommonCode.GOOD_REQUEST, visionDetectingService.calculateCanvasScore(filePath, visionName).getScoreValue()));
+    }
+
 }

@@ -3,12 +3,14 @@ package com.siliconvalley.domain.sse.application;
 import com.siliconvalley.domain.sse.code.SseCode;
 import com.siliconvalley.domain.sse.repository.SseEmitterRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class SseEmitterSender {
 
@@ -24,13 +26,7 @@ public class SseEmitterSender {
 
         } catch (IOException exception) {
             sseEmitterRepository.delete(profileId);
-            throw new RuntimeException(SseCode.CONNECT_FAIL.getMessage());
+            log.info(SseCode.CONNECT_FAIL.getMessage());
         }
     }
-
-    public void sendNotReceivedEvent(String lastEventId) {
-
-    }
-
-
 }

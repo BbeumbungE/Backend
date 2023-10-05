@@ -65,6 +65,7 @@ public class CanvasConvertService {
         canvas.updateCanvas(response.getCanvasUrl());
         Long profileId = canvas.getProfile().getId();
         ConvertEventDto convertEventDto = new ConvertEventDto(canvas.getId(), response.getCanvasUrl());
+        log.info(canvas.getId() + "번 그림에 대한 변환 처리 완료 및 SSE로 메시지 전송");
         convertResultSender.send(canvasSseEmitterFinder.findByProfileId(profileId), convertEventDto, profileId, "drawing");
     }
     public void sendConvertedDemoCanvas(DemoConversionResponse response){
