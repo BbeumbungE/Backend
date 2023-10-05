@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -19,8 +20,8 @@ import java.util.Map;
 @Slf4j
 public class GoogleVisionApiService {
 
-    @Value("${google.service.account.key}")
-    private String serviceAccountKey;
+    @Value("${GOOGLE_APPLICATION_CREDENTIALS}")
+    private String serviceAccountKeyPath;
 
     public Map<String, Float> detectLabels(String filePath) {
         List<AnnotateImageRequest> requests = new ArrayList<>();
@@ -39,9 +40,8 @@ public class GoogleVisionApiService {
                     .build();
             requests.add(request);
 
-            GoogleCredentials credentials = GoogleCredentials.fromStream(
-                    new ByteArrayInputStream(serviceAccountKey.getBytes(StandardCharsets.UTF_8))
-            );
+            GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(serviceAccountKeyPath));
+
             ImageAnnotatorSettings settings = ImageAnnotatorSettings.newBuilder()
                     .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
                     .build();
