@@ -14,7 +14,7 @@ public class CanvasSseEmitterCreater {
 
     private final CanvasSseEmitterRepository canvasSseEmitterRepository;
     private final DemoCanvasSseEmitterRepository demoCanvasSseEmitterRepository;
-    public static final long EXPIRATION_TIME = 600000;
+    public static final long EXPIRATION_TIME = 3600000;
     public static final long DEMO_EXPIRATION_TIME = 120000;
     public SseEmitter createEmitter(Long profileId) {
 
