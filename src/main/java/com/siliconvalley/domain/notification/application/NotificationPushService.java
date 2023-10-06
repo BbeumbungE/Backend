@@ -70,4 +70,20 @@ public class NotificationPushService {
 
         eventCashRepository.save(id, notificationResponse); // 미전송 알림 저장용
     }
+
+    public void pushNotification(Long profileId, Long awardPoint){
+        SseEmitter sseEmitter = sseEmitterFinder.findByProfileId(profileId);
+
+        Profile profile = profileFindDao.findById(profileId);
+
+        Notification notification = Notification.toRankingNotification(profile, NotificationType.AWARD);
+        notificationRepository.save(notification);
+
+        NotificationResponse notificationResponse = new NotificationResponse(notification);
+        String id = profileId + "_" + System.currentTimeMillis();
+
+        if (sseEmitter != null) sseEmitterSender.send(sseEmitter, id, notificationResponse, profileId, "message");
+
+        eventCashRepository.save(id, notificationResponse);
+    }
 }
