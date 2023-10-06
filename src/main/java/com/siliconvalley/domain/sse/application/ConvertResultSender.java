@@ -22,7 +22,7 @@ public class ConvertResultSender {
             sseEmitter.send(SseEmitter.event()
                     .name(eventName)
                     .data(data)
-                    .reconnectTime(0L)); // 재연결 시도
+                    .reconnectTime(300L)); // 재연결 시도
             log.info(profileId + "번 프로필 SSE 전송 성공");
         } catch (IOException exception) {
             log.info("에러 발생, SSE 삭제");
