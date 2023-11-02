@@ -23,7 +23,6 @@ public class CanvasSseEmitterService {
             canvasSseEmitterRepository.delete(profileId);
         }
         SseEmitter sseEmitter = canvasSseEmitterCreater.createEmitter(profileId);
-        log.info(profileId + "번 유저 SSE 연결 완료");
         return sseEmitter;
     }
 

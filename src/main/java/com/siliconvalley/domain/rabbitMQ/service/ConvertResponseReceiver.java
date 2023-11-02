@@ -22,24 +22,20 @@ public class ConvertResponseReceiver {
 
     @RabbitListener(queues = "sketch_conversion_response_queue", ackMode = "MANUAL")
     public void receiveMessage(SketchConversionResponse response, Message message, Channel channel) throws IOException {
-        log.info("Received message: {}", response);
         try {
             canvasConvertService.updateConvertedData(response);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false); // 메시지 승인
         } catch (Exception e) {
-            log.error("Error processing the message: {}",  e);
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false); // 메시지 거부, 글로벌 핸들링
         }
     }
 
     @RabbitListener(queues = "demo_conversion_response_queue", ackMode = "MANUAL")
     public void receiveMessage(DemoConversionResponse response, Message message, Channel channel) throws IOException {
-        log.info("Received message: {}", response);
         try {
             canvasConvertService.sendConvertedDemoCanvas(response);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false); // 메시지 승인
         } catch (Exception e) {
-            log.error("Error processing the message: {}", e.getMessage());
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false); // 메시지 거부, 글로벌 핸들링
         }
     }

@@ -24,15 +24,12 @@ public class SseEmitterCreater {
 
         // 연결 실패시 삭제
         sseEmitter.onCompletion(() -> {
-            log.info("onCompletion callback");
             sseEmitterRepository.delete(profileId);
         });
         sseEmitter.onTimeout(() -> {
-            log.info("onTimeout callback");
             sseEmitterRepository.delete(profileId);
         });
         sseEmitter.onError((e) -> {
-            log.info("on" + e.getMessage() + " callback");
             sseEmitterRepository.delete(profileId);
         });
 

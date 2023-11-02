@@ -16,16 +16,15 @@ public class ConvertResultSender {
 
     private final CanvasSseEmitterRepository canvasSseEmitterRepository;
     private final DemoCanvasSseEmitterRepository demoCanvasSseEmitterRepository;
+    private static final long RECONNECT_TIME = 300L;
 
     public void send(SseEmitter sseEmitter, Object data, Long profileId, String eventName) {
         try {
             sseEmitter.send(SseEmitter.event()
                     .name(eventName)
                     .data(data)
-                    .reconnectTime(300L)); // 재연결 시도
-            log.info(profileId + "번 프로필 SSE 전송 성공");
+                    .reconnectTime(RECONNECT_TIME)); // 재연결 시도
         } catch (IOException exception) {
-            log.info("에러 발생, SSE 삭제");
             canvasSseEmitterRepository.delete(profileId);
             throw new RuntimeException("SSE Connect Fail");
         }
