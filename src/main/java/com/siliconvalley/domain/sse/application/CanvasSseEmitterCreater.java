@@ -23,15 +23,12 @@ public class CanvasSseEmitterCreater {
 
         // 연결 실패시 삭제
         sseEmitter.onCompletion(() -> {
-            log.info("onCompletion callback");
             canvasSseEmitterRepository.delete(profileId);
         });
         sseEmitter.onTimeout(() -> {
-            log.info("onTimeout callback");
             canvasSseEmitterRepository.delete(profileId);
         });
         sseEmitter.onError((e) -> {
-            log.info("on" + e.getMessage() + " callback");
             canvasSseEmitterRepository.delete(profileId);
         });
 
@@ -45,15 +42,12 @@ public class CanvasSseEmitterCreater {
 
         // 연결 실패시 삭제
         sseEmitter.onCompletion(() -> {
-            log.info("onCompletion callback");
             demoCanvasSseEmitterRepository.delete(tempId);
         });
         sseEmitter.onTimeout(() -> {
-            log.info("onTimeout callback");
             demoCanvasSseEmitterRepository.delete(tempId);
         });
         sseEmitter.onError((e) -> {
-            log.info("on" + e.getMessage() + " callback");
             demoCanvasSseEmitterRepository.delete(tempId);
         });
 

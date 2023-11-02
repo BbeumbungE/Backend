@@ -1,7 +1,6 @@
 package com.siliconvalley.domain.post.service;
 
 import com.siliconvalley.domain.canvas.dao.CanvasFindDao;
-import com.siliconvalley.domain.canvas.dao.CanvasRepository;
 import com.siliconvalley.domain.canvas.domain.Canvas;
 import com.siliconvalley.domain.post.code.PostCode;
 import com.siliconvalley.domain.post.dao.PostFindDao;
@@ -25,14 +24,12 @@ public class PostingService {
 
     private final PostFindDao postFindDao;
     private final PostRepository postRepository;
-    private final CanvasRepository canvasRepository;
     private final CanvasFindDao canvasFindDao;
 
     public Response createPostForCanvas(Long canvasId){
         Canvas canvas = canvasFindDao.findById(canvasId);
         Post post = canvas.buildPost();
         postRepository.save(post);
-        log.info(post.getId() + "번 아이디");
         return Response.of(PostCode.POSTING_SUCCESS, new PostCreatedResponse(post));
     }
     public Response deletePost(Long postId, Profile profile){

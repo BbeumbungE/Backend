@@ -15,7 +15,11 @@ public class RankingCachingDto {
     private String subjectName;
     private List<PostRankingDto> rankerList;
 
-    public RankingCachingDto(List<PostRankingDto> dto, String subjectName, Long subjectId){
+    public static RankingCachingDto of(List<PostRankingDto> dto, String subjectName, Long subjectId){
+        return new RankingCachingDto(dto, subjectName, subjectId);
+    }
+
+    private RankingCachingDto(List<PostRankingDto> dto, String subjectName, Long subjectId){
         this.time = "Update Time : " + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute();
         this.rankerList = dto;
         this.subjectId = subjectId;

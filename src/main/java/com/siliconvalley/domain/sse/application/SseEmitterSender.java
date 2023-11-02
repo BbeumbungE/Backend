@@ -15,6 +15,7 @@ import java.io.IOException;
 public class SseEmitterSender {
 
     private final SseEmitterRepository sseEmitterRepository;
+    private static final int RECONNECT_TIME_MILLIS = 0;
 
     public void send(SseEmitter sseEmitter, String id, Object data, Long profileId, String name) {
         try {
@@ -22,11 +23,10 @@ public class SseEmitterSender {
                     .id(id)
                     .name(name)
                     .data(data)
-                    .reconnectTime(0));
+                    .reconnectTime(RECONNECT_TIME_MILLIS));
 
         } catch (IOException exception) {
             sseEmitterRepository.delete(profileId);
-            log.info(SseCode.CONNECT_FAIL.getMessage());
         }
     }
 }
