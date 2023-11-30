@@ -54,7 +54,7 @@
 
 ### 3. 시스템 아키텍쳐
 
-![Architecture](./docs/images/아키텍쳐.webp)
+![Architecture](./docs/images/아키텍처.png)
 
 
 ### 4. 활용 스택
@@ -63,6 +63,74 @@
 
 ### 5. 팀원 소개
 
-![팀원 소개](./docs/images/팀원%20소개.PNG)
+#### BE 팀원 소개
 
+* [이명우](https://github.com/Fishphobiagg)
+  * 역할 및 기여
+    * RESTful API(REST API 2단계 모델)
+      * 그림 API
+        * 그림 변환 API
+          * S3 (Simple storage service)
+        * 채점 기능
+          * Java + GoogleVisionAPI의 label detection으로 구현
+      * 게시물 API
+        * 감정표현하기 
+        * 게시물 CRUD
+        * 주제별 게시물 조회
+          * querydsl 활용하여 N + 1 문제 해결 
+        * 랭킹 조회
+          * 1시간마다 랭킹 통계 쿼리 -> Redis에 저장
+    * 메시지 큐
+      * 메시지 브로커 : RabbitMQ
+      * 프로시저 : fastAPI, Spring Boot
+      * 리스너 : fastAPI, Spring Boot
+    * 설계
+      * ERD 설계 및 테이블 생성
+      * 아키텍처 설계
+
+
+* [엄한결](https://github.com/ah9mon)
+  * **역할 및 기여**
+    * **Back-end**
+      * Restful API(REST API 2단계 모델)
+        * 상점 기능
+          * 아바타 구매
+          * 그림 주제 구매
+          * 포인트 기능
+        * 단게별 그리기
+          * 스테이지 조회
+          * 스테이지 클리어
+        * 아이템
+          * 내 아이템 API(그림, 아바타)
+      * SSE 활용한 실시간 알림
+        * 랭킹 진입 알림
+        * 신규 아이템 출시 알림
+      * 인증/인가 구현
+        * JWT + OAuth2 + Spring Security 활용한 인증/인가 필터 구현
+        * 카카오 로그인 API 활용한 소셜 로그인 구현
+        
+    * **Infra**
+      * github action 배포 자동화 + 인프라 환경 구성
+        * AWS ECR
+        * EC2(개발, 운영 서버 분리)
+        * Docker Compose
+          * Redis, RabbitMQ, Nginx 컨테이너 환경에서 실행
+      * RDS 
+        * MySQL 환경 구성
+    * 설계
+      * ERD 설계 및 테이블 생성
+      * 아키텍처 설계
+
+
+* [조현기](https://github.com/chk7082)
+  * 역할 및 기여
+    * AI 
+    * [모델 개발 과정 상세 링크](https://github.com/chk7082/AICanvas-Pix2Pix#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%84%EC%B2%98%EB%A6%AC)
+      * 데이터 수집 및 전처리(6개 그림 주제, 약 27만장)
+        * HED 활용하여
+      * Pix2Pix 모델 논문 구현
+      * 6개 주제 모델 학습
+        * GPU로 학습 & CPU로 데이터 로딩 병렬 처리
+    * **Back-end**
+      * fastAPI 서버 개발
 <br>
