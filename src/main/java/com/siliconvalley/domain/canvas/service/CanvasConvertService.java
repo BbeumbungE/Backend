@@ -44,9 +44,8 @@ public class CanvasConvertService {
 
 
     public Response convertSketchToCanvas(Long profileId, Long subjectId, String sketch){
-        Profile profile = profileFindDao.findById(profileId);
         Subject subject = subjectFindDao.findById(subjectId);
-        Canvas canvas = canvasCreateService.createCanvas(CanvasCreateDto.builder().subject(subject).sketchUrl(sketch).profile(profile).build());
+        Canvas canvas = canvasCreateService.createCanvas(CanvasCreateDto.builder().subject(subject).sketchUrl(sketch).profileId(profileId).build());
         return convertRequestSender.sendSketchConversionRequest(sketch, canvas.getId(), profileId, subject);
     }
 
@@ -63,7 +62,7 @@ public class CanvasConvertService {
     public void updateConvertedData(SketchConversionResponse response){
         Canvas canvas = canvasFindDao.findById(response.getCanvasId());
         canvas.updateCanvas(response.getCanvasUrl());
-        Long profileId = canvas.getProfile().getId();
+        Long profileId = canvas.getProfileId();
         ConvertEventDto convertEventDto = new ConvertEventDto(canvas.getId(), response.getCanvasUrl());
         convertResultSender.send(canvasSseEmitterFinder.findByProfileId(profileId), convertEventDto, profileId, "drawing");
     }

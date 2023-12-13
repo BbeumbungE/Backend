@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PostDetailService {
 
@@ -21,10 +20,11 @@ public class PostDetailService {
     private final EmotionCustomRepository emotionCustomRepository;
     private final RankCachingService rankCachingService;
 
+    @Transactional(readOnly = true)
     public Response getPostDetail(Long postId, Long profileId){
         Post post = postFindDao.findById(postId);
         return Response.of(PostCode.GET_POST_DETAIL_SUCCESS,
-                new PostDetailResponse(post, emotionCustomRepository.findEmotionStatsByPostAndProfile(postId, profileId)));
+                new PostDetailResponse(post, emotionCustomRepository.findEmotionStatsByPostAndProfile(postId, profileId), profileId));
     }
 
     public Response getTopPostBySubject(Long subjectId){

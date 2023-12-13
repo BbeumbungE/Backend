@@ -12,21 +12,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CanvasCreateDto {
 
-    private Profile profile;
+    private Long profileId;
     private Subject subject;
     private String sketchUrl;
 
 
     @Builder
-    public CanvasCreateDto(Profile profile, Subject subject, String sketchUrl){
-        this.profile = profile;
+    public CanvasCreateDto(Long profileId, Subject subject, String sketchUrl){
+        this.profileId = profileId;
         this.subject = subject;
         this.sketchUrl = sketchUrl;
     }
 
     public Canvas toEntity(){
         return Canvas.builder()
-                .profile(profile).subject(subject)
+                .profileId(profileId).subject(subject)
                 .sketch(sketchUrl)
                 .build();
     }

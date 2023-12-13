@@ -39,7 +39,7 @@ public class PostEmoteService {
     public Response updateEmote(Long postId, Long requestProfileId, Long emotionTypeId){
         EmotionType emotionType = emotionTypeFindDao.findById(emotionTypeId);
         emotionFindDao.findByPostIdAndProfileId(postId, requestProfileId).updateEmotion(emotionType);
-        return Response.of(EmotionCode.CANCEL_EMOTION_SUCCESS, null);
+        return Response.of(EmotionCode.CANCEL_EMOTION_SUCCESS);
     }
 
     public Response cancelEmote(Long postId, Long requestProfileId){
@@ -48,7 +48,7 @@ public class PostEmoteService {
             throw new IllegalDeleteException("요청 ID와 감정표현 프로필 ID가 맞지않음");
         }
         emotionRepository.delete(emotion);
-        return Response.of(EmotionCode.CANCEL_EMOTION_SUCCESS, null);
+        return Response.of(EmotionCode.CANCEL_EMOTION_SUCCESS);
     }
 
 }

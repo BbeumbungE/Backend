@@ -20,7 +20,7 @@ public class CanvasDeleteService {
 
     public Response deleteCanvas(Long profileId, Long canvasId){
         Canvas canvas = canvasFindDao.findById(canvasId);
-        if (canvas.getProfile().getId() != profileId){
+        if (canvas.getProfileId() != profileId){
             throw new CanvasIllegalDeleteException("삭제 권한이 없는 유저입니다.");
         }
         canvasRepository.delete(canvas);

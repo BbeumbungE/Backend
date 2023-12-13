@@ -201,7 +201,7 @@ public class ProfileApi {
             @RequestParam int page,
             @RequestParam int size
     ){
-        Response response = canvasFindDao.findByProfileId(profileId, PageRequest.of(page, size));
+        Response response = canvasFindDao.findByProfileId(profileId);
         return ResponseEntity.ok(response);
     }
 
