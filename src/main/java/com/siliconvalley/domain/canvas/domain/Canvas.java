@@ -2,12 +2,10 @@ package com.siliconvalley.domain.canvas.domain;
 
 import com.siliconvalley.domain.item.subject.domain.Subject;
 import com.siliconvalley.domain.post.domain.Post;
-import com.siliconvalley.domain.profile.domain.Profile;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
@@ -28,9 +26,8 @@ public class Canvas {
     @Column(name = "converted_sketch")
     private String canvas;
 
-    @ManyToOne
-    @JoinColumn(name = "profile_id", nullable = false)
-    private Profile profile;
+    @Column(name = "profile_id")
+    private Long profileId;
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
@@ -46,9 +43,8 @@ public class Canvas {
     }
 
     @Builder
-    public Canvas(Subject subject, Profile profile, String sketch){
+    public Canvas(Subject subject, Long profileId, String sketch){
         this.subject = subject;
-        this.profile = profile;
         this.sketch = sketch;
     }
 

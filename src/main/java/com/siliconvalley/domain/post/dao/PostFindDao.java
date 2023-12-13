@@ -26,9 +26,9 @@ public class PostFindDao {
     private final PostCustomRepository postCustomRepository;
     private final SubjectFindDao subjectFindDao;
 
-    public Post findById(Long targetId){
-        final Optional<Post> post = postRepository.findById(targetId);
-        post.orElseThrow(() -> new PostNotFoundException("post number : " + targetId ));
+    public Post findById(Long postId){
+        final Optional<Post> post = postRepository.findById(postId);
+        post.orElseThrow(() -> new PostNotFoundException("post number : " + postId ));
         return post.get();
     }
 

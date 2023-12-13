@@ -13,13 +13,11 @@ import java.util.List;
 public class PostDetailResponse {
     private String canvasUrl;
     private Long authorProfileId;
-    private ProfileAvatarItemResponse authorProfileAvatar;
     private List<PostEmotionTypeInfo> postEmotionTypeInfos;
 
-    public PostDetailResponse(Post post, List<PostEmotionTypeInfo> postEmotionTypeInfos){
+    public PostDetailResponse(Post post, List<PostEmotionTypeInfo> postEmotionTypeInfos, Long profileId){
         this.canvasUrl = post.getCanvas().getCanvas();
-        this.authorProfileId = post.getCanvas().getProfile().getId();
-        this.authorProfileAvatar = new ProfileAvatarItemResponse(post.getCanvas().getProfile().getProfileItem());
+        this.authorProfileId = profileId;
         this.postEmotionTypeInfos = postEmotionTypeInfos;
     }
 }

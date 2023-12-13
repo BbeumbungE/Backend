@@ -6,6 +6,7 @@ import com.siliconvalley.domain.post.domain.QEmotion;
 import com.siliconvalley.domain.post.domain.QPost;
 import com.siliconvalley.domain.post.dto.PostRankingDto;
 import com.siliconvalley.domain.post.dto.QPostRankingDto;
+import com.siliconvalley.domain.profile.domain.QProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,7 @@ public class RankingRepository {
         LocalDateTime endOfWeek = weekMap.get("endOfWeek");
 
         return jpaQueryFactory
-                .select(new QPostRankingDto(canvas.profile.id, canvas.id, canvas.canvas, post.id))
+                .select(new QPostRankingDto(canvas.profileId, canvas.id, canvas.canvas, post.id))
                 .from(emotion)
                 .join(emotion.post, post)
                 .join(post.canvas, canvas)
