@@ -46,7 +46,7 @@ public class CanvasController {
         log.info(profileId + "번 프로필의 " + canvasId + "번 그림에 대한 변환 요청");
         String sketch = s3ImageUploadService.uploadFile(sketchFile, s3PathBuildService.buildPath(profileId, "sketch"));
         Response response = canvasConvertService.updateSketchAndCanvas(profileId, canvasId, sketch);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
     @PostMapping("/demo/subject/{subjectId}/tempId/{tempId}")

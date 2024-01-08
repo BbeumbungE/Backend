@@ -21,7 +21,6 @@ public class Response<T> {
         private String message;
     }
 
-
     /**
      * 응답 코드와 내용으로 응답 객체를 생성한다.
      *
