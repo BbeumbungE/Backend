@@ -27,12 +27,12 @@ public class CanvasFindDao {
     }
 
     public Response findByProfileId(Long profileId){
-        List<CanvasListSummary> canvasPage = canvasRepository.findByProfileId(profileId);
+        List<CanvasListSummary> canvasPage = canvasRepository.findByProfileId(profileId, CanvasListSummary.class);
         return Response.of(CanvasCode.GET_CANVAS_SUCCESS, canvasPage);
     }
 
     public List<CanvasListSummary> findCanvasListByProfileId(Long profileId){
-        return canvasRepository.findByProfileId(profileId);
+        return canvasRepository.findByProfileId(profileId, CanvasListSummary.class);
     }
 
 

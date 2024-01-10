@@ -13,6 +13,8 @@ public interface CanvasRepository extends JpaRepository<Canvas, Long> {
 
     @Query("SELECT new com.siliconvalley.domain.canvas.dto.CanvasDto(c.id, c.canvas) FROM Canvas c WHERE c.profileId = ?1")
     List<CanvasDto> findCanvasByProfileId(Long profileId);
-    List<CanvasListSummary> findByProfileId(Long profileId);
+//    List<CanvasListSummary> findByProfileId(Long profileId);
+
+    <T> List<T> findByProfileId(Long profileId, Class<T> type);
     Optional<Canvas> findCanvasByIdAndProfileId(Long canvasId, Long profileId);
 }
