@@ -6,15 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CanvasDto {
 
-    private Long canvasId;
-    private String canvasUrl;
+    private Long id;
+    private String canvas;
 
     @Builder
-    public CanvasDto(Long canvasId, String canvasUrl){
-        this.canvasId = canvasId;
-        this.canvasUrl = canvasUrl;
+    public CanvasDto(Long id, String canvas){
+        this.id = id;
+        this.canvas = canvas;
     }
 }

@@ -29,11 +29,11 @@ public class Canvas {
     @Column(name = "profile_id")
     private Long profileId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
-    @OneToOne(mappedBy = "canvas", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "canvas", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Post post;
 
     public Post buildPost(){
