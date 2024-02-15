@@ -3,6 +3,8 @@ package com.siliconvalley.domain.item.subject.api;
 import com.siliconvalley.domain.image.service.S3ImageUploadService;
 import com.siliconvalley.domain.image.service.S3PathBuildService;
 import com.siliconvalley.domain.item.subject.application.SketchCreateService;
+import com.siliconvalley.domain.item.subject.application.SubjectServiceImpl;
+import com.siliconvalley.global.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ public class SubjectApi {
     private final S3ImageUploadService s3ImageUploadService;
     private final S3PathBuildService s3PathBuildService;
     private final SketchCreateService sketchCreateService;
+    private final SubjectServiceImpl subjectService;
 
     @PostMapping("/{subjectId}/sketches")
     public ResponseEntity addSketchToSubject(
@@ -28,4 +31,12 @@ public class SubjectApi {
         String sketchImageUrl = s3ImageUploadService.uploadFile(sketchImage, s3PathBuildService.buildPathForItem("sketch"));
         return ResponseEntity.status(HttpStatus.CREATED).body(sketchCreateService.createSketch(subjectId, sketchImageUrl));
     }
+
+    @GetMapping("/{subjectId}/sketches")
+    public ResponseEntity<Response> getSketchLists(
+            @PathVariable(name = "subjectId") Long subjectId
+    ) {
+        return ResponseEntity.ok(this.subjectService.getRandomSketchBySubjectId(subjectId));
+    }
+
 }

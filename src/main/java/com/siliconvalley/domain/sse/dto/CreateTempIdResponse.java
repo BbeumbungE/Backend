@@ -17,4 +17,8 @@ public class CreateTempIdResponse {
         this.subjectSketch = subjectSketch;
         this.tempId = tempId;
     }
+
+    public CreateTempIdResponse(String tempId){
+        this.tempId = tempId;
+    }
 }

@@ -26,6 +26,11 @@ public class TempIdCreateService {
         return Response.of(SseCode.TEMP_ID_GENERATE_SUCCESS, new CreateTempIdResponse(subjectId, subjectSketch, tempId));
     }
 
+    public Response createTempId(){
+        String tempId = createTempIdForSse();
+        return Response.of(SseCode.TEMP_ID_GENERATE_SUCCESS, new CreateTempIdResponse(tempId));
+    }
+
     private String getPrimarySubjectSketch(Long subjectId){
         List<Sketch> sketches = sketchFindDao.findSketchBySubjectId(subjectId);
         Sketch randomSketch = sketches.get(new Random().nextInt(sketches.size()));

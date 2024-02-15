@@ -7,6 +7,7 @@ public enum SketchCode implements ResponseCode {
 
     CREATE_SUCCESS(201, "스케치 생성에 성공했습니다.", HttpStatus.CREATED);
 
+
     private int code;
     private String message;
 

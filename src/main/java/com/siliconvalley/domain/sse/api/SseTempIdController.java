@@ -19,10 +19,8 @@ public class SseTempIdController {
     private final TempIdCreateService tempIdCreateService;
 
     @PostMapping("/tempId")
-    public ResponseEntity<Response> createTempId(
-            @RequestBody CreateTempIdRequest dto
-            ){
-        Response response = tempIdCreateService.getSubjectImageAndCreateTempId(dto.getSubjectId());
+    public ResponseEntity<Response> createTempId(){
+        Response response = tempIdCreateService.createTempId();
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
